@@ -17,6 +17,9 @@
 */
 import React from "react";
 
+// locales
+import { useTranslation } from "react-i18next";
+
 // reactstrap components
 import {
   Button,
@@ -26,13 +29,14 @@ import {
 } from "reactstrap";
 
 export default function Useful_links() {
+  const { t } = useTranslation();
 
   return (
     <div className="section section-basic" id="basic-elements">
       <img alt="..." className="path" src={require("assets/img/path1.png")} />
       <Container>
         
-        <h3>Полезные ссылки</h3>
+        <h3>{t("Useful_links-useful-links")}</h3>
         <Row>
           <Col md="8">
 
@@ -49,7 +53,7 @@ export default function Useful_links() {
             target="_blank"
             href="https://docs.google.com/spreadsheets/u/0/d/1LCuqahTKzkdCFvRp6cL3hzUkMZFuYjgB53hrZgdZZHg/htmlview#"
             role="button">
-              Google Документ
+              {t("Useful_links-Google-Docs")}
             </Button>
 
             <Button 
@@ -58,7 +62,7 @@ export default function Useful_links() {
             target="_blank"
             href="https://www.reddit.com/r/araragi/comments/5eilqt/monogatari_short_stories_translation_project/"
             role="button">
-              Reddit
+              {t("Useful_links-Reddit")}
             </Button>
 
             {/* <Button 

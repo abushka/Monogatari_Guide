@@ -429,8 +429,8 @@
 }
 
 .brand .h1-seo {
-  font-size: 5em;
-  text-transform: uppercase;
+  font-size: 4em;
+  /* text-transform: uppercase; */
   font-weight: 300;
 }
 

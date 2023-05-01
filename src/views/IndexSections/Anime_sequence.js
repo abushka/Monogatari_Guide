@@ -22,6 +22,9 @@ import classnames from "classnames";
 import { Icon } from '@iconify/react';
 // import { faCrab} from '@fortawesome/fontawesome-svg-core'
 
+// locales
+import { useTranslation } from "react-i18next";
+
 // reactstrap components
 import {
   Container,
@@ -41,6 +44,8 @@ import {
 export default function Anime_sequence() {
 
   const [iconTabs, setIconsTabs] = React.useState(1);
+
+  const { t } = useTranslation();
 
   // const carouselItems = [
   //   {
@@ -71,13 +76,13 @@ export default function Anime_sequence() {
       <img alt="Anime picture" className="img-fluid" src={require("assets/img/Anime_sequence.jpg")}/>
         <Col md="12">
         <div className="title">
-          <h3 className="mb-3">Navigation</h3>
+          <h3 className="mb-3">{t("Anime_Sequence-Navigation")}</h3>
         </div>
         <Row>
           <Col className="ml-auto mr-auto" md="12" xl="12">
             <div className="mb-4">
               <small className="text-uppercase font-weight-bold">
-                Anime Seasons
+                {t("Anime_Sequence-Anime-Seasons")}
               </small>
             </div>
             <Card>
@@ -342,17 +347,11 @@ export default function Anime_sequence() {
                 <TabContent className="tab-space" activeTab={"link" + iconTabs}>
                   <hr className="line-info"/>
                   <TabPane tabId="link1">
-                    <p>
-                      Первая часть сезона Monogatari Series: First Season. Насчитывает 15 сверхъестественных серий.<br />
-                      Премьера состоялась 3 июля 2009, финальная серия вышла 25 июня 2010.<br /><br />
+                    <p> {t("Anime_Seguence-Bakemonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Bakemonogatari-description-2")}<br /><br />
+                        {t("Anime_Seguence-Bakemonogatari-description-3")}<br />
+                        {t("Anime_Seguence-Bakemonogatari-description-4")}
 
-                      Хотелось бы много всего здесь написать, но СЛИШКОМ МНОГО БУКАВ, скажу кратко, 
-                      а далее просто маленькое описание начала первой серии. <br />
-                      Данный тайтл завязан на диалогах и игре слов, естественно на японском, на любой другой язык перевести всю красоту этой 
-                      игры слов не сможет перевести никто, поэтому чтобы оценить его на все 100% - нужно учить японский язык, 
-                      можно конечно найти сайты где при просмотре малость объясняются эти моменты (советую конечно хотя бы немного послушать 
-                      как это звучит в оригинальной озвучке), но даже без полного перевода этот тайтл захватывает дух и становится любимым для многих людей. 
-                      <br /><br />
 
                       {/* В первых сериях может показаться что мы начинаем 
                       с середины истории и автор забыл нам показать то, что было до этого,
@@ -384,85 +383,78 @@ export default function Anime_sequence() {
                     </p>
                   </TabPane>
                   <TabPane tabId="link2">
-                    <p>
-                      Четвёртая часть сезона Monogatari Series: First Season. Насчитывает 3 безумно красивых полнометражных фильма, которые ранят Вас в самое сердце,
-                      Железной крови, Горячей крови, Холодной крови. В данных полнометражках Вы познакомитесь с 
-                      Киссшот-Ацерола-Орион-Харт-Андер-Блейд Железнокровным, Горячекровным, Хладнокровным Вампиром и вообще просто богиней.<br /><br />
-                      И кстати да, тут нет ошибки, после первой части Вам нужно смотреть четвёртую часть :) <br /><br />
-                      Полнометражные фильмы трилогии Kizumonogatari выходили на экраны с промежутком в полгода. 8 января 2016 года вышел фильм 
-                      Tekketsu-hen, 19 августа вышел второй фильм Nekketsu-hen, 6 января 2017 года состоялся выход третьего фильма Reiketsu-hen.
-                      
+                    <p> 
+                        {t("Anime_Seguence-Kizumonogatari-description-1")}<br /><br />
+                        {t("Anime_Seguence-Kizumonogatari-description-2")}<br /><br />
+                        {t("Anime_Seguence-Kizumonogatari-description-3")}                      
                     </p>
                   </TabPane>
                   <TabPane tabId="link3">
                     <p>
-                      Вторая часть сезона Monogatari Series: First Season. Насчитывает 11 неподдельно занимательных серий.<br />
-                      Премьера состоялась 7 января 2012, финальная серия вышла 17 марта 2012.
+                        {t("Anime_Seguence-Nisemonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Nisemonogatari-description-2")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link4">
                     <p>
-                      Третья часть сезона Monogatari Series: First Season. Содержит 4 серии.<br />
-                      Премьера состоялась 31 декабря 2012.
+                        {t("Anime_Seguence-Nekomonogatari-Kuro-description-1")}<br />
+                        {t("Anime_Seguence-Nekomonogatari-Kuro-description-2")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link5">
                     <p>
-                      Monogatari Series: Second Season это целый сезон, который включает в себя: <br /><br />
-                      ⚬ Nekomonogatari (Shiro) Содержит 5 серий. Премьера состоялась 6 июля 2013, финальная серия вышла 3 августа 2013.<br />
-                      ⚬ Kabukimonogatari Содержит 4 серии. Премьера состоялась 17 августа 2013, финальная серия вышла 7 сентября 2013.<br />
-                      ⚬ Otorimonogatari Содержит 4 серии. Премьера состоялась 21 сентября 2013, финальная серия вышла 12 октября 2013.<br />
-                      ⚬ Onimonogatari Содержит 4 серии. Премьера состоялась 26 октября 2013, финальная серия вышла 16 ноября 2013.<br />
-                      ⚬ Koimonogatari Содержит 6 серий. Премьера состоялась 23 ноября 2013, финальная серия вышла 28 декабря 2013.<br />
-                      ⚬ Hanamonogatari Содержит 5 серий, которые позже соединили в один полнометражный фильм. Премьера состоялась 16 августа 2014.<br /><br />
-
-                      Но тут есть маленький нюанс, лично я советую смотреть Monogatari Series: Second Season до 9-ой серии (9-ую серию включительно), 
-                      переходить к просмотру Hanamonogatari, и продолжить смотреть Monogatari Series: Second Season с 10-ой серии до конечной 23-ой серии (включительно).
+                        {t("Anime_Seguence-Second-Season-description-1")}<br /><br />
+                        {t("Anime_Seguence-Second-Season-Nekomonogatari-Shiro-description-2")}<br />
+                        {t("Anime_Seguence-Second-Season-Kabukimonogatari-description-3")}<br />
+                        {t("Anime_Seguence-Second-Season-Otorimonogatari-description-4")}<br />
+                        {t("Anime_Seguence-Second-Season-Onimonogatari-description-5")}<br />
+                        {t("Anime_Seguence-Second-Season-Koimonogatari-description-6")}<br />
+                        {t("Anime_Seguence-Second-Season-Hanamonogatari-description-7")}<br /><br />
+                        {t("Anime_Seguence-Second-Season-description-8")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link6">
                     <p>
-                      Шестая часть сезона Monogatari Series: Second Season, содержит 5 серий, которые позже соединили в один полнометражный фильм.<br />
-                      Премьера состоялась 16 августа 2014. <br />
-                      Можно смотреть как сериями, так и сразу полнометражный фильм.
+                        {t("Anime_Seguence-Hanamonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Hanamonogatari-description-2")}<br />
+                        {t("Anime_Seguence-Hanamonogatari-description-3")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link7">
                     <p>
-                      Если Вы послушались моего совета и начали смотреть после 9-ой серии Hanamonogatari, то сейчас Вы можете начать смотреть 
-                      Monogatari Series: Second Season с 10-ой серии до 23-ой (включительно) <br />
-                      Если Вы не посмотрели весь сезон сразу, а после начали смотреть Hanamonogatari, то можете пропустить данный этап и переходить к следующей части.
+                        {t("Anime_Seguence-Second-Season-description-9")}<br />
+                        {t("Anime_Seguence-Second-Season-description-10")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link8">
                     <p>
-                      Первая часть сезона Monogatari Series: Final Season, содержит 4 серии.<br />
-                      Премьера состоялась 31 декабря 2014.
+                        {t("Anime_Seguence-Tsukimonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Tsukimonogatari-description-2")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link9">
                     <p>
-                      Вторая часть сезона Monogatari Series: Final Season, содержит 13 серий.<br />
-                      Премьера состоялась 3 октября 2015, финальная серия вышла 20 декабря 2015. <br />
-                      Первый и второй эпизод «Формулы Оуги» вышли на телеэкранах в виде одного эпизода длиною в час, но были разделены на DVD и Blu-ray.
+                        {t("Anime_Seguence-Owarimonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Owarimonogatari-description-2")}<br />
+                        {t("Anime_Seguence-Owarimonogatari-description-3")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link10">
                     <p>
-                      Третья часть сезона Monogatari Series: Final Season, содержит 12 серий.<br />
-                      Премьера состоялась 9 января 2016, финальная серия вышла 26 марта 2016.
+                        {t("Anime_Seguence-Koyomimonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Koyomimonogatari-description-2")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link11">
                     <p>
-                      Четвёртая часть сезона Monogatari Series: Final Season, содержит 7 серий.<br />
-                      Премьера состоялась 12 августа 2017, финальная серия вышла 13 августа 2017.
+                        {t("Anime_Seguence-Owarimonogatari-II-description-1")}<br />
+                        {t("Anime_Seguence-Owarimonogatari-II-description-2")}
                     </p>
                   </TabPane>
                   <TabPane tabId="link12">
                     <p>
-                      Пятая часть сезона Monogatari Series: Final Season, содержит 6 серий.<br />
-                      Премьера состоялась 10 ноября 2018.
+                        {t("Anime_Seguence-Zoku-Owarimonogatari-description-1")}<br />
+                        {t("Anime_Seguence-Zoku-Owarimonogatari-description-2")}
                     </p>
                   </TabPane>
                 </TabContent>

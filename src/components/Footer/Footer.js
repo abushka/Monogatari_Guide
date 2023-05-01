@@ -16,6 +16,10 @@
 
 */
 import React from "react";
+
+// locales
+import { useTranslation } from "react-i18next";
+
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -30,6 +34,8 @@ import {
 } from "reactstrap";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <Container>
@@ -65,28 +71,28 @@ export default function Footer() {
             <Nav>
               <NavItem>
                 <NavLink href="https://t.me/YaJ75" target="_blank">
-                  Contact Us
+                  {t("Footer-contact-us")}
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/abushka" target="_blank">
-                  About Us
+                  {t("Footer-about-us")}
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://blog.astafeev.dev" target="_blank">
-                  Blog
+                  {t("Footer-blog")}
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://opensource.org/licenses/MIT" target="_blank">
-                  License
+                  {t("Footer-Licence")}
                 </NavLink>
               </NavItem>
             </Nav>
           </Col>
           <Col md="3">
-            <h3 className="title">Follow us:</h3>
+            <h3 className="title">{t("Footer-follow-us")}:</h3>
             <div className="btn-wrapper profile">
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
@@ -97,8 +103,8 @@ export default function Footer() {
               >
                 <i className="fab fa-twitter" />
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip622135962">
-                Follow us
+              <UncontrolledTooltip target="tooltip622135962">
+                {t("Footer-follow-us")}
               </UncontrolledTooltip>
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
@@ -109,20 +115,20 @@ export default function Footer() {
               >
                 <i className="fab fa-instagram" />
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip230450801">
-                Like us
+              <UncontrolledTooltip target="tooltip230450801">
+                {t("Footer-like-us")}
               </UncontrolledTooltip>
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
                 color="default"
-                href="https://t.me/YaJ75"
+                href="https://t.me/monogatari_poryadok"
                 id="tooltip318450378"
                 target="_blank"
               >
                 <i className="fab fa-telegram" />
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip318450378">
-                Follow us
+              <UncontrolledTooltip target="tooltip318450378">
+                {t("Footer-follow-us")}
               </UncontrolledTooltip>
             </div>
           </Col>

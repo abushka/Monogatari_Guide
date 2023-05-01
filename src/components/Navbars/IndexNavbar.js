@@ -17,6 +17,13 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+// locales
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n.js";
+
+// Icons
+import { Icon } from '@iconify/react';
+
 // reactstrap components
 import {
   Button,
@@ -74,6 +81,13 @@ export default function IndexNavbar() {
       .getElementById("suggestion-section")
       .scrollIntoView({ behavior: "smooth" });
   };
+  // locales
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const { t } = useTranslation();
+
   return (
     <Navbar className={"fixed-top " + color} color-on-scroll="100" expand="lg">
       <Container>
@@ -105,7 +119,7 @@ export default function IndexNavbar() {
           <div className="navbar-collapse-header">
             <Row>
               <Col className="collapse-brand" xs="6">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                <a href="#" onClick={(e) => e.preventDefault()}>
                   Fanat•Monogatari Series Guide
                 </a>
               </Col>
@@ -127,7 +141,7 @@ export default function IndexNavbar() {
                 href="https://twitter.com/abushka_404"
                 rel="noopener noreferrer"
                 target="_blank"
-                title="Подпишись на мой Twitter"
+                title={t("IndexNavbar-Subscribe-Twitter")} // Подпишись на мой Twitter
               >
                 <i className="fab fa-twitter" />
                 <p className="d-lg-none d-xl-none">Twitter</p>
@@ -139,7 +153,7 @@ export default function IndexNavbar() {
                 href="https://t.me/monogatari_poryadok"
                 rel="noopener noreferrer"
                 target="_blank"
-                title="Подпишись на мой Telegram канал"
+                title={t("IndexNavbar-Subscribe-Telegram")} // Подпишись на мой Telegram канал
               >
                 <i className="fab fa-telegram" />
                 <p className="d-lg-none d-xl-none">Telegram</p>
@@ -151,43 +165,13 @@ export default function IndexNavbar() {
                 href="https://www.instagram.com/abushka_404"
                 rel="noopener noreferrer"
                 target="_blank"
-                title="Подпишись на мой Instagram"
+                title={t("IndexNavbar-Subscribe-Instagram")} // Подпишись на мой Instagram
               >
                 <i className="fab fa-instagram" />
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
-            {/* <UncontrolledDropdown nav>
-              <DropdownToggle
-                caret
-                color="default"
-                data-toggle="dropdown"
-                href="#pablo"
-                nav
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="fa fa-cogs d-lg-none d-xl-none" />
-                Getting started
-              </DropdownToggle>
-              <DropdownMenu className="dropdown-with-icons">
-                <DropdownItem href="https://demos.creative-tim.com/blk-design-system-react/#/documentation/overview">
-                  <i className="tim-icons icon-paper" />
-                  Documentation
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/register-page">
-                  <i className="tim-icons icon-bullet-list-67" />
-                  Register Page
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/landing-page">
-                  <i className="tim-icons icon-image-02" />
-                  Landing Page
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/profile-page">
-                  <i className="tim-icons icon-single-02" />
-                  Profile Page
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
+
 
             <NavItem>
               <Button
@@ -195,8 +179,8 @@ export default function IndexNavbar() {
                 color="primary"
                 onClick={scrollToSuggestion}
               >
-                <i className="tim-icons icon-bulb-63" /> Подать идею
-              </Button>
+                <i className="tim-icons icon-bulb-63" /> {t("IndexNavbar-Give-Suggestion")}
+              </Button> 
             </NavItem>
             <NavItem>
               <Button
@@ -205,9 +189,33 @@ export default function IndexNavbar() {
                 target="_blank"
                 href="https://t.me/YaJ75"
               >
-                <i className="tim-icons icon-spaceship" /> Обратная связь
+                <i className="tim-icons icon-spaceship" /> {t("IndexNavbar-Feedback")}
               </Button>
             </NavItem>
+
+            <UncontrolledDropdown nav>
+              <DropdownToggle
+                caret
+                color="default"
+                data-toggle="dropdown"
+                href="#"
+                nav
+                onClick={(e) => e.preventDefault()}
+              >
+                <i className="fa fa-cogs d-lg-none d-xl-none" />
+                <Icon icon="material-symbols:language" style={{ fontSize: '20px' }} />
+                {t("IndexNavbar-Language")}
+              </DropdownToggle>
+
+              <DropdownMenu className="dropdown-with-icons">
+                <DropdownItem onClick={() => changeLanguage("en")}>
+                  <Icon icon="fxemoji:greatbritainflag" style={{ fontSize: '20px' }} /> English
+                </DropdownItem>
+                <DropdownItem onClick={() => changeLanguage("ru")}>
+                  <Icon icon="openmoji:flag-russia" style={{ fontSize: '20px' }} /> Русский
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
 
           </Nav>
         </Collapse>

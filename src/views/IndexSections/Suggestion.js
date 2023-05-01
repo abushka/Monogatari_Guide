@@ -16,10 +16,16 @@
 
 */
 import React from "react";
+
+// locales
+import { useTranslation } from "react-i18next";
+
 // reactstrap components
 import { Button, Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 
 export default function Suggestion() {
+  const { t } = useTranslation();
+
   return (
     <div
       className="section section-download"
@@ -31,11 +37,10 @@ export default function Suggestion() {
         <Row className="justify-content-md-center">
           <Col className="text-center" lg="8" md="12">
             <h2 className="title">
-              Вам нравится это руководство по Циклу Историй ?
+              {t("Suggestion-title")}
             </h2>
             <h4 className="description">
-            Если у вас есть идеи, предложения, советы или вы можете помочь проекту, подкинув какой-то материал - пишите в телеграм.
-            Если увидели ошибку в материале - так же можете написать в телеграм.
+            {t("Suggestion-description")}
             </h4>
           </Col>
           <Col className="text-center" lg="8" md="12">
@@ -59,34 +64,38 @@ export default function Suggestion() {
         <Row className="row-grid align-items-center my-md">
           <Col lg="6">
             <h3 className="text-info font-weight-light mb-2">
-              Спасибо что помогаете нам!
+              {t("Suggestion-ty-for-help")}
             </h3>
             <h4 className="mb-0 font-weight-light">
-              Можем связаться на любой из этих платформ.
+              {t("Suggestion-communication-methods")}
             </h4>
           </Col>
           <Col className="text-lg-center btn-wrapper" lg="6">
             <Button
               className="btn-icon btn-round"
-              color="twitter"
+              color="telegram"
+              href="https://t.me/YaJ75"
               id="twitter"
               size="lg"
+              target="_blank"
             >
-              <i className="fab fa-twitter" />
+              <i className="fab fa-telegram" />
             </Button>
-            <UncontrolledTooltip delay={0} target="twitter">
-              Tweet!
+            <UncontrolledTooltip target="twitter">
+              {t("Suggestion-Telegram")}
             </UncontrolledTooltip>
             <Button
               className="btn-icon btn-round"
               color="danger"
+              href="https://instagram.com/abushka_404"
               id="instagram"
               size="lg"
+              target="_blank"
             >
               <i className="fab fa-instagram" />
             </Button>
-            <UncontrolledTooltip delay={0} target="instagram">
-              Подпишись!
+            <UncontrolledTooltip target="instagram">
+              {t("Suggestion-subscribe")}
             </UncontrolledTooltip>
             <Button
               className="btn-icon btn-round"
@@ -98,8 +107,8 @@ export default function Suggestion() {
             >
               <i className="fab fa-github" />
             </Button>
-            <UncontrolledTooltip delay={0} target="tooltip877922017">
-              Звёздочка на Github
+            <UncontrolledTooltip target="tooltip877922017">
+              {t("Suggestion-star-on-github")}
             </UncontrolledTooltip>
           </Col>
         </Row>

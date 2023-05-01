@@ -23,6 +23,10 @@ import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import PageHeader from "components/PageHeader/PageHeader.js";
 import Footer from "components/Footer/Footer.js";
 
+// locales
+import i18n from "../components/i18n.js";
+import { I18nextProvider } from "react-i18next";
+
 // sections for this page/view
 import Anime_sequence from "views/IndexSections/Anime_sequence.js"
 import Useful_links from "views/IndexSections/Useful_links"
@@ -49,7 +53,7 @@ export default function Index() {
     };
   }, []);
   return (
-    <>
+    <I18nextProvider i18n={i18n}>
       <IndexNavbar />
       <div className="wrapper">
         <PageHeader />
@@ -71,6 +75,6 @@ export default function Index() {
         </div>
         <Footer />
       </div>
-    </>
+    </I18nextProvider>
   );
 }
