@@ -38,14 +38,7 @@ export default function Useful_links() {
         
         <h3>{t("Useful_links-useful-links")}</h3>
         <Row>
-          <Col md="8">
-
-            {/* <Button 
-            color="link"
-            target="_blank"
-            href="https://t.me/YaJ75"
-            role="button"
-            >Default</Button> */}
+          <Col md="12">
             
             <Button 
             className="btn-link" 
@@ -63,6 +56,33 @@ export default function Useful_links() {
             href="https://www.reddit.com/r/araragi/comments/5eilqt/monogatari_short_stories_translation_project/"
             role="button">
               {t("Useful_links-Reddit")}
+            </Button>            
+
+            <Button 
+            className="btn-link" 
+            color="info"
+            target="_blank"
+            href="https://github.com/Chortowod/Monogatari-Series-Checklist-Ru/releases/"
+            role="button">
+              {t("Useful_links-check-chronology-windows-app")}
+            </Button>
+
+            <Button 
+            className="btn-link" 
+            color="danger"
+            target="_blank"
+            href="https://bakemonogatari.fandom.com/wiki/Bakemonogatari_Wiki"
+            role="button">
+              {t("Useful_links-fandom")}
+            </Button>
+
+            <Button
+            className="btn-link"  
+            color="success"
+            target="_blank"
+            href="https://abushka.uz/beautiful_site"
+            role="button"
+            > {t("Useful_links-beautiful-site")} 
             </Button>
 
             {/* <Button 
@@ -76,21 +96,22 @@ export default function Useful_links() {
 
             <Button 
             className="btn-link" 
-            color="info"
+            color="primary"
             target="_blank"
             href="https://t.me/YaJ75"
             role="button">
-              Warning
+              Success
             </Button>
 
             <Button 
             className="btn-link" 
-            color="danger"
+            color="primary"
             target="_blank"
             href="https://t.me/YaJ75"
             role="button">
-              Danger
+              Success
             </Button> */}
+
 
           </Col>
         </Row>
