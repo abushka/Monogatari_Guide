@@ -20,6 +20,9 @@ import React from "react";
 // locales
 import { useTranslation } from "react-i18next";
 
+// Icons
+import { Icon } from '@iconify/react';
+
 // reactstrap components
 import { Button, Container } from "reactstrap";
 
@@ -42,8 +45,8 @@ export default function PageHeader() {
           <h1 className="h1-seo">{t("PageHeader-welcome")}</h1>
           <h3 className="d-none d-md-block">
             {t("PageHeader-from-amateur")} <br/>
-            {t("PageHeader-copyright")} 
-            <i className="tim-icons icon-minimal-down" />
+            {t("PageHeader-copyright")}
+            <Icon icon="material-symbols:arrow-circle-down" style={{ fontSize: '32px'}} />
           </h3>
           <Button
                 className="nav-link d-none d-md-block"
@@ -52,7 +55,7 @@ export default function PageHeader() {
                 target="_blank"
                 href="https://monogatari-series.com"
               >
-                <i className="tim-icons icon-heart-2" /> Monogatari-series.com <i className="tim-icons icon-heart-2" />
+                <Icon icon="mdi:cards-heart-outline" style={{ fontSize: '20px'}} /> Monogatari-series.com <Icon icon="mdi:cards-heart-outline" style={{ fontSize: '20px'}} />
           </Button>
         </div>
       </Container>

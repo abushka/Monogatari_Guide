@@ -20,6 +20,8 @@ import React from "react";
 // locales
 import { useTranslation } from "react-i18next";
 
+import { Icon } from '@iconify/react';
+
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -101,7 +103,8 @@ export default function Footer() {
                 id="tooltip622135962"
                 target="_blank"
               >
-                <i className="fab fa-twitter" />
+                
+                <Icon icon="mdi:twitter" style={{ fontSize: '20px', position: 'relative', top: '7px'}} />
               </Button>
               <UncontrolledTooltip target="tooltip622135962">
                 {t("Footer-follow-us")}
@@ -113,7 +116,7 @@ export default function Footer() {
                 id="tooltip230450801"
                 target="_blank"
               >
-                <i className="fab fa-instagram" />
+                <Icon icon="mdi:instagram" style={{ fontSize: '20px', position: 'relative', top: '7px'}} />
               </Button>
               <UncontrolledTooltip target="tooltip230450801">
                 {t("Footer-like-us")}
@@ -125,7 +128,7 @@ export default function Footer() {
                 id="tooltip318450378"
                 target="_blank"
               >
-                <i className="fab fa-telegram" />
+                <Icon icon="ic:baseline-telegram" style={{ fontSize: '22px', position: 'relative', top: '6px'}} />
               </Button>
               <UncontrolledTooltip target="tooltip318450378">
                 {t("Footer-follow-us")}

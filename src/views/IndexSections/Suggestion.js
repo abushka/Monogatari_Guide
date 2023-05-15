@@ -20,6 +20,8 @@ import React from "react";
 // locales
 import { useTranslation } from "react-i18next";
 
+import { Icon } from '@iconify/react';
+
 // reactstrap components
 import { Button, Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 
@@ -79,7 +81,7 @@ export default function Suggestion() {
               size="lg"
               target="_blank"
             >
-              <i className="fab fa-telegram" />
+              <Icon icon="ic:baseline-telegram" style={{ fontSize: '38px', position: 'relative', top: '10px', left: '1px'}} />
             </Button>
             <UncontrolledTooltip target="twitter">
               {t("Suggestion-Telegram")}
@@ -92,7 +94,7 @@ export default function Suggestion() {
               size="lg"
               target="_blank"
             >
-              <i className="fab fa-instagram" />
+              <Icon icon="mdi:instagram" style={{ fontSize: '35px', position: 'relative', top: '12px'}} />
             </Button>
             <UncontrolledTooltip target="instagram">
               {t("Suggestion-subscribe")}
@@ -105,7 +107,7 @@ export default function Suggestion() {
               size="lg"
               target="_blank"
             >
-              <i className="fab fa-github" />
+              <Icon icon="mdi:github" style={{ fontSize: '35px', position: 'relative', top: '12px'}} />
             </Button>
             <UncontrolledTooltip target="tooltip877922017">
               {t("Suggestion-star-on-github")}

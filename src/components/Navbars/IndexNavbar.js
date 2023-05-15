@@ -129,7 +129,7 @@ export default function IndexNavbar() {
                   className="navbar-toggler"
                   onClick={toggleCollapse}
                 >
-                  <i className="tim-icons icon-simple-remove" />
+                  <Icon icon="ph:x-bold" style={{ fontSize: '30px'}} /> 
                 </button>
               </Col>
             </Row>
@@ -143,7 +143,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 title={t("IndexNavbar-Subscribe-Twitter")} // Подпишись на мой Twitter
               >
-                <i className="fab fa-twitter" />
+                <Icon icon="mdi:twitter" style={{ fontSize: '20px'}} />
                 <p className="d-lg-none d-xl-none">Twitter</p>
               </NavLink>
             </NavItem>
@@ -155,7 +155,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 title={t("IndexNavbar-Subscribe-Telegram")} // Подпишись на мой Telegram канал
               >
-                <i className="fab fa-telegram" />
+                <Icon icon="ic:baseline-telegram" style={{ fontSize: '20px'}} />
                 <p className="d-lg-none d-xl-none">Telegram</p>
               </NavLink>
             </NavItem>
@@ -167,7 +167,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 title={t("IndexNavbar-Subscribe-Instagram")} // Подпишись на мой Instagram
               >
-                <i className="fab fa-instagram" />
+                <Icon icon="mdi:instagram" style={{ fontSize: '20px'}} />
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
@@ -179,7 +179,7 @@ export default function IndexNavbar() {
                 color="primary"
                 onClick={scrollToSuggestion}
               >
-                <i className="tim-icons icon-bulb-63" /> {t("IndexNavbar-Give-Suggestion")}
+                <Icon icon="tabler:bulb" style={{ fontSize: '20px', position: 'relative', top: '-2px'}} /> {t("IndexNavbar-Give-Suggestion")}
               </Button> 
             </NavItem>
             <NavItem>
@@ -189,7 +189,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 href="https://t.me/YaJ75"
               >
-                <i className="tim-icons icon-spaceship" /> {t("IndexNavbar-Feedback")}
+                <Icon icon="material-symbols:rocket-launch" style={{ fontSize: '20px'}} /> {t("IndexNavbar-Feedback")}
               </Button>
             </NavItem>
 
@@ -202,7 +202,7 @@ export default function IndexNavbar() {
                 nav
                 onClick={(e) => e.preventDefault()}
               >
-                {/* <i className="fa fa-cogs d-lg-none d-xl-none" /> */}
+                
                 <Icon icon="material-symbols:language" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Language")}
               </DropdownToggle>
 
