@@ -316,6 +316,11 @@
  }
 
 
+ .dropdown-menu .dropdown-item{
+  color: $dark-gray;
+}
+
+
 // Dropown: Sizes
 
 .dropdown-menu-sm {
@@ -350,8 +355,12 @@
 }
 
 
-@media screen and (min-width: 992px){
-  .dropdown-menu .dropdown-item{
-      color: $dark-gray;
-  }
-}
+
+
+
+
+// @media screen and (min-width: 992px){
+//   .dropdown-menu .dropdown-item{
+//       color: $dark-gray;
+//   }
+// }

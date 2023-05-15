@@ -187,6 +187,19 @@
             box-shadow: none;
         }
     }
+
+    &.btn-useful-link{
+        color: $btn-color;
+        &:hover,
+        &:focus,
+        &:active{
+            background-color: $transparent-bg !important;
+            background-image: none !important;
+            color: $white !important;
+            text-decoration: none;
+            box-shadow: none;
+        }
+    }
 }
 
 @mixin button-variant($background, $border, $hover-background: darken($background, 0%), $hover-border: darken($border, 0%), $active-background: darken($background, 10%), $active-border: darken($border, 0%)) {

@@ -141,7 +141,8 @@
 }
 
 .btn-simple,
-.btn-link{
+.btn-link,
+.btn-useful-link{
     &.disabled,
     &:disabled,
     &[disabled],
@@ -172,6 +173,20 @@
     box-shadow: none !important;
     transform: none !important;
   }
+}
+
+.btn-useful-link{
+  border: $none;
+  box-shadow: none;
+  padding: 0 0;
+  background: $transparent-bg;
+  color: $gray-300;
+  font-weight: $font-weight-bold;
+
+&:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
 }
 
 .btn-lg{

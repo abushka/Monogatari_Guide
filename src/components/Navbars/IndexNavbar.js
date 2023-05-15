@@ -202,9 +202,8 @@ export default function IndexNavbar() {
                 nav
                 onClick={(e) => e.preventDefault()}
               >
-                <i className="fa fa-cogs d-lg-none d-xl-none" />
-                <Icon icon="material-symbols:language" style={{ fontSize: '20px' }} />
-                {t("IndexNavbar-Language")}
+                {/* <i className="fa fa-cogs d-lg-none d-xl-none" /> */}
+                <Icon icon="material-symbols:language" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Language")}
               </DropdownToggle>
 
               <DropdownMenu className="dropdown-with-icons">

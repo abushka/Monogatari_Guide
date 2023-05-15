@@ -25,7 +25,7 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 
 export default function Useful_links() {
@@ -38,8 +38,8 @@ export default function Useful_links() {
         
         <h3>{t("Useful_links-useful-links")}</h3>
         <Row>
-          <Col md="12">
-            
+
+          {/* <Col md="12">
             <Button 
             className="btn-link" 
             color="success"
@@ -77,45 +77,129 @@ export default function Useful_links() {
             </Button>
 
             <Button
-            className="btn-link"  
+            className="btn-link"
             color="success"
             target="_blank"
             href="https://abushka.uz/beautiful_site"
             role="button"
-            > {t("Useful_links-beautiful-site")} 
+            > {t("Useful_links-beautiful-site")}
             </Button>
 
-            {/* <Button 
-            className="btn-link" 
+            <Button
+            className="btn-link"
             color="primary"
             target="_blank"
-            href="https://t.me/YaJ75"
-            role="button">
-              Success
+            href="https://t.me/suicideisatactic"
+            role="button"
+            > {t("Useful_links-telegram-channel-with-monogatari")}
             </Button>
 
-            <Button 
-            className="btn-link" 
-            color="primary"
+            <Button
+            className="btn-link"
+            color="warning"
             target="_blank"
-            href="https://t.me/YaJ75"
+            href="https://t.me/Monogatari_Fandom"
+            role="button"
+            > {t("Useful_links-telegram-monogatari-fandom")}
+            </Button>
+          </Col> */}
+
+          <Col md="12" className="mb-2">
+          <Button 
+            className="btn-useful-link" 
+            color="success"
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/u/0/d/1LCuqahTKzkdCFvRp6cL3hzUkMZFuYjgB53hrZgdZZHg/htmlview#"
             role="button">
-              Success
+              {t("Useful_links-Google-Docs")}
             </Button>
 
-            <Button 
-            className="btn-link" 
-            color="primary"
-            target="_blank"
-            href="https://t.me/YaJ75"
-            role="button">
-              Success
-            </Button> */}
-
-
+            <span> {t("Useful_links-Google-Docs-description")}</span>
           </Col>
+
+          <Col md="12" className="mb-2">
+          <Button 
+            className="btn-useful-link" 
+            color="warning"
+            target="_blank"
+            href="https://www.reddit.com/r/araragi/comments/5eilqt/monogatari_short_stories_translation_project/"
+            role="button">
+              {t("Useful_links-Reddit")}
+            </Button>      
+
+            <span> {t("Useful_links-Reddit-description")}</span>
+          </Col>
+
+          <Col md="12" className="mb-2">
+          <Button 
+            className="btn-useful-link" 
+            color="info"
+            target="_blank"
+            href="https://github.com/Chortowod/Monogatari-Series-Checklist-Ru/releases/"
+            role="button">
+              {t("Useful_links-check-chronology-windows-app")}
+            </Button>
+
+            <span> {t("Useful_links-check-chronology-windows-app-description")}</span>
+          </Col>
+
+          <Col md="12" className="mb-2">
+          <Button 
+            className="btn-useful-link" 
+            color="danger"
+            target="_blank"
+            href="https://bakemonogatari.fandom.com/wiki/Bakemonogatari_Wiki"
+            role="button">
+              {t("Useful_links-fandom")}
+            </Button>
+
+            <span> {t("Useful_links-fandom-description")}</span>
+          </Col>
+
+          <Col md="12" className="mb-2">
+          {/* https://github.com/m1el   https://github.com/m1el/nishio-drops */} 
+          <Button
+            className="btn-useful-link"
+            color="success"
+            target="_blank"
+            href="https://abushka.uz/beautiful_site"
+            role="button">
+              {t("Useful_links-beautiful-site")}
+            </Button>
+
+            <span> {t("Useful_links-beautiful-site-description-1")} <a href="https://github.com/m1el">{t("Useful_links-beautiful-site-description-author")}</a>
+            {t("Useful_links-beautiful-site-description-2")} <a href="https://github.com/m1el/nishio-drops">{t("Useful_links-beautiful-site-description-github-repo")}</a>  
+            {t("Useful_links-beautiful-site-description-3")}
+            </span>
+          </Col>
+          
+          <Col md="12" className="mb-2">
+          <Button
+            className="btn-useful-link"
+            color="primary"
+            target="_blank"
+            href="https://t.me/suicideisatactic"
+            role="button">
+              {t("Useful_links-telegram-channel-with-monogatari")}
+            </Button>
+
+            <span> {t("Useful_links-telegram-channel-with-monogatari-description")}</span>
+          </Col>
+
+          <Col md="12" className="mb-2">
+          <Button
+              className="btn-useful-link"
+              color="warning"
+              target="_blank"
+              href="https://t.me/Monogatari_Fandom"
+              role="button">
+                {t("Useful_links-telegram-monogatari-fandom")}
+              </Button>
+
+            <span> {t("Useful_links-telegram-monogatari-fandom-description")}</span>
+          </Col>
+          
         </Row>
-        
       </Container>
     </div>
   );
