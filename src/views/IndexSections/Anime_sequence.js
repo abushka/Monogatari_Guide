@@ -73,7 +73,7 @@ export default function Anime_sequence() {
         
       <Container>
         
-      <img alt="Anime picture" className="img-fluid" src={require("assets/img/Anime_sequence.jpg")}/>
+      <img alt="Anime picture" className="anime-picture" src={require("assets/img/Anime_sequence.webp")}/>
         <Col md="12">
         <div className="title">
           <h3 className="mb-3">{t("Anime_Sequence-Navigation")}</h3>

@@ -1,0 +1,32 @@
+.anime-picture {
+    width: 1088px;
+    height: 596px;
+}
+
+@include media-breakpoint-down(lg){
+    .anime-picture {
+        width: 930px;
+        height: 509px;
+    }
+  }
+  
+@include media-breakpoint-down(md){
+    .anime-picture {
+        width: 690px;
+        height: 377px;
+}
+}
+  
+@include media-breakpoint-down(sm){
+    .anime-picture {
+        width: 510px;
+        height: 279px;
+    }
+}
+  
+@include media-breakpoint-down(xs){
+    .anime-picture {
+        width: 100%;
+        height: 100%;
+    }
+}
