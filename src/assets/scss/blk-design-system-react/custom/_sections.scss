@@ -220,12 +220,12 @@
 }
 
 .page-header{
-    min-height: 100vh;
-    max-height: 999px;
+    // min-height: 100vh;
+    // max-height: 999px;
     padding: 0;
     color: $white;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 
     .page-header-image{
         position: absolute;

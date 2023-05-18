@@ -156,9 +156,76 @@
 }
 
 .table-responsive{
-  overflow: scroll;
+  height: 300px;
+  width: 100%;
+  overflow: auto;
   padding-bottom: 10px;
 }
+
+
+// .table-tbody {
+//   height: 300px;
+//   max-width:300px;
+//   overflow-y: auto;
+//   padding-bottom: 10px;
+// }
+
+// .table-tbody tr {
+//   overflow-x:scroll;
+//   white-space: nowrap;
+// }
+
+// .table-tbody tr td {
+//   min-width: 500px;
+// }
+
+
+// .table-tbody {
+//   max-width: 300px;
+// }
+
+// .table-responsive::-webkit-scrollbar {
+//   width: 0.4em;
+//   height: 0.4em;
+// }
+
+// .table-responsive::-webkit-scrollbar-thumb {
+//   background-color: rgba(0, 0, 0, 0.5);
+//   border-radius: 0.25em;
+// }
+
+// .table-responsive::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+
+// // .checklist-demo-tr td {
+// //   overflow-x: auto;
+// // }
+
+// .checklist-demo-tr {
+//   overflow-x: auto;
+//   white-space: nowrap;
+// }
+
+// .checklist-demo-tr td {
+//   min-width: 400px;
+// }
+
+// .padding {
+//   padding:25px;
+// }
+
+
+// .checklist-demo-tr td {
+//   height: 65px;
+// }
+
+// .checklist-demo-tr td div {
+//   display: inline-block;
+//   height: 100%;
+//   overflow-x: auto;
+//   white-space: nowrap;
+// }
 
 #tables .table-responsive{
     margin-bottom: 30px;

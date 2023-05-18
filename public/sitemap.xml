@@ -6,4 +6,34 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+    <url>
+        <loc>http://abushka.uz/</loc>
+        <lastmod>2023-05-12T12:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://abushka.uz/register</loc>
+        <lastmod>2023-05-12T12:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>http://abushka.uz/register</loc>
+        <lastmod>2023-05-12T12:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://abushka.uz/beautiful-site</loc>
+        <lastmod>2023-05-12T12:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>http://abushka.uz/beautiful-site</loc>
+        <lastmod>2023-05-12T12:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
 </urlset>

@@ -93,7 +93,7 @@ export default function IndexNavbar() {
       <Container>
         <div className="navbar-translate">
           <NavbarBrand to="/" tag={Link} id="navbar-brand">
-            <span>Fanat•</span>
+            <span>Fanat • </span>
             Monogatari Series Guide
           </NavbarBrand>
           <UncontrolledTooltip placement="bottom" target="navbar-brand">
@@ -135,7 +135,7 @@ export default function IndexNavbar() {
             </Row>
           </div>
           <Nav navbar>
-            <NavItem className="p-0">
+            {/* <NavItem className="p-0">
               <NavLink
                 data-placement="bottom"
                 href="https://twitter.com/abushka_404"
@@ -146,7 +146,8 @@ export default function IndexNavbar() {
                 <Icon icon="mdi:twitter" style={{ fontSize: '20px'}} />
                 <p className="d-lg-none d-xl-none">Twitter</p>
               </NavLink>
-            </NavItem>
+            </NavItem> */}
+
             <NavItem className="p-0">
               <NavLink
                 data-placement="bottom"
@@ -192,6 +193,34 @@ export default function IndexNavbar() {
                 <Icon icon="material-symbols:rocket-launch" style={{ fontSize: '20px'}} /> {t("IndexNavbar-Feedback")}
               </Button>
             </NavItem>
+
+            <UncontrolledDropdown nav>
+              <DropdownToggle
+                caret
+                color="default"
+                data-toggle="dropdown"
+                href="#"
+                nav
+                onClick={(e) => e.preventDefault()}
+              >
+                
+                <Icon icon="material-symbols:format-list-bulleted" style={{ fontSize: '20px', marginRight: '8px'}}/> {t("IndexNavbar-Pages")}
+              </DropdownToggle>
+
+              <DropdownMenu className="dropdown-with-icons">
+
+                <DropdownItem tag={Link} to="/">
+                    <Icon icon="ic:baseline-home" style={{ fontSize: '20px', marginRight: '13px'}}/>
+                    {t("IndexNavbar-Home")}
+                </DropdownItem>
+                <DropdownItem tag={Link} to="/register">
+                    <Icon icon="mdi:register" style={{ fontSize: '20px', marginRight: '13px'}}/>
+                    {t("IndexNavbar-Register-Page")}
+                </DropdownItem>
+
+              </DropdownMenu>
+            </UncontrolledDropdown>
+
 
             <UncontrolledDropdown nav>
               <DropdownToggle

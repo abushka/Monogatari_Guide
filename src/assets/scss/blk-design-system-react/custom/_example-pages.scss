@@ -588,6 +588,13 @@
   .section-coins {
     margin-top: 0 !important;
   }
+  .index-page,
+  .landing-page,
+  .profile-page,
+  .register-page{
+    background-image: url($asset-base-path + "/img/dots.webp");
+    background-size: contain;
+  }
 }
 
 @include media-breakpoint-down(xs){
@@ -608,6 +615,13 @@
         margin-top: 100px;
       }
     }
+  }
+  .index-page,
+  .landing-page,
+  .profile-page,
+  .register-page{
+    background-image: url($asset-base-path + "/img/dots.webp");
+    background-size: contain;
   }
 }
 

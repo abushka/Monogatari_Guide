@@ -19021,7 +19021,18 @@ textarea.form-control:active {
   .section-coins {
     margin-top: 0 !important;
   }
+
+  .index-page,
+  .landing-page,
+  .profile-page,
+  .register-page {
+    background-image: url("../../../../assets/img/dots.webp");
+    background-size: contain;
+  }
+  
 }
+
+
 
 @media (max-width: 575.98px) {
   .card-login {
@@ -19036,12 +19047,32 @@ textarea.form-control:active {
   .landing-page .page-header h1 {
     margin-top: 100px;
   }
+
+  .index-page,
+  .landing-page,
+  .profile-page,
+  .register-page {
+    background-image: url("../../../../assets/img/dots.webp");
+    background-size: contain;
 }
+
+}
+
+
+
 
 @media (min-width: 768px) {
   .info:first-of-type {
     padding-top: 60%;
   }
+  .index-page,
+  .landing-page,
+  .profile-page,
+  .register-page {
+    background-image: url("../../../../assets/img/dots.webp");
+    background-size: contain;
+}
+
 }
 
 .progress-container {

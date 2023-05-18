@@ -5,10 +5,11 @@
 
   .card-header img {
     position: absolute;
-    margin-left: -50px;
+    margin-left: -55px;
     margin-top: -150px;
     border-radius: 20%;
-    width: 350px;
+    width: 450px;
+    height: 370px;
     }
 
     .header {
@@ -42,10 +43,10 @@
 
       .card-title {
         position: relative;
-        font-size: 5em;
+        font-size: 3.8em;
         font-weight: 900;
         color: $black;
-        text-transform: lowercase;
+        // text-transform: lowercase;
         margin-left: -5px;
         z-index: 1;
       }
@@ -76,14 +77,52 @@
     }
 }
 
+@include media-breakpoint-down(lg){
+  .card.card-register .card-img {
+    margin-left: -45px;
+    width: 450px;
+    height: 330px;
+  }
+  .card.card-register .card-title {
+    margin-top: 20px;
+    font-size: 2.8em;
+  }
+}
+
 @include media-breakpoint-down(md){
   .card.card-register .card-img {
     margin-left: -45px;
+    width: 500px;
+    height: 330px;
+  }
+  .card.card-register .card-title {
+    font-size: 2.8em;
+  }
+}
+
+@include media-breakpoint-down(sm){
+  .card.card-register .card-img {
+    margin-left: -45px;
+    width: 450px;
+    height: 330px;
+  }
+  .card.card-register .card-title {
+    margin-top: 20px;
+    font-size: 2.8em;
   }
 }
 
 @include media-breakpoint-down(xs){
   .card.card-register {
     margin-top: 50px;
+  }
+  .card.card-register .card-img {
+    margin-left: -45px;
+    width: 300px;
+    height: 330px;
+  }
+  .card.card-register .card-title {
+    margin-top: 20px;
+    font-size: 2.3em;
   }
 }

@@ -1,0 +1,94 @@
+.register-info p {
+    font-size: 16px;
+    color: inherit;
+}
+
+.register-info-steps p {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.container_div {
+    max-height: 300px;
+    max-width:300px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+.container_div::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container_div::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #ffffff00;
+    border: 1px solid #ffffff00;
+}
+
+.container_div::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+    background-color: #666666a1;
+}
+
+.child-container {
+    overflow-x: auto;
+    padding-right: 10px; /* Добавлено для предотвращения перекрытия полосы прокрутки */
+    mask-image: linear-gradient(to left, transparent, black),
+        linear-gradient(to top, transparent 10px, black 10px);
+    mask-size: 20000px 100%; /* Изменено для горизонтального скролла */
+    mask-position: right top; /* Изменено для горизонтального скролла */
+    -webkit-mask-image: linear-gradient(to left, transparent, black),
+        linear-gradient(to top, transparent 10px, black 10px);
+    -webkit-mask-size: 20000px 100%; /* Изменено для горизонтального скролла */
+    -webkit-mask-position: right top; /* Изменено для горизонтального скролла */
+    transition: mask-position 0.3s, -webkit-mask-position 0.3s;
+}
+
+.child-container:hover {
+    -webkit-mask-position: left top;
+}
+
+
+.child-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.child-container::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #ffffff00;
+    border: 1px solid #ffffff00;
+}
+
+.child-container::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+    background-color: #666666a1;
+    pointer-events: none;
+}
+
+.child-item {
+    white-space: nowrap;
+}
+
+.child-item p {
+    font-size: 16px;
+    padding: 3px;
+}
+
+.profile-description {
+    margin-top: -30px;
+    max-width: 450px;
+    font-size: $font-size-base;
+    line-height: 26px;
+}
+
+@media screen and (min-width: 576px) {
+    .profile-description {
+        margin-bottom: 90px;
+        
+    }
+}
