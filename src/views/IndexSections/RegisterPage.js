@@ -57,17 +57,17 @@ import Footer from "components/Footer/Footer.js";
 
 const carouselItems = [
   {
-    src: require("assets/img/denys.jpg"),
+    src: require("assets/img/denys.webp"),
     altText: "Slide 1",
     caption: "Big City Life, United States"
   },
   {
-    src: require("assets/img/fabien-bazanegue.jpg"),
+    src: require("assets/img/fabien-bazanegue.webp"),
     altText: "Slide 2",
     caption: "Somewhere Beyond, United States"
   },
   {
-    src: require("assets/img/mark-finn.jpg"),
+    src: require("assets/img/mark-finn.webp"),
     altText: "Slide 3",
     caption: "Stocks, United States"
   }
@@ -138,7 +138,7 @@ export default function RegisterPage() {
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square-purple-1.png")}
+                        src={require("assets/img/square-purple-1.webp")} // рассмотрение
                       />
                       <CardTitle tag="h4">{t("RegisterPage-register")}</CardTitle>
                     </CardHeader>
@@ -266,7 +266,7 @@ export default function RegisterPage() {
                     <img
                       alt="..."
                       className="img-center img-fluid rounded-circle"
-                      src={require("assets/img/mike.jpg")}
+                      src={require("assets/img/mike.webp")}
                     />
                     <h4 className="title">{t("RegisterPage-easy-peasy")}</h4>
                   </CardHeader>
