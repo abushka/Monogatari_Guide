@@ -18,6 +18,9 @@
 import React from "react";
 import classnames from "classnames";
 
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 // locales
 import { useTranslation } from "react-i18next";
 
@@ -51,6 +54,8 @@ import {
   UncontrolledCarousel
 } from "reactstrap";
 
+import { Icon } from '@iconify/react';
+
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footer/Footer.js";
@@ -79,8 +84,10 @@ export default function RegisterPage() {
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
   const [fullNameFocus, setFullNameFocus] = React.useState(false);
-  const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus, setPasswordFocus] = React.useState(false);
+  // const [emailFocus, setEmailFocus] = React.useState(false);
+  const [passwordFocus1, setPasswordFocus1] = React.useState(false);
+  const [passwordFocus2, setPasswordFocus2] = React.useState(false);
+  
   React.useEffect(() => {
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
@@ -111,6 +118,49 @@ export default function RegisterPage() {
 
   const [tabs, setTabs] = React.useState(1);
 
+  // логика взаимодействия с бекендом
+  const [cookies, setCookie] = useCookies(['access', 'refresh', 'user']);
+
+  const [fullName, setFullName] = React.useState('');
+  // const [email, setEmail] = React.useState('');
+  const [password1, setPassword1] = React.useState('');
+  const [password2, setPassword2] = React.useState('');
+
+
+  const registerUser = async (userData, setCookie) => {
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/auth/registration/', userData);
+      console.log(response.data); // Результат ответа от сервера
+  
+      // Сохранение данных в cookie
+      setCookie('access', response.data.access, { expires: new Date(Date.now() + 86400 * 1000) });
+      setCookie('refresh', response.data.refresh, { expires: new Date(Date.now() + 86400 * 1000) });
+      setCookie('user', JSON.stringify(response.data.user), { expires: new Date(Date.now() + 86400 * 1000) });
+  
+      // Дополнительные действия после успешной регистрации
+    } catch (error) {
+      console.error(error);
+      // Обработка ошибок
+    }
+  };
+  
+  const handleRegister = (event) => {
+    event.preventDefault();
+
+    const userData = {
+      username: fullName,
+      // email: email,
+      password1: password1,
+      password2: password2
+    };
+
+    registerUser(userData, setCookie);
+  };
+  
+  // console.log(cookies)
+  
+    // ...
+
   // locales
   const { t } = useTranslation();
   
@@ -136,73 +186,86 @@ export default function RegisterPage() {
                   />
                   <Card className="card-register">
                     <CardHeader>
-                      <CardImg
-                        alt="..."
-                        src={require("assets/img/square-purple-1.webp")} // рассмотрение
-                      />
+                      <CardImg alt="..." src={require("assets/img/square-purple-1.webp")} />
                       <CardTitle tag="h4">{t("RegisterPage-register")}</CardTitle>
                     </CardHeader>
                     <CardBody>
-                      <Form className="form">
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": fullNameFocus
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder={t("RegisterPage-login")}
-                            type="text"
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": emailFocus
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-email-85" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder={t("RegisterPage-email")}
-                            type="text"
-                            onFocus={(e) => setEmailFocus(true)}
-                            onBlur={(e) => setEmailFocus(false)}
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": passwordFocus
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder={t("RegisterPage-password")}
-                            type="text"
-                            onFocus={(e) => setPasswordFocus(true)}
-                            onBlur={(e) => setPasswordFocus(false)}
-                          />
-                        </InputGroup>
+                      <Form className="form" onSubmit={handleRegister} autoComplete="off">
+                      <InputGroup
+                        className={classnames({
+                          "input-group-focus": fullNameFocus
+                        })}
+                      >
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="tim-icons icon-single-02" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder={t("RegisterPage-login")}
+                          type="text"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          onFocus={(e) => setFullNameFocus(true)}
+                          onBlur={(e) => setFullNameFocus(false)}
+                          autoComplete="off"
+                          name="full-name" 
+                        />
+                      </InputGroup>
+
+                      <InputGroup
+                        className={classnames({
+                          "input-group-focus": passwordFocus1
+                        })}
+                      >
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="tim-icons icon-lock-circle" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder={t("RegisterPage-password")}
+                          type="password"
+                          value={password1}
+                          onChange={(e) => setPassword1(e.target.value)}
+                          onFocus={(e) => setPasswordFocus1(true)}
+                          onBlur={(e) => setPasswordFocus1(false)}
+                          autoComplete="new-password" 
+                          name="password" 
+                        />
+                      </InputGroup>
+                      <InputGroup
+                        className={classnames({
+                          "input-group-focus": passwordFocus2
+                        })}
+                      >
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="tim-icons icon-lock-circle" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder={t("RegisterPage-confirm-password")}
+                          type="password"
+                          value={password2}
+                          onChange={(e) => setPassword2(e.target.value)}
+                          onFocus={(e) => setPasswordFocus2(true)}
+                          onBlur={(e) => setPasswordFocus2(false)}
+                          autoComplete="new-password" 
+                          name="password" 
+                        />
+                      </InputGroup>
+
+                      <div className="error">
+                        {password1 != '' && password2 != '' && password1 != password2 ? <p>{t("Register-password-mismatch")}</p> : <></> }
+                      </div>
+
                         <FormGroup check className="text-left">
                           <Label check>
                             <Input type="checkbox" />
-                            <span className="form-check-sign" />{t("RegisterPage-agree")}
-                            <a
-                              href="#"
-                              onClick={(e) => e.preventDefault()}
-                            >
+                            <span className="form-check-sign" />
+                            {t("RegisterPage-agree")}
+                            <a href="#" onClick={(e) => e.preventDefault()}>
                               {t("RegisterPage-terms-and-conditions")}
                             </a>
                           </Label>
@@ -210,14 +273,51 @@ export default function RegisterPage() {
                       </Form>
                     </CardBody>
                     <CardFooter>
-                      <Button className="btn-round" color="primary" size="lg">
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="lg"
+                        type="submit"
+                        onClick={handleRegister}
+                        disabled={!fullName || !password1 || !password2}
+                      >
                         {t("RegisterPage-get-started")}
                       </Button>
-                    </CardFooter>
+                    
+                    <div className="register-form-br">
+                      <p>
+                      {t("RegisterPage-or")}
+                      </p>
+                    </div>
+                    <Button
+                        className="btn-icon btn-round btn-register"
+                        color="github"
+                        href="https://github.com/login/oauth/authorize?client_id=79ef11a4147f680234b4&redirect_uri=http://127.0.0.1:8000/api/auth/accounts/github/login/callback/&scope=SCOPE"
+                        id="tooltip877922017"
+                        size="md-responsive"
+                        target="_blank"
+                      >
+                        <Icon icon="mdi:github" className="button-register" style={{ fontSize: '30px', position: 'relative'}} />
+                        <p className="button-register">Войдите через Github</p>
+                      </Button>
+
+                      
+                      <Button
+                        className="btn-icon btn-round"
+                        color="facebook"
+                        href="https://accounts.google.com/o/oauth2/auth?client_id=939724390993-9fuo2mhp58lgqetmp2hnucrtsfjdqlm0.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8000/api/auth/accounts/google/login/callback/&scope=profile&response_type=code"
+                        id="tooltip877922017"
+                        size="md-responsive"
+                        target="_blank"
+                      >
+                        <Icon icon="flat-color-icons:google" className="button-register"  style={{ fontSize: '30px', position: 'relative'}} />
+                        <p className="button-register" >Войдите через Google</p>
+                      </Button>
+
+                      </CardFooter>
                   </Card>
                 </Col>
               </Row>
-              {/* <div className="register-bg" /> */}
               <div
                 className="square square-1"
                 id="square1"

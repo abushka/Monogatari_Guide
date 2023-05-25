@@ -54,6 +54,19 @@
             }
         }
 
+        &.btn-md-responsive{
+          height: $icon-size-md;
+          min-width: $icon-width-md;
+          width: $icon-width-md;
+
+          .fa,
+          .far,
+          .fas,
+          .tim-icons{
+              font-size: $icon-font-size-md;
+          }
+      }
+
         &.btn-lg{
             height: $icon-size-lg;
             min-width: $icon-size-lg;
@@ -139,6 +152,10 @@
     padding: $padding-btn-vertical - 1 $padding-round-horizontal - 1;
     background-color: $transparent-bg;
 }
+
+// .btn-register {
+  // text-align: left !important;
+// }
 
 .btn-simple,
 .btn-link,

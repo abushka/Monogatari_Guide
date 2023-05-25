@@ -8,6 +8,54 @@
     font-size: 16px;
 }
 
+/* Стили для полей, становящихся белыми при автозаполнении */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Стили для placeholder в полях, становящихся белыми при автозаполнении */
+// input:-webkit-autofill::placeholder {
+//   color: #fff !important;
+// }
+
+// textarea:-webkit-autofill::placeholder {
+//   color: #fff !important;
+// }
+
+// select:-webkit-autofill::placeholder {
+//   color: #fff !important;
+// }
+
+.error {
+    position: relative;
+    height: 12px;
+    // margin-bottom: 10px;
+}
+
+.error p {
+    position: absolute;
+    top: -7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 26, 26, 0.918) !important;
+}
+
+.register-form-br {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 auto;
+}
+
+.button-register {
+    position: relative;
+    display: inline-block;
+    top: 9px;
+    margin-left: 5px;
+}
+
 .container_div {
     max-height: 300px;
     max-width:300px;
