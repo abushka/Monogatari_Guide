@@ -10,7 +10,11 @@
   "IndexNavbar-Pages": "Разделы",
   "IndexNavbar-Home": "На Главную",
   "IndexNavbar-Register-Page": "Регистрация",
+  "IndexNavbar-user": " Пользователь",
   "IndexNavbar-Language": " RU",
+  "IndexNavbar-Registration": "Зарегистрироваться",
+  "IndexNavbar-Signin": "Войти",
+  "IndexNavbar-Logout": "Выйти",
   "Anime_Sequence-Navigation": "Навигация",
   "Anime_Sequence-Anime-Seasons": "Аниме сезоны (с картинкой выше немного расходится порядок, чуть позже свою картинку сделаю, а эта с интернета)",
   "Anime_Seguence-Bakemonogatari-description-1": "Первая часть сезона Monogatari Series: First Season. Насчитывает 15 сверхъестественных серий.",
@@ -86,6 +90,7 @@
   "RegisterPage-password": "Пароль",
   "RegisterPage-confirm-password": "Подтверждение пароля",
   "Register-password-mismatch": "Пароли не совпадают",
+  "RegisterPage-password-length": "пароль должен содержать минимум 8 символов",
   "RegisterPage-agree": "я согласен с ",
   "RegisterPage-terms-and-conditions": "Условиями и Положениями.",
   "RegisterPage-get-started": "Поехали!",
@@ -108,5 +113,6 @@
   "RegisterPage-section-1-title": "Немного информации",
   "RegisterPage-section-1-description": "Регистрируясь можно получить несколько очень удобных фишек, которые определённо помогут в просмотре/чтении Monogatari Series. Наш сервис некоммерческий, поэтому платить ничего не нужно, от Вас требуется минимальный объём информации, для того, чтобы сохранять Ваши просмотренные или любимые серии/сезоны.",
   "RegisterPage-section-2-title": "Плюшки профиля",
-  "RegisterPage-section-2-description": "Здесь будут наглядно показаны плюшки профиля, которые Вы получите после регистрации, это будут Ваши чекпоинты, любимые серии/сезоны, уведомления о рассылке новостей, возможность загружать медифайлы связанные с Циклом историй (возможно, я ещё не начал над этим работу) и т.д."
+  "RegisterPage-section-2-description": "Здесь будут наглядно показаны плюшки профиля, которые Вы получите после регистрации, это будут Ваши чекпоинты, любимые серии/сезоны, уведомления о рассылке новостей, возможность загружать медифайлы связанные с Циклом историй (возможно, я ещё не начал над этим работу) и т.д.",
+  "Login-signin": "Войти"
 }

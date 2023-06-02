@@ -27,6 +27,7 @@ import "assets/demo/demo.css";
 import Index from "views/Index.js";
 // import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/IndexSections/RegisterPage.js";
+import LoginPage from "views/IndexSections/Login";
 // import ProfilePage from "views/examples/ProfilePage.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -36,6 +37,7 @@ root.render(
     <ScrollToTop />
     <Switch>
       <Route exact path="/register" render={(props) => <RegisterPage {...props} />} />
+      <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
       <Route path="/" render={(props) => <Index {...props} />} />
       {/* <Redirect exact from="/register" to="/register" /> */}
     </Switch>

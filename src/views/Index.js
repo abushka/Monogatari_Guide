@@ -15,7 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 
 // core components
@@ -45,13 +47,72 @@ import Suggestion from "views/IndexSections/Suggestion.js"
 
 
 export default function Index() {
-  React.useEffect(() => {
-    document.body.classList.toggle("index-page");
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      document.body.classList.toggle("index-page");
+  const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
+  const [accessToken, setAccessToken] = useState(cookies.access);
+
+  useEffect(() => {
+    setAccessToken(cookies.access);
+    console.log('проверочный токен в хуках:', accessToken);
+  }, [cookies.access]);
+
+  useEffect(() => {
+    // Функция для проверки и обновления токена доступа
+    const refreshAccessToken = async () => {
+      const verifyUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/token/verify/`;
+      const refreshUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/token/refresh/`;
+      const refreshToken = cookies.refresh;
+
+      try {
+        // Проверяем валидность токена
+        await axios.post(verifyUrl, { token: accessToken });
+
+        console.log('Токен валиден.');
+      } catch (error) {
+        console.log('Токен недействителен. Получаем новый токен.');
+
+        try {
+          // Обновляем токен
+          const response = await axios.post(refreshUrl, { refresh: refreshToken });
+
+          const newAccessToken = response.data.access;
+
+          if (cookies.access) {
+            removeCookie('access');
+          }
+          setCookie('access', newAccessToken, { expires: new Date(Date.now() + 86400 * 7 * 1000) });
+          console.log('проверочный токен:', accessToken);
+          console.log('Новый токен получен:', newAccessToken);
+
+          // Далее вы можете использовать новый токен для доступа к защищенным ресурсам
+        } catch (error) {
+          console.log('Не удалось получить новый токен.');
+        }
+      }
     };
+
+    // Вызываем функцию refreshAccessToken при загрузке компонента
+    refreshAccessToken();
+
+    // Вы можете также вызывать функцию refreshAccessToken в других событиях или интервалах,
+    // например при переходе пользователя на новую страницу или каждые 5 минут:
+
+    // При переходе пользователя на новую страницу
+    // window.addEventListener('beforeunload', refreshAccessToken);
+
+    // Каждые 5 минут
+    setInterval(() => {
+      refreshAccessToken();
+    }, 10 * 1000);
+
+    // Очищаем обработчик события при размонтировании компонента
+    // return () => {
+    //   window.removeEventListener('beforeunload', refreshAccessToken);
+    // };
   }, []);
+
+  // Остальная часть вашего компонента
+
+
   return (
     <I18nextProvider i18n={i18n}>
       <IndexNavbar />

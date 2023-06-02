@@ -162,7 +162,8 @@ export default function Useful_links() {
             className="btn-useful-link"
             color="success"
             target="_blank"
-            href="https://abushka.uz/beautiful_site"
+            // href="https://abushka.uz/beautiful_site"
+            href={`${process.env.REACT_APP_MAIN_DOMAIN}/beautiful_site`}
             role="button">
               {t("Useful_links-beautiful-site")}
             </Button>

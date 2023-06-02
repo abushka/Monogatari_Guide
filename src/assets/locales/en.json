@@ -10,7 +10,11 @@
     "IndexNavbar-Pages": "Pages",
     "IndexNavbar-Home": "Home",
     "IndexNavbar-Register-Page": "Registration",
+    "IndexNavbar-user": " user",
     "IndexNavbar-Language": " ENG",
+    "IndexNavbar-Registration": "Registration",
+    "IndexNavbar-Signin": "Sign in",
+    "IndexNavbar-Logout": "Logout",
     "Anime_Sequence-Navigation": "Navigation",
     "Anime_Sequence-Anime-Seasons": "Anime Seasons (with the picture above, the order is slightly different, a little later I will make my own picture, and this one is from the Internet)",
     "Anime_Seguence-Bakemonogatari-description-1": "The first part of the Monogatari Series: First Season. Includes 15 supernatural episodes.",
@@ -86,6 +90,7 @@
     "RegisterPage-password": "Password",
     "RegisterPage-confirm-password": "Confirm password",
     "Register-password-mismatch": "Password mismatch",
+    "RegisterPage-password-length": "password must contain at least 8 characters",
     "RegisterPage-agree": "I agree to the ",
     "RegisterPage-terms-and-conditions": "terms and conditions.",
     "RegisterPage-get-started": "Get Started",
@@ -108,5 +113,6 @@
     "RegisterPage-section-1-title": "A little information",
     "RegisterPage-section-1-description": "By registering, you can get some very handy features that will definitely help you in watching/reading the Monogatari Series. Our service is non-commercial, so you do not need to pay anything, you need a minimum amount of information in order to save your watched or favorite series / seasons.",
     "RegisterPage-section-2-title": "Profile bonus",
-    "RegisterPage-section-2-description": "This will clearly show the profile goodies that you will receive after registration, these will be your checkpoints, favorite series / seasons, newsletter notifications, the ability to download media files related to the Story Cycle (maybe I have not started working on this yet), etc. ."
+    "RegisterPage-section-2-description": "This will clearly show the profile goodies that you will receive after registration, these will be your checkpoints, favorite series / seasons, newsletter notifications, the ability to download media files related to the Story Cycle (maybe I have not started working on this yet), etc. .",
+    "Login-signin": "Sign in"
   }

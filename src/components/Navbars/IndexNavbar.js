@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 // locales
 import { useTranslation } from "react-i18next";
@@ -23,6 +23,11 @@ import i18n from "../i18n.js";
 
 // Icons
 import { Icon } from '@iconify/react';
+
+// import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
+
 
 // reactstrap components
 import {
@@ -44,10 +49,15 @@ import {
 } from "reactstrap";
 
 export default function IndexNavbar() {
-  const [collapseOpen, setCollapseOpen] = React.useState(false);
-  const [collapseOut, setCollapseOut] = React.useState("");
-  const [color, setColor] = React.useState("navbar-transparent");
-  React.useEffect(() => {
+  const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
+
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const [collapseOut, setCollapseOut] = useState("");
+  const [color, setColor] = useState("navbar-transparent");
+
+  useEffect(() => {
     window.addEventListener("scroll", changeColor);
     return function cleanup() {
       window.removeEventListener("scroll", changeColor);
@@ -87,6 +97,55 @@ export default function IndexNavbar() {
   };
 
   const { t } = useTranslation();
+
+  // console.log(cookies.access);
+  // console.log(cookies.refresh);
+  // console.log(cookies.user);
+
+
+  // const logoutUser = async (userData, setCookie) => {
+  //   try {
+  //     const response = await axios.post('http://127.0.0.1:8000/api/auth/logout/', userData);
+  //     console.log(response.data); // Результат ответа от сервера
+  //     // Сохранение данных в cookie
+  //     removeCookie('access');
+  //     removeCookie('refresh');
+  //     removeCookie('user');
+  //     setIsLoggedIn(false);
+  //     history.push('/');
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Обработка ошибок
+  //   }
+  // };
+
+  // const userData = {
+
+  // }
+
+  useEffect(() => {
+    if (cookies.access) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [cookies]);
+
+
+  const handleLogout = () => {
+    if (cookies.access) {
+      removeCookie('access');
+    }
+    if (cookies.refresh) {
+      removeCookie('refresh');
+    }
+    if (cookies.user) {
+      removeCookie('user');
+    }
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
+  
 
   return (
     <Navbar className={"fixed-top " + color} color-on-scroll="100" expand="lg">
@@ -174,16 +233,8 @@ export default function IndexNavbar() {
             </NavItem>
 
 
-            <NavItem>
-              <Button
-                className="nav-link d-none d-lg-block"
-                color="primary"
-                onClick={scrollToSuggestion}
-              >
-                <Icon icon="tabler:bulb" style={{ fontSize: '20px', position: 'relative', top: '-2px'}} /> {t("IndexNavbar-Give-Suggestion")}
-              </Button> 
-            </NavItem>
-            <NavItem>
+            
+            {/* <NavItem>
               <Button
                 className="nav-link d-none d-lg-block"
                 color="default"
@@ -192,9 +243,9 @@ export default function IndexNavbar() {
               >
                 <Icon icon="material-symbols:rocket-launch" style={{ fontSize: '20px'}} /> {t("IndexNavbar-Feedback")}
               </Button>
-            </NavItem>
+            </NavItem> */}
 
-            <UncontrolledDropdown nav>
+            {/* <UncontrolledDropdown nav>
               <DropdownToggle
                 caret
                 color="default"
@@ -219,7 +270,51 @@ export default function IndexNavbar() {
                 </DropdownItem>
 
               </DropdownMenu>
-            </UncontrolledDropdown>
+            </UncontrolledDropdown> */}
+
+            <UncontrolledDropdown nav>
+            <DropdownToggle
+              caret
+              color="default"
+              data-toggle="dropdown"
+              href="#"
+              nav
+              onClick={(e) => e.preventDefault()}
+            >
+              
+              <Icon icon="icon-park-solid:people" style={{ fontSize: '20px'}} />
+               {/* {t("IndexNavbar-user")} */}
+            </DropdownToggle>
+
+            <DropdownMenu className="dropdown-with-icons">
+
+              <DropdownItem tag={Link} to="/">
+                    <Icon icon="ic:baseline-home" style={{ fontSize: '20px', marginRight: '13px'}}/>
+                    {t("IndexNavbar-Home")}
+              </DropdownItem>
+
+            {isLoggedIn ?<></> : 
+              <DropdownItem tag={Link} to="/register">
+                <Icon icon="mdi:register" style={{ fontSize: '20px', marginRight: '11px' }} /> {t("IndexNavbar-Registration")}
+              </DropdownItem>
+              }
+
+            {isLoggedIn ?<></> : 
+              <DropdownItem tag={Link} to="/login">
+                <Icon icon="fluent-mdl2:signin" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Signin")}
+              </DropdownItem>
+              }
+
+            {isLoggedIn ? 
+              <DropdownItem onClick={handleLogout} to="/logout">
+                <Icon icon="mdi:exit-run" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Logout")}
+              </DropdownItem>
+              : <></>}
+
+            </DropdownMenu>
+          </UncontrolledDropdown>
+            
+            
 
 
             <UncontrolledDropdown nav>
@@ -244,6 +339,16 @@ export default function IndexNavbar() {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+
+            <NavItem>
+              <Button
+                className="nav-link d-none d-lg-block"
+                color="primary"
+                onClick={scrollToSuggestion}
+              >
+                <Icon icon="tabler:bulb" style={{ fontSize: '20px', position: 'relative', top: '-2px'}} /> {t("IndexNavbar-Give-Suggestion")}
+              </Button> 
+            </NavItem>
 
           </Nav>
         </Collapse>

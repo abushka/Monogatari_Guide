@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState, useEffect} from "react";
 import classnames from "classnames";
 
 import axios from 'axios';
@@ -53,8 +53,7 @@ import {
   Table,
   TabContent,
   TabPane,
-  UncontrolledTooltip,
-  UncontrolledCarousel
+  UncontrolledTooltip
 } from "reactstrap";
 
 import { Icon } from '@iconify/react';
@@ -63,61 +62,40 @@ import { Icon } from '@iconify/react';
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
-const carouselItems = [
-  {
-    src: require("assets/img/denys.webp"),
-    altText: "Slide 1",
-    caption: "Big City Life, United States"
-  },
-  {
-    src: require("assets/img/fabien-bazanegue.webp"),
-    altText: "Slide 2",
-    caption: "Somewhere Beyond, United States"
-  },
-  {
-    src: require("assets/img/mark-finn.webp"),
-    altText: "Slide 3",
-    caption: "Stocks, United States"
-  }
-];
 
-let ps = null;
-
-export default function RegisterPage() {
-  const [squares1to6, setSquares1to6] = React.useState("");
-  const [squares7and8, setSquares7and8] = React.useState("");
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
-  // const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus1, setPasswordFocus1] = React.useState(false);
-  const [passwordFocus2, setPasswordFocus2] = React.useState(false);
-  
-  React.useEffect(() => {
-    document.body.classList.toggle("register-page");
-    document.documentElement.addEventListener("mousemove", followCursor);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      document.body.classList.toggle("register-page");
-      document.documentElement.removeEventListener("mousemove", followCursor);
+export default function LoginPage() {
+    const [squares1to6, setSquares1to6] = React.useState("");
+    const [squares7and8, setSquares7and8] = React.useState("");
+    const [fullNameFocus, setFullNameFocus] = React.useState(false);
+    const [passwordFocus, setPasswordFocus] = React.useState(false);
+    
+    React.useEffect(() => {
+        document.body.classList.toggle("register-page");
+        document.documentElement.addEventListener("mousemove", followCursor);
+        // Specify how to clean up after this effect:
+        return function cleanup() {
+        document.body.classList.toggle("register-page");
+        document.documentElement.removeEventListener("mousemove", followCursor);
+        };
+    }, []);
+    const followCursor = (event) => {
+        let posX = event.clientX - window.innerWidth / 2;
+        let posY = event.clientY - window.innerWidth / 6;
+        setSquares1to6(
+        "perspective(500px) rotateY(" +
+            posX * 0.05 +
+            "deg) rotateX(" +
+            posY * -0.05 +
+            "deg)"
+        );
+        setSquares7and8(
+        "perspective(500px) rotateY(" +
+            posX * 0.02 +
+            "deg) rotateX(" +
+            posY * -0.02 +
+            "deg)"
+        );
     };
-  }, []);
-  const followCursor = (event) => {
-    let posX = event.clientX - window.innerWidth / 2;
-    let posY = event.clientY - window.innerWidth / 6;
-    setSquares1to6(
-      "perspective(500px) rotateY(" +
-        posX * 0.05 +
-        "deg) rotateX(" +
-        posY * -0.05 +
-        "deg)"
-    );
-    setSquares7and8(
-      "perspective(500px) rotateY(" +
-        posX * 0.02 +
-        "deg) rotateX(" +
-        posY * -0.02 +
-        "deg)"
-    );
-  };
 
   const [tabs, setTabs] = React.useState(1);
 
@@ -130,17 +108,24 @@ export default function RegisterPage() {
 
   // логика взаимодействия с бекендом
   const [cookies, setCookie] = useCookies(['access', 'refresh', 'user']);
-  const history = useHistory();
 
   const [fullName, setFullName] = React.useState('');
-  // const [email, setEmail] = React.useState('');
-  const [password1, setPassword1] = React.useState('');
-  const [password2, setPassword2] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
 
-  const registerUser = async (userData, setCookie) => {
+  useEffect(() => {
+      if (cookies.access) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    }, [cookies]);
+
+  const loginUser = async (userData, setCookie) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/registration/`, userData);
+      const response = await axios.post(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/login/`, userData);
       console.log(response.data); // Результат ответа от сервера
   
       // Сохранение данных в cookie
@@ -148,6 +133,8 @@ export default function RegisterPage() {
       setCookie('refresh', response.data.refresh, { expires: new Date(Date.now() + 86400 * 90 * 1000) });
       setCookie('user', JSON.stringify(response.data.user), { expires: new Date(Date.now() + 86400 * 90 * 1000) });
   
+      setIsLoggedIn(true);
+
       history.push('/');
     } catch (error) {
       console.error(error);
@@ -155,18 +142,19 @@ export default function RegisterPage() {
     }
   };
   
-  const handleRegister = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
 
     const userData = {
       username: fullName,
-      // email: email,
-      password1: password1,
-      password2: password2
+      password: password
     };
 
-    registerUser(userData, setCookie);
+    loginUser(userData, setCookie);
   };
+
+
+
 
   const handleGoogleLoginSuccess = (response) => {
     // Handle successful Google authentication
@@ -234,10 +222,10 @@ export default function RegisterPage() {
                   <Card className="card-register">
                     <CardHeader>
                       <CardImg alt="..." src={require("assets/img/square-purple-1.webp")} />
-                      <CardTitle tag="h4">{t("RegisterPage-register")}</CardTitle>
+                      <CardTitle tag="h4">{t("Login-signin")}</CardTitle>
                     </CardHeader>
                     <CardBody>
-                      <Form className="form" onSubmit={handleRegister} autoComplete="off">
+                      <Form className="form" onSubmit={handleLogin} autoComplete="off">
                       <InputGroup
                         className={classnames({
                           "input-group-focus": fullNameFocus
@@ -262,7 +250,7 @@ export default function RegisterPage() {
 
                       <InputGroup
                         className={classnames({
-                          "input-group-focus": passwordFocus1
+                          "input-group-focus": passwordFocus
                         })}
                       >
                         <InputGroupAddon addonType="prepend">
@@ -273,56 +261,14 @@ export default function RegisterPage() {
                         <Input
                           placeholder={t("RegisterPage-password")}
                           type="password"
-                          value={password1}
-                          onChange={(e) => setPassword1(e.target.value)}
-                          onFocus={(e) => setPasswordFocus1(true)}
-                          onBlur={(e) => setPasswordFocus1(false)}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          onFocus={(e) => setPasswordFocus(true)}
+                          onBlur={(e) => setPasswordFocus(false)}
                           autoComplete="new-password" 
                           name="password" 
                         />
                       </InputGroup>
-
-                      {password1.length < 8 && password1 !== '' && (
-                        <p>{t("RegisterPage-password-length")}</p>
-                      )}
-
-                      {/* {!/\d/.test(password1) && password1 !== '' && (
-                        <p>{t("Register-password-digit")}</p>
-                      )}
-
-                      {!/[A-Z]/.test(password1) && password1 !== '' && (
-                        <p>{t("Register-password-uppercase")}</p>
-                      )}
-
-                      {!/[^a-zA-Z0-9]/.test(password1) && password1 !== '' && (
-                        <p>{t("Register-password-special")}</p>
-                      )} */}
-
-                      <InputGroup
-                        className={classnames({
-                          "input-group-focus": passwordFocus2
-                        })}
-                      >
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="tim-icons icon-lock-circle" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          placeholder={t("RegisterPage-confirm-password")}
-                          type="password"
-                          value={password2}
-                          onChange={(e) => setPassword2(e.target.value)}
-                          onFocus={(e) => setPasswordFocus2(true)}
-                          onBlur={(e) => setPasswordFocus2(false)}
-                          autoComplete="new-password" 
-                          name="password" 
-                        />
-                      </InputGroup>
-
-                      <div className="error">
-                        {password1 != '' && password2 != '' && password1 != password2 ? <p>{t("Register-password-mismatch")}</p> : <></> }
-                      </div>
 
                         <FormGroup check className="text-left">
                           <Label check>
@@ -342,8 +288,8 @@ export default function RegisterPage() {
                         color="primary"
                         size="lg"
                         type="submit"
-                        onClick={handleRegister}
-                        disabled={!fullName || !password1 || !password2}
+                        onClick={handleLogin}
+                        disabled={!fullName || !password}
                       >
                         {t("RegisterPage-get-started")}
                       </Button>
@@ -403,232 +349,40 @@ export default function RegisterPage() {
                   </Card>
                 </Col>
               </Row>
-              <div
+              {/* <div
                 className="square square-1"
                 id="square1"
                 style={{ transform: squares1to6 }}
-              />
+              /> */}
               <div
                 className="square square-2"
                 id="square2"
                 style={{ transform: squares1to6 }}
               />
-              {/* <div
+              <div
                 className="square square-3"
                 id="square3"
                 style={{ transform: squares1to6 }}
-              /> */}
-              {/* <div
+              />
+              <div
                 className="square square-4"
                 id="square4"
                 style={{ transform: squares1to6 }}
-              /> */}
+              />
               <div
                 className="square square-5"
                 id="square5"
                 style={{ transform: squares1to6 }}
               />
-              {/* <div
+              <div
                 className="square square-6"
                 id="square6"
                 style={{ transform: squares1to6 }}
-              /> */}
+              />
             </Container>
           </div>
 
-          <Container className="align-items-center">
-            <Row>
-              <Col lg="6" md="6">
-                <h1 className="profile-title text-left">{t("RegisterPage-section-1-title")}</h1>
-                <h5 className="text-on-back">01</h5>
-                <p className="profile-description">
-                  {t("RegisterPage-section-1-description")} 
-                </p>
-              </Col>
-              <Col className="ml-auto mr-auto" lg="4" md="6">
-                <Card className="card-coin card-plain">
-                  <CardHeader>
-                    <img
-                      alt="..."
-                      className="img-center img-fluid rounded-circle"
-                      src={require("assets/img/mike.webp")}
-                    />
-                    <h4 className="title">{t("RegisterPage-easy-peasy")}</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Nav
-                      className="nav-tabs-primary justify-content-center"
-                      tabs
-                    >
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 1
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(1);
-                          }}
-                          href="#"
-                        >
-                          {t("RegisterPage-info")}
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 2
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(2);
-                          }}
-                          href="#"
-                        >
-                          {t("RegisterPage-possibilities")}
-                        </NavLink>
-                      </NavItem>
-                      {/* <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 3
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(3);
-                          }}
-                          href="#"
-                        >
-                          Send
-                        </NavLink>
-                      </NavItem> */}
-                    </Nav>
-
-                    <TabContent
-                      className="tab-subcategories"
-                      activeTab={"tab" + tabs}
-                    >
-                      <TabPane tabId="tab1">
-                        <div className="register-info-steps">
-                          <p>{t("RegisterPage-register-easy-steps")}</p>
-                          <p>{t("RegisterPage-register-basic-data")}</p>
-                          <p>• {t("RegisterPage-card-username")}</p>
-                          <p>• {t("RegisterPage-card-email")}</p>
-                          <p>• {t("RegisterPage-card-password")}</p>
-                          <p>• {t("RegisterPage-card-confirm-password")}</p>
-                        </div>
-                      </TabPane>
-                      {/* <TabPane tabId="tab2">
-                        <Row>
-                          <Label sm="3">Pay to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. 1Nasd92348hU984353hfid"
-                                type="text"
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid address.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Label sm="3">Amount</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input placeholder="1.587" type="text" />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Button
-                          className="btn-simple btn-icon btn-round float-right"
-                          color="primary"
-                          type="submit"
-                        >
-                          <i className="tim-icons icon-send" />
-                        </Button>
-                      </TabPane> */}
-                      <TabPane tabId="tab2">
-                        <div className="container_div">
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-status-viewed")}</p>
-                            </div>
-                          </div>
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-add-certain")}</p>
-                            </div>
-                          </div>
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-comments")}</p>
-                            </div>
-                          </div>
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-chat")}</p>
-                            </div>
-                          </div>
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-newsletter")}</p>
-                            </div>
-                          </div>
-                          <div className="child-container">
-                            <div className="child-item">
-                              <p>• {t("RegisterPage-card-send-media")}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-
-                
-
-              </Col>
-            </Row>
-          </Container>
-        
-        <div className="section">
-          <Container>
-            <Row className="justify-content-between">
-              <Col md="6">
-                <Row className="justify-content-between align-items-center">
-                  <UncontrolledCarousel items={carouselItems} />
-                </Row>
-              </Col>
-              <Col md="5">
-                <h1 className="profile-title text-left">{t("RegisterPage-section-2-title")}</h1>
-                <h5 className="text-on-back">02</h5>
-                <p className="profile-description text-left">
-                {t("RegisterPage-section-2-description")}
-                </p>
-                {/* <div className="btn-wrapper pt-3">
-                  <Button
-                    className="btn-simple"
-                    color="primary"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <i className="tim-icons icon-book-bookmark" /> Bookmark
-                  </Button>
-                  <Button
-                    className="btn-simple"
-                    color="info"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <i className="tim-icons icon-bulb-63" /> Check it!
-                  </Button>
-                </div> */}
-              </Col>
-            </Row>
-          </Container>
-          </div>
+    
 
           {/* <section className="section">
           <Container>
