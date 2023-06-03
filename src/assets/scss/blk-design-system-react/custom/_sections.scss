@@ -304,6 +304,91 @@
     }
 }
 
+.page-header-login{
+    // min-height: 100vh;
+    // max-height: 999px;
+    padding: 0;
+    color: $white;
+    position: relative;
+    overflow: hidden;
+
+    .page-header-image{
+        position: absolute;
+        background-size: cover;
+        background-position: center center;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    & > .content{
+        margin-top: 11%;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .signup-page & {
+        max-height: fit-content;
+    }
+
+    .content-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: $white;
+        padding: 0 15px;
+        width: 100%;
+        max-width: 880px;
+
+        &.brand {
+          width: 47%;
+        }
+
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .container{
+        height: 100%;
+        z-index: 1;
+    }
+
+    .category,
+    .description{
+        color: $opacity-8;
+    }
+
+    &.page-header-small{
+        min-height: 60vh;
+        max-height: 440px;
+    }
+
+    &.page-header-mini{
+        min-height: 40vh;
+        max-height: 340px;
+    }
+
+    .title{
+        margin-bottom: 15px;
+    }
+    .title + h4{
+        margin-top: 10px;
+    }
+
+    &.header-filter:after {
+      background: rgba(0,0,0,.5);
+    }
+}
+
 .clear-filter{
     &:after,
     &:before{

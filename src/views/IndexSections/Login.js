@@ -116,7 +116,7 @@ export default function LoginPage() {
   const history = useHistory();
 
   useEffect(() => {
-      if (cookies.access) {
+      if (cookies.access && cookies.refresh) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -203,7 +203,7 @@ export default function LoginPage() {
     <>
       <IndexNavbar />
       <div className="wrapper">
-        <div className="page-header">
+        <div className="page-header-login">
           <div className="page-header-image" />
           <div className="content">
             <Container>
@@ -269,17 +269,6 @@ export default function LoginPage() {
                           name="password" 
                         />
                       </InputGroup>
-
-                        <FormGroup check className="text-left">
-                          <Label check>
-                            <Input type="checkbox" />
-                            <span className="form-check-sign" />
-                            {t("RegisterPage-agree")}
-                            <a href="#" onClick={(e) => e.preventDefault()}>
-                              {t("RegisterPage-terms-and-conditions")}
-                            </a>
-                          </Label>
-                        </FormGroup>
                       </Form>
                     </CardBody>
                     <CardFooter>

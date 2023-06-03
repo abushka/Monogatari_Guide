@@ -48,4 +48,4 @@ Disallow: /customer/account/forgotpassword/
 Disallow: /review/
 Disallow: /*?___from_store=*
 Disallow: /*&___from_store=*
-Sitemap: https://abushka.uz/sitemap.xml
+Sitemap: https://monogatari-guide.com/sitemap.xml

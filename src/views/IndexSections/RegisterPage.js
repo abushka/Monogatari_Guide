@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState} from "react";
 import classnames from "classnames";
 
 import axios from 'axios';
@@ -136,6 +136,8 @@ export default function RegisterPage() {
   // const [email, setEmail] = React.useState('');
   const [password1, setPassword1] = React.useState('');
   const [password2, setPassword2] = React.useState('');
+  const [checkBoxChecked, setCheckBoxChecked] = useState(false);
+
 
 
   const registerUser = async (userData, setCookie) => {
@@ -326,7 +328,7 @@ export default function RegisterPage() {
 
                         <FormGroup check className="text-left">
                           <Label check>
-                            <Input type="checkbox" />
+                            <Input type="checkbox" onChange={(e) => setCheckBoxChecked(e.target.checked)}/>
                             <span className="form-check-sign" />
                             {t("RegisterPage-agree")}
                             <a href="#" onClick={(e) => e.preventDefault()}>
@@ -343,7 +345,7 @@ export default function RegisterPage() {
                         size="lg"
                         type="submit"
                         onClick={handleRegister}
-                        disabled={!fullName || !password1 || !password2}
+                        disabled={!fullName || !password1 || !password2 || password1.length < 8 || password2.length < 8 || password1 != password2 || !checkBoxChecked}
                       >
                         {t("RegisterPage-get-started")}
                       </Button>

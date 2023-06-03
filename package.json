@@ -50,6 +50,8 @@
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
     "i18next": "^22.4.15",
+    "mobx": "^6.9.0",
+    "mobx-react-lite": "^3.4.3",
     "moment": "2.29.4",
     "nouislider": "14.6.3",
     "perfect-scrollbar": "1.5.5",
