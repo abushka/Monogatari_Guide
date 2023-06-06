@@ -218,17 +218,49 @@ textarea.form-control{
 }
 
 // Input files - hide actual input - requires specific markup in the sample.
-.form-group input[type=file] {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-}
+// .form-group input[type=file] {
+//   opacity: 0;
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// }
+
+
+.input_container {
+    border: 1px solid $primary;
+    border-radius: $border-radius-lg;
+  }
+  
+  .form-group input[type=file] {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .form-group input[type=file]::file-selector-button {
+    // background-color: linear-gradient(to bottom left, $primary, $primary-states, $primary);
+    background: $primary;
+    background-image: linear-gradient(to bottom left, $primary, $primary-states, $primary);
+    background-size: 210% 210%;
+    background-position: top right;
+    background-color: $primary;
+    transition: all 0.15s ease;
+    color: #fff;
+    border: 0px;
+    border-right: 1px solid $primary;
+    padding: 5px 10px;
+    margin-right: 20px;
+    transition: .5s;
+  }
+  
+  .form-group input[type=file]::file-selector-button:hover {
+    background-color: $primary;
+    border: 0px;
+    border-right: 1px solid #e5e5e5;
+  }
 
 .form-text{
     font-size: $font-size-sm;

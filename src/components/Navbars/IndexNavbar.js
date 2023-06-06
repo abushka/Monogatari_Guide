@@ -281,9 +281,17 @@ export default function IndexNavbar() {
               nav
               onClick={(e) => e.preventDefault()}
             >
-              
-              <Icon icon="icon-park-solid:people" style={{ fontSize: '20px'}} />
+
+              {isLoggedIn ? <>
+                <Icon icon="icon-park-solid:people" style={{ fontSize: '20px', marginRight: '5px'}} />
+               {t("IndexNavbar-Profile")} 
+              </>
+               : <>
+               <Icon icon="teenyicons:signin-outline" style={{ fontSize: '20px', marginRight: '5px'}} />
                {/* {t("IndexNavbar-user")} */}
+               {t("IndexNavbar-sign-in")}
+               </>}
+               
             </DropdownToggle>
 
             <DropdownMenu className="dropdown-with-icons">
@@ -292,6 +300,12 @@ export default function IndexNavbar() {
                     <Icon icon="ic:baseline-home" style={{ fontSize: '20px', marginRight: '13px'}}/>
                     {t("IndexNavbar-Home")}
               </DropdownItem>
+
+            {isLoggedIn ?
+              <DropdownItem tag={Link} to="/profile">
+                <Icon icon="icon-park-solid:people" style={{ fontSize: '20px', marginRight: '11px' }} /> {t("IndexNavbar-Profile")}
+              </DropdownItem>
+               : <></>}
 
             {isLoggedIn ?<></> : 
               <DropdownItem tag={Link} to="/register">

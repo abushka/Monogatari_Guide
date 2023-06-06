@@ -15,6 +15,7 @@ import { I18nextProvider } from "react-i18next";
 
 // sections for this page/view
 import Anime_sequence from "views/IndexSections/Anime_sequence.js"
+import Anime_Series from "views/IndexSections/Anime_series.js"
 import Useful_links from "views/IndexSections/Useful_links"
 import Suggestion from "views/IndexSections/Suggestion.js"
 
@@ -28,8 +29,8 @@ const Index = observer(() => {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
-      const verifyUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/token/verify/`;
-      const refreshUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/token/refresh/`;
+      const verifyUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/token/verify/`;
+      const refreshUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/token/refresh/`;
       const refreshToken = cookies.refresh;
       // console.log(authStore.accessToken)
 
@@ -103,6 +104,7 @@ const Index = observer(() => {
         <PageHeader />
         <div className="main">
           <Anime_sequence />
+          <Anime_Series />
           <Useful_links />
           <Suggestion />
         </div>

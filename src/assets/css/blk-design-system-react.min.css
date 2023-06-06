@@ -17102,7 +17102,7 @@ textarea.form-control:active {
   padding: 0 12px;
 }
 .form-group input[type="file"] {
-  opacity: 0;
+  opacity: 1;
   position: absolute;
   top: 0;
   right: 0;

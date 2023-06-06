@@ -142,7 +142,7 @@ export default function RegisterPage() {
 
   const registerUser = async (userData, setCookie) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/registration/`, userData);
+      const response = await axios.post(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/registration/`, userData);
       console.log(response.data); // Результат ответа от сервера
   
       // Сохранение данных в cookie
@@ -183,7 +183,7 @@ export default function RegisterPage() {
   
   const handleGoogleLogin = async (userData, setCookie) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PORT}/api/auth/accounts/google/login/`)
+      const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/accounts/google/login/`)
         .then(response => {
             window.location.href = response.data.authorization_url;
         })
