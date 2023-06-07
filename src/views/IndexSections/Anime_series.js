@@ -54,7 +54,7 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
-import { Cookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 import authStore from "variables/AuthStore.js";
 
 
@@ -64,14 +64,26 @@ export default function Anime_Series() {
 
   const { t } = useTranslation();
 
-  
+  const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
+
+  useEffect(() => {
+    authStore.setAccessToken(cookies.access);
+    // console.log('проверочный токен в хуках:', authStore.accessToken);
+  }, [cookies.access]);
+
   const [SeasonsData, setSeasonsData] = useState([])
   const SeasonsArray = Object.values(SeasonsData);
+
+  const [SeasonsStatusData, setSeasonsStatusData] = useState([])
+  const SeasonsStatusArray = Object.values(SeasonsStatusData);
+
+  // console.log(SeasonsStatusData)
 
   const [SeriesData, setSeriesData] = useState([])
   const seriesArray = Object.values(SeriesData);
 
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatusArray, setSelectedStatusArray] = useState([]);
 
 
   useEffect(() => {
@@ -94,25 +106,38 @@ export default function Anime_Series() {
 
 
   useEffect(() => {
+  const SeasonsStatus = async () => {
   
-    const Series = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/`, {
-        });
-        console.log(response.data);
-    
-        setSeriesData(response.data);
-      } catch (error) {
-        console.error(error);
-        // Обработка ошибок
-      }
-    };
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/seasons/status/`,
+        {
+          headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+          }
+        }
+      );
+      setSeasonsStatusData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      // Обработка ошибок
+    }
+  };
 
-    Series()
+  SeasonsStatus()
   }, [])
+
+  useEffect(() => {
+    console.log(SeasonsStatusData)
+    console.log(SeasonsStatusArray)
+  }, [SeasonsStatusData])
 
 
   const handleStatusSelection = async (status, seasonNumber) => {
+    const updatedStatusArray = [...selectedStatusArray];
+    updatedStatusArray[seasonNumber - 1] = status;
+    setSelectedStatusArray(updatedStatusArray);
     setSelectedStatus(status);
   
     try {
@@ -137,6 +162,25 @@ export default function Anime_Series() {
       // Обработка ошибок
     }
   };
+
+
+  useEffect(() => {
+  
+    const Series = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/`, {
+        });
+        console.log(response.data);
+    
+        setSeriesData(response.data);
+      } catch (error) {
+        console.error(error);
+        // Обработка ошибок
+      }
+    };
+
+    Series()
+  }, [])
 
 
   return (
@@ -247,7 +291,7 @@ export default function Anime_Series() {
               <TabContent className="tab-space" activeTab={"link" + iconTabs}>
                 <hr className="line-info"/>
                 <TabPane tabId="link1" className="accordion-tabpane">
-                  {SeasonsArray.reverse().map((season) => (
+                  {SeasonsArray.reverse().map((season, index) => (
                     <div key={season.id}>
                       <Accordion key={season.id} className="accordion-main">
                         <AccordionSummary
@@ -258,43 +302,72 @@ export default function Anime_Series() {
                         >
                           <Typography className="accordion-header">ID Сезона: {season.number}, Name: {season.name_ru}</Typography>
                           {/* <Container id="menu-dropdown"> */}
-                            <Row>
-                              <Col md="12">
-                                <Navbar className="bg-primary" expand="lg">
-                                  <Container>
-                                    <Collapse navbar isOpen={false}>
-                                      <Nav navbar>
-                                        <UncontrolledDropdown nav>
+                            <Row className="zindex-important">
+                              <Col md="12" className="zindex-important">
+                                <Navbar className="accordion-navbar zindex-important" expand="lg">
+                                  <Container className="zindex-important">
+                                    <Collapse navbar className="zindex-important" isOpen={false}>
+                                      <Nav className="zindex-important">
+                                        <UncontrolledDropdown nav className="accordion-dropdown zindex-important">
                                           <DropdownToggle
                                             aria-expanded={false}
                                             aria-haspopup={true}
                                             caret
                                             color="default"
                                             data-toggle="dropdown"
-                                            href="http://example.com"
+                                            href="#"
                                             id="navbarDropdownMenuLink"
+                                            onClick={(event) => event.stopPropagation()}
                                             nav
+                                            className="accordion-select-header zindex-important"
                                           >
-                                            <p>{console.log(season)}</p>
+                                            
+                                            {selectedStatusArray[season.number - 1] !== undefined
+                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season.status}`)
+                                              : SeasonsStatusData[season.id]?.season != undefined
+                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
+                                              : ""}
+
                                           </DropdownToggle>
-                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink">
+                                          {/* <div className="test_div"></div> */}
+                                          
+                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                            
                                             <DropdownItem
+                                            className="accordion-dropdown-menu-item"
                                               href="#"
-                                              onClick={() => handleStatusSelection('not-watched', season.number)}
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('not-watched', season.number)}}
                                             >
-                                              Не просмотрено
+                                              {t('Anime_Series_not-watched')}
                                             </DropdownItem>
                                             <DropdownItem
+                                            className="accordion-dropdown-menu-item"
                                               href="#"
-                                              onClick={() => handleStatusSelection('watched', season.number)}
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('watching', season.number)}}
                                             >
-                                              Просмотрено
+                                              {t('Anime_Series_watching')}
                                             </DropdownItem>
                                             <DropdownItem
+                                            className="accordion-dropdown-menu-item"
                                               href="#"
-                                              onClick={() => handleStatusSelection('to-watch', season.number)}
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('watched', season.number)}}
                                             >
-                                              Буду смотреть
+                                              {t('Anime_Series_watched')}
+                                            </DropdownItem>
+                                            <DropdownItem
+                                            className="accordion-dropdown-menu-item"
+                                              href="#"
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('to-watch', season.number)}}
+                                            >
+                                              {t('Anime_Series_to-watch')}
                                             </DropdownItem>
                                           </DropdownMenu>
                                         </UncontrolledDropdown>

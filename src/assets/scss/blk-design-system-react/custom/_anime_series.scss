@@ -30,12 +30,113 @@
     margin-bottom: 10px !important;
 }
 
+
+.accordion-select-header {
+    position: relative;
+    z-index: 500;
+}
+
+.zindex-important {
+    z-index: 100;
+}
+
+.accordion-navbar {
+    padding: 0.9375rem;
+    width: 100%;
+    z-index: 1050;
+    background: transparent !important;
+}
+
+// .accordion-dropdown {
+//     position: relative;
+// }
+
+// .accordion-dropdown-menu {
+//     position: absolute !important;
+//     z-index: 1899 !important;
+// }
+
+// .accordion-dropdown-menu-item {
+//     position: relative !important;
+//     z-index: 1900 !important;
+// }
+
+.test_div {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    height: 200px;
+    width: 200px;
+    background: red;
+    z-index: 1999;
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 0.875rem;
+    color: #525f7f;
+    text-align: left;
+    list-style: none;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 0 solid rgba(34, 42, 66, 0.15);
+    border-radius: 0.1428rem;
+    box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 150ms linear, transform 150ms linear;
+    transform: translate3d(0, -20px, 0);
+}
+
+.dropdown.show .dropdown-menu,
+.bootstrap-select.show .dropdown-menu:not(.inner),
+.dropdown-menu.bootstrap-datetimepicker-widget.top.open,
+.dropdown-menu.bootstrap-datetimepicker-widget.bottom.open,
+.dropup.show:not(.bootstrap-select) .dropdown-menu,
+.navbar .dropdown.show .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 1px, 0) !important;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu[x-placement^=top],
+.dropdown-menu[x-placement^=right],
+.dropdown-menu[x-placement^=bottom],
+.dropdown-menu[x-placement^=left] {
+    right: auto;
+    bottom: auto;
+}
+
+.accordion-dropdown-menu {
+    position: absolute !important;
+    z-index: 1899 !important;
+}
+
+.accordion-dropdown-menu-item {
+    position: relative !important;
+    z-index: 1900 !important;
+}
+
+
 .accordion-array svg {
     color: #fff !important;
 }
 
 .accordion-header {
     color: #fff !important;
+    z-index: 1 !important;
     // background-color: black !important;
 }
 
@@ -55,6 +156,9 @@
     background-color: transparent !important;
     // border: 1px solid $info-states;
 }
+
+
+
 
 @include media-breakpoint-down(lg){
     .anime-picture {
