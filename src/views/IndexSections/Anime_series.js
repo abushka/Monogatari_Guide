@@ -334,6 +334,9 @@ export default function Anime_Series() {
                                           <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
                                             
                                             <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
                                             className="accordion-dropdown-menu-item"
                                               href="#"
                                               onClick={(event) => {
@@ -343,6 +346,9 @@ export default function Anime_Series() {
                                               {t('Anime_Series_not-watched')}
                                             </DropdownItem>
                                             <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
                                             className="accordion-dropdown-menu-item"
                                               href="#"
                                               onClick={(event) => {
@@ -352,6 +358,9 @@ export default function Anime_Series() {
                                               {t('Anime_Series_watching')}
                                             </DropdownItem>
                                             <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
                                             className="accordion-dropdown-menu-item"
                                               href="#"
                                               onClick={(event) => {
@@ -361,6 +370,9 @@ export default function Anime_Series() {
                                               {t('Anime_Series_watched')}
                                             </DropdownItem>
                                             <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
                                             className="accordion-dropdown-menu-item"
                                               href="#"
                                               onClick={(event) => {

@@ -36,14 +36,14 @@
     z-index: 500;
 }
 
-.zindex-important {
-    z-index: 100;
-}
+// .zindex-important {
+//     z-index: 100;
+// }
 
 .accordion-navbar {
     padding: 0.9375rem;
     width: 100%;
-    z-index: 1050;
+    // z-index: 1050;
     background: transparent !important;
 }
 
@@ -121,7 +121,7 @@
 
 .accordion-dropdown-menu {
     position: absolute !important;
-    z-index: 1899 !important;
+    z-index: 2099 !important;
 }
 
 .accordion-dropdown-menu-item {
