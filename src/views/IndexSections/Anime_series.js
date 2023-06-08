@@ -302,13 +302,14 @@ export default function Anime_Series() {
                         >
                           <Typography className="accordion-header">ID Сезона: {season.number}, Name: {season.name_ru}</Typography>
                           {/* <Container id="menu-dropdown"> */}
-                            <Row className="zindex-important">
+                          
+                            <Row className="row-dropdown">
                               <Col md="12" className="zindex-important">
-                                <Navbar className="accordion-navbar zindex-important" expand="lg">
+                                <Navbar className="accordion-navbar zindex-important" expand="xs">
                                   <Container className="zindex-important">
                                     <Collapse navbar className="zindex-important" isOpen={false}>
                                       <Nav className="zindex-important">
-                                        <UncontrolledDropdown nav className="accordion-dropdown zindex-important">
+                                        <UncontrolledDropdown className="accordion-dropdown zindex-important">
                                           <DropdownToggle
                                             aria-expanded={false}
                                             aria-haspopup={true}
@@ -321,15 +322,14 @@ export default function Anime_Series() {
                                             nav
                                             className="accordion-select-header zindex-important"
                                           >
-                                            
+                                            {/* {console.log(selectedStatus)} */}
                                             {selectedStatusArray[season.number - 1] !== undefined
-                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season.status}`)
+                                              ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
                                               : SeasonsStatusData[season.id]?.season != undefined
                                               ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
                                               : ""}
 
                                           </DropdownToggle>
-                                          {/* <div className="test_div"></div> */}
                                           
                                           <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
                                             
@@ -392,6 +392,9 @@ export default function Anime_Series() {
                           {/* </Container> */}
                         </AccordionSummary>
                         <AccordionDetails>
+
+
+
                         {seriesArray
                         .filter((series) => series.season.id === season.id)
                         .map((series) => (
@@ -407,6 +410,9 @@ export default function Anime_Series() {
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
                                 {series.description_ru}{series.number}
+
+
+                                
                               </AccordionDetails>
                             </Accordion>
                           </div>

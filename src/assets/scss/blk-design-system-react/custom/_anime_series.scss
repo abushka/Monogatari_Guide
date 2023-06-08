@@ -12,6 +12,10 @@
 //     background-color: blue !important;
 // }
 
+
+
+
+
 .accordion-main {
     // color: white !important;
     background-color: #1c326b !important;
@@ -41,7 +45,7 @@
 // }
 
 .accordion-navbar {
-    padding: 0.9375rem;
+    padding: 0 !important;
     width: 100%;
     // z-index: 1050;
     background: transparent !important;
@@ -61,16 +65,6 @@
 //     z-index: 1900 !important;
 // }
 
-.test_div {
-    position: absolute;
-    top: -50px;
-    left: 0;
-    height: 200px;
-    width: 200px;
-    background: red;
-    z-index: 1999;
-}
-
 
 .dropdown-menu {
     position: absolute;
@@ -79,8 +73,8 @@
     z-index: 1000;
     display: none;
     min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
+    padding: 0rem 0;
+    margin: 0rem 0 0;
     font-size: 0.875rem;
     color: #525f7f;
     text-align: left;
@@ -129,15 +123,29 @@
     z-index: 1900 !important;
 }
 
+.accordion-array div {
+    margin: 0 0 0 auto !important;
+}
 
 .accordion-array svg {
     color: #fff !important;
 }
 
 .accordion-header {
+    position: relative;
+    top: 7px;
+    height: 100%;
     color: #fff !important;
     z-index: 1 !important;
+    vertical-align: middle !important;
+    
     // background-color: black !important;
+}
+
+
+.row-dropdown {
+    display: flex;
+    justify-content: end;
 }
 
 .accordion-children-main {
