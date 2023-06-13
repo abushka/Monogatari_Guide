@@ -24,7 +24,6 @@ const Index = observer(() => {
 
   useEffect(() => {
     authStore.setAccessToken(cookies.access);
-    // console.log('проверочный токен в хуках:', authStore.accessToken);
   }, [cookies.access]);
 
   useEffect(() => {
@@ -32,9 +31,7 @@ const Index = observer(() => {
       const verifyUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/token/verify/`;
       const refreshUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/token/refresh/`;
       const refreshToken = cookies.refresh;
-      // console.log(authStore.accessToken)
 
-      // console.log(cookies.refresh)
       if (authStore.accessToken == '' && cookies.refresh == '' || authStore.accessToken == undefined && cookies.refresh == undefined ||
           authStore.accessToken == '' && cookies.refresh == undefined || authStore.accessToken == undefined && cookies.refresh == ''
       ) {
@@ -59,7 +56,6 @@ const Index = observer(() => {
 
           authStore.setAccessToken(newAccessToken);
 
-          // console.log('проверочный токен:', authStore.accessToken);
           console.log('Новый токен получен:', newAccessToken);
 
         } catch (error) {
@@ -75,8 +71,6 @@ const Index = observer(() => {
             removeCookie('user');
           }
           console.log('Не удалось получить новый токен.');
-
-          // return alert('Вам нужно залогиниться')
         }
       }
     };
@@ -85,12 +79,12 @@ const Index = observer(() => {
 
       setInterval(() => {
         refreshAccessToken();
-      }, 60 * 10 * 1000);
+      }, 60 * 5 * 1000);
     }
 
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.classList.toggle("index-page");
     return function cleanup() {
       document.body.classList.toggle("index-page");
@@ -103,7 +97,7 @@ const Index = observer(() => {
       <div className="wrapper">
         <PageHeader />
         <div className="main">
-          <Anime_sequence />
+          {/* <Anime_sequence /> */}
           <Anime_Series />
           <Useful_links />
           <Suggestion />

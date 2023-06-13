@@ -37,7 +37,9 @@
 
 .accordion-select-header {
     position: relative;
+    color: $success !important;
     z-index: 500;
+    padding: 0 !important;
 }
 
 // .zindex-important {
@@ -64,6 +66,7 @@
 //     position: relative !important;
 //     z-index: 1900 !important;
 // }
+
 
 
 .dropdown-menu {
@@ -115,7 +118,12 @@
 
 .accordion-dropdown-menu {
     position: absolute !important;
+    background-color: #fff !important;
     z-index: 2099 !important;
+
+    &::before {
+        display: block !important;
+    }
 }
 
 .accordion-dropdown-menu-item {
@@ -133,7 +141,7 @@
 
 .accordion-header {
     position: relative;
-    top: 7px;
+    // top: 7px;
     height: 100%;
     color: #fff !important;
     z-index: 1 !important;
@@ -146,6 +154,7 @@
 .row-dropdown {
     display: flex;
     justify-content: end;
+    padding: 5px 0;
 }
 
 .accordion-children-main {
@@ -168,10 +177,22 @@
 
 
 
+
 @include media-breakpoint-down(lg){
     .anime-picture {
         width: 930px;
         height: 509px;
+    }
+    .accordion-collapse-dropdown {
+        position: relative;
+        width: 100%;
+        height: auto !important;
+        left: 0;
+        top: 0;
+        margin: 0rem;
+        background: transparent;
+        border-radius: 0rem;
+        padding: 0rem;
     }
   }
   
@@ -179,7 +200,19 @@
     .anime-picture {
         width: 690px;
         height: 377px;
-}
+    }
+    .accordion-header {
+        font-size: 14px !important;
+        // background-color: green !important;
+    }
+    .accordion-children-header {
+        color: #fff !important;
+        font-size: 14px !important;
+        // background-color: green !important;
+    }
+    .accordion-select-header {
+        font-size: 14px !important;
+    }
 }
   
 @include media-breakpoint-down(sm){
@@ -187,11 +220,58 @@
         width: 510px;
         height: 279px;
     }
+    .accordion-header {
+        font-size: 14px !important;
+        width: 60%;
+        // background-color: green !important;
+    }
+    .accordion-children-header {
+        color: #fff !important;
+        font-size: 14px !important;
+        // background-color: green !important;
+    }
+    .accordion-select-header {
+        font-size: 14px !important;
+    }
 }
   
 @include media-breakpoint-down(xs){
     .anime-picture {
         width: 100%;
         height: 100%;
+    }
+    // .container {
+    //     padding: 0 5px 0 5px !important;
+    // }
+    .accordion-header {
+        font-size: 12px !important;
+        margin-top: 7px !important;
+        margin-left: 3px !important;
+        
+        // width: 60%;
+        // height: 38px;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        // background-color: green !important;
+    }
+    .accordion-children-header {
+        color: #fff !important;
+        font-size: 12px !important;
+        width: 60%;
+        height: 38px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // white-space: nowrap;
+        // background-color: green !important;
+    }
+    .accordion-select-header {
+        width: 38%;
+        font-size: 12px !important;
+        margin-right: -10px;
+    }
+
+    .accordion-select-header::after {
+        display: none;
     }
 }

@@ -395,6 +395,117 @@
     }
 }
 
+.profile-page{
+
+  overflow-x: hidden;
+
+    .page-header-profile{
+      min-height: 550px;
+
+      .container {
+        padding-top: 30vh;
+      }
+
+      .path {
+        max-width: 65%;
+        right: 0;
+        top: 100px;
+      }
+    }
+
+    .info {
+      padding: 40px 0 0;
+
+      .description {
+        text-align: left;
+        padding-left: 20px;
+      }
+    }
+
+    .profile-title {
+      position: absolute;
+      top: 110px;
+      left: 60px;
+    }
+
+    .profile-description {
+      margin-top: -30px;
+      max-width: 450px;
+      font-size: $font-size-base;
+      line-height: 26px;
+    }
+
+    .profile-container {
+        color: $white;
+    }
+    .photo-container {
+      max-width: 400px;
+      overflow: hidden;
+      -webkit-box-shadow: -15px 20px 60px 0px rgba(0,0,0,0.30);
+      -moz-box-shadow: -15px 20px 60px 0px rgba(0,0,0,0.30);
+      box-shadow: -15px 20px 60px 0px rgba(0,0,0,0.30);
+    }
+
+    .title{
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .description,
+    .category{
+        text-align: center;
+    }
+
+    h5.description {
+        max-width: 700px;
+        margin: 20px auto 75px;
+    }
+
+    .nav-align-center {
+        margin-top: 30px;
+    }
+
+    .content {
+      .social-description {
+        display: inline-block;
+        max-width: 150px;
+        width: 145px;
+        text-align: center;
+        margin: 15px 0 0px;
+
+        h2 {
+          margin-bottom: 15px;
+        }
+      }
+    }
+
+    .collections {
+        img {
+            margin-bottom: 30px;
+        }
+    }
+
+    .gallery {
+        margin-top: 45px;
+        padding-bottom: 50px;
+    }
+
+    .card-coin {
+      .list-group{
+        margin: 0 !important;
+        text-align: left !important;
+        color: $opacity-5;
+      }
+    }
+    .card {
+      .card-header {
+        .profile-title {
+          top: 125px;
+        }
+      }
+    }
+}
+
 .section-full-page{
 
     &:after,

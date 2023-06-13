@@ -24,7 +24,7 @@ import i18n from "../i18n.js";
 // Icons
 import { Icon } from '@iconify/react';
 
-// import axios from 'axios';
+import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 
@@ -98,30 +98,36 @@ export default function IndexNavbar() {
 
   const { t } = useTranslation();
 
-  // console.log(cookies.access);
-  // console.log(cookies.refresh);
-  // console.log(cookies.user);
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+  };
 
-  // const logoutUser = async (userData, setCookie) => {
-  //   try {
-  //     const response = await axios.post('http://127.0.0.1:8000/api/auth/logout/', userData);
-  //     console.log(response.data); // Результат ответа от сервера
-  //     // Сохранение данных в cookie
-  //     removeCookie('access');
-  //     removeCookie('refresh');
-  //     removeCookie('user');
-  //     setIsLoggedIn(false);
-  //     history.push('/');
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Обработка ошибок
-  //   }
-  // };
+  useEffect(() => {
+    UserLanguageChange(selectedLanguage);
+  }, [selectedLanguage]);
 
-  // const userData = {
+  const UserLanguageChange = async (selectedLanguage) => {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/user/change-language/`, 
+      {
+        language: selectedLanguage},
+      {
+        headers: {
+          Authorization: `Bearer ${cookies.access}`
+        }
+      });
 
-  // }
+      console.log(selectedLanguage)
+      console.log(response.data); 
+  
+    } catch (error) {
+      console.error(error);
+      // Обработка ошибок
+    }
+  };
+
 
   useEffect(() => {
     if (cookies.access) {
@@ -194,18 +200,6 @@ export default function IndexNavbar() {
             </Row>
           </div>
           <Nav navbar>
-            {/* <NavItem className="p-0">
-              <NavLink
-                data-placement="bottom"
-                href="https://twitter.com/abushka_404"
-                rel="noopener noreferrer"
-                target="_blank"
-                title={t("IndexNavbar-Subscribe-Twitter")} // Подпишись на мой Twitter
-              >
-                <Icon icon="mdi:twitter" style={{ fontSize: '20px'}} />
-                <p className="d-lg-none d-xl-none">Twitter</p>
-              </NavLink>
-            </NavItem> */}
 
             <NavItem className="p-0">
               <NavLink
@@ -233,45 +227,6 @@ export default function IndexNavbar() {
             </NavItem>
 
 
-            
-            {/* <NavItem>
-              <Button
-                className="nav-link d-none d-lg-block"
-                color="default"
-                target="_blank"
-                href="https://t.me/YaJ75"
-              >
-                <Icon icon="material-symbols:rocket-launch" style={{ fontSize: '20px'}} /> {t("IndexNavbar-Feedback")}
-              </Button>
-            </NavItem> */}
-
-            {/* <UncontrolledDropdown nav>
-              <DropdownToggle
-                caret
-                color="default"
-                data-toggle="dropdown"
-                href="#"
-                nav
-                onClick={(e) => e.preventDefault()}
-              >
-                
-                <Icon icon="material-symbols:format-list-bulleted" style={{ fontSize: '20px', marginRight: '8px'}}/> {t("IndexNavbar-Pages")}
-              </DropdownToggle>
-
-              <DropdownMenu className="dropdown-with-icons">
-
-                <DropdownItem tag={Link} to="/">
-                    <Icon icon="ic:baseline-home" style={{ fontSize: '20px', marginRight: '13px'}}/>
-                    {t("IndexNavbar-Home")}
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/register">
-                    <Icon icon="mdi:register" style={{ fontSize: '20px', marginRight: '13px'}}/>
-                    {t("IndexNavbar-Register-Page")}
-                </DropdownItem>
-
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
-
             <UncontrolledDropdown nav>
             <DropdownToggle
               caret
@@ -288,7 +243,6 @@ export default function IndexNavbar() {
               </>
                : <>
                <Icon icon="teenyicons:signin-outline" style={{ fontSize: '20px', marginRight: '5px'}} />
-               {/* {t("IndexNavbar-user")} */}
                {t("IndexNavbar-sign-in")}
                </>}
                
@@ -345,10 +299,16 @@ export default function IndexNavbar() {
               </DropdownToggle>
 
               <DropdownMenu className="dropdown-with-icons">
-                <DropdownItem onClick={() => changeLanguage("en")}>
+                <DropdownItem onClick={() => {
+                                changeLanguage("en");
+                                handleLanguageChange("en");
+                              }}>
                   <Icon icon="fxemoji:greatbritainflag" style={{ fontSize: '20px' }} /> English
                 </DropdownItem>
-                <DropdownItem onClick={() => changeLanguage("ru")}>
+                <DropdownItem onClick={() => {
+                                changeLanguage("ru");
+                                handleLanguageChange("ru");
+                              }}>
                   <Icon icon="openmoji:flag-russia" style={{ fontSize: '20px' }} /> Русский
                 </DropdownItem>
               </DropdownMenu>
