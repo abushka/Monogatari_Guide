@@ -83,6 +83,7 @@ export default function ProfilePage() {
 
 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedCardFile, setSelectedCardFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -91,11 +92,9 @@ export default function ProfilePage() {
 
   const handleFileChangeAvatar = async (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
+    setSelectedCardFile(file);
   
     const userData = {
-      username: username,
-      email: email,
       image: file
     };
   
@@ -105,7 +104,6 @@ export default function ProfilePage() {
   const handleFileRemove = (e) => {
     setSelectedFile(null);
     e.preventDefault();
-    // Сбрасываем значение поля выбора файла
     fileInputRef.current.value = '';
   };
 
@@ -197,7 +195,9 @@ export default function ProfilePage() {
         console.log(response.data);
     
         setUser(response.data);
-        
+
+        setSelectedFile(null)
+        fileInputRef.current.value = '';
     
         history.push('/profile');
       } catch (error) {
@@ -329,7 +329,7 @@ export default function ProfilePage() {
                     <div className="add-profile-overlay">
                       <Icon icon="material-symbols:add-a-photo" className="add-profile-picture-svg" />
                       <form onSubmit={handleChangeProfile} style={{ cursor: 'pointer' }}>
-                        <input type="file" onChange={handleFileChangeAvatar} ref={fileInputRef} accept="image/*" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", opacity: 0, cursor: "pointer" }} />
+                        <input type="file" onChange={handleFileChangeAvatar} accept="image/*" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", opacity: 0, cursor: "pointer" }} />
                       </form>
                     </div>
                   </div>
@@ -452,7 +452,7 @@ export default function ProfilePage() {
                         className="btn-round float-right"
                         color="primary"
                         data-placement="right"
-                        id="tooltip341148792"
+                        id="tooltip3411487123"
                         type="button"
                         onClick={handleChangeProfile}
                       >
@@ -461,7 +461,7 @@ export default function ProfilePage() {
                       <UncontrolledTooltip
                         delay={0}
                         placement="right"
-                        target="tooltip341148792"
+                        target="tooltip3411487123"
                       >
                         Отправить для изменения
                       </UncontrolledTooltip>

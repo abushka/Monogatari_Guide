@@ -36,8 +36,6 @@ import {
   CardFooter,
   CardImg,
   CardTitle,
-  Label,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -46,14 +44,6 @@ import {
   Container,
   Row,
   Col,
-  FormText,
-  NavItem,
-  NavLink,
-  Nav,
-  Table,
-  TabContent,
-  TabPane,
-  UncontrolledTooltip
 } from "reactstrap";
 
 import { Icon } from '@iconify/react';
