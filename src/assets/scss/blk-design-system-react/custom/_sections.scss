@@ -219,13 +219,17 @@
     }
 }
 
-.page-header-profile {
-    // min-height: 100vh;
+.page-header-profiles {
+    min-height: 550px;
     // max-height: 999px;
     padding: 0;
     color: $white;
     position: relative;
     // overflow-x: hidden;
+
+    .container {
+        padding-top: 30vh;
+      }
 
     .page-header-image{
         position: absolute;

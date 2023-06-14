@@ -338,10 +338,10 @@ export default function Anime_Series() {
       <div className="section-tabs">
         
       <Container> 
-      <img alt="Anime picture" className="anime-picture" src={require("assets/img/Anime_sequence.webp")}/>
+      <img alt="Anime picture" className="anime-picture" src={require("assets/img/Monogatari_Fandom.webp")}/>
         <Col md="12">
         <div className="title">
-          <h3 className="mb-3">Порядок просмотра аниме серий</h3>
+          <h3 className="mb-3">{t('Anime_Sequence-orders-watching-anime')}</h3>
         </div>
         <Row>
           <Col className="ml-auto mr-auto" md="12" xl="12">
@@ -364,15 +364,15 @@ export default function Anime_Series() {
                       id="tooltip3760483123"
                     >
                       <Icon icon="ic:baseline-clear-all" style={{ fontSize: '28px', marginTop: '-3px' }} />
-                      <span className="font-weight-light"> Все серии и сезоны</span>
+                      <span className="font-weight-light"> {t('Anime_Sequence-all-series-and-seasons')}</span>
                     </NavLink>
                   </NavItem>
-                  <UncontrolledTooltip
+                  {/* <UncontrolledTooltip
                       placement="top"
                       target="tooltip3760483123"
                     >
                       Все серии и сезоны
-                  </UncontrolledTooltip>
+                  </UncontrolledTooltip> */}
 
                   <NavItem>
                     <NavLink
@@ -384,15 +384,15 @@ export default function Anime_Series() {
                       id="tooltip4123123123"
                     >
                       <Icon icon="bi:calendar-date-fill" style={{ fontSize: '20px', marginTop: '-5px' }} />
-                      <span className="font-weight-light"> По дате выхода серий</span>
+                      <span className="font-weight-light"> {t('Anime_Sequence-serie-release-date')}</span>
                     </NavLink>
                   </NavItem>
-                  <UncontrolledTooltip
+                  {/* <UncontrolledTooltip
                       placement="top"
                       target="tooltip4123123123"
                     >
                       По дате выхода серий
-                  </UncontrolledTooltip>
+                  </UncontrolledTooltip> */}
 
                   <NavItem>
                     <NavLink
@@ -404,15 +404,15 @@ export default function Anime_Series() {
                       id="tooltip4456345232"
                     >
                       <Icon icon="icon-park-outline:timeline" style={{ fontSize: '24px', marginTop: '-2px'}} />
-                      <span className="font-weight-light"> Хронологический порядок</span>
+                      <span className="font-weight-light"> {t('Anime_Sequence-chronological-order')}</span>
                     </NavLink>
                   </NavItem>
-                  <UncontrolledTooltip
+                  {/* <UncontrolledTooltip
                       placement="top"
                       target="tooltip4456345232"
                     >
                       Хронологический порядок
-                  </UncontrolledTooltip>
+                  </UncontrolledTooltip> */}
 
                   <NavItem>
                     <NavLink
@@ -424,15 +424,15 @@ export default function Anime_Series() {
                       id="tooltip124567854"
                     >
                       <Icon icon="ion:book" style={{ fontSize: '20px', marginTop: '-2px'}} />
-                      <span className="font-weight-light"> По ранобэ</span>
+                      <span className="font-weight-light"> {t('Anime_Sequence-light-novel')}</span>
                     </NavLink>
                   </NavItem>
-                  <UncontrolledTooltip
+                  {/* <UncontrolledTooltip
                       placement="top"
                       target="tooltip124567854"
                     >
                       По ранобэ
-                  </UncontrolledTooltip>
+                  </UncontrolledTooltip> */}
 
                 </Nav>
               </CardHeader>
@@ -455,7 +455,7 @@ export default function Anime_Series() {
                           {/* <Container id="menu-dropdown"> */}
                           
                             <Row className="row-dropdown">
-                              <Col md="12" className="">
+                              <Col md="12" className="accordion-status">
                                 <Navbar className="accordion-navbar" expand="xs">
                                   <Container className="">
                                     <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
@@ -547,6 +547,13 @@ export default function Anime_Series() {
                           {/* </Container> */}
                         </AccordionSummary>
                         <AccordionDetails>
+                          <div className="season-image-container">
+                            {season.image != null && season.image != undefined ? 
+                              <img className="season-image" alt="season_image" src={season.image}/>
+                            :
+                              <></>
+                            }
+                          </div>
                           
 
                         {seriesArray
@@ -655,7 +662,18 @@ export default function Anime_Series() {
 
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
-                                {series.description_ru}{series.number}
+                              <div className="series-image-container">
+                                {series.image != null && series.image != undefined ? 
+                                  <img className="series-image" alt="series_image" src={series.image}/>
+                                :
+                                  <></>
+                                }
+                              </div>
+                              
+                                <div>
+                                  {series.description_ru}{series.number}
+                                </div>
+                                
                               </AccordionDetails>
                             </Accordion>
                           </div>
@@ -669,7 +687,7 @@ export default function Anime_Series() {
                 </TabPane>
 
                 <TabPane tabId="link2" className="color-white">
-                  {isLoggedIn ? <p>В этом порядке просмотра статусы просмотра есть только у серий</p> : <></>}
+                  {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
                   
 
                 {seriesAnimeReleaseArray.map((season, index) => (
@@ -778,6 +796,13 @@ export default function Anime_Series() {
 
                         </AccordionSummary>
                         <AccordionDetails>
+                        <div className="season-image-container">
+                            {season.image != null && season.image != undefined ? 
+                              <img className="season-image" alt="season_image" src={season.image}/>
+                            :
+                              <></>
+                            }
+                          </div>
                           
 
                         {season.series
@@ -889,6 +914,14 @@ export default function Anime_Series() {
 
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
+                              <div className="series-image-container">
+                                {series.image != null && series.image != undefined ? 
+                                  <img className="series-image" alt="series_image" src={series.image}/>
+                                :
+                                  <></>
+                                }
+                              </div>
+
                                 {series.description_ru}{series.number}
                               </AccordionDetails>
                             </Accordion>
@@ -906,7 +939,7 @@ export default function Anime_Series() {
                 </TabPane>
 
                 <TabPane tabId="link3" className="color-white">
-                {isLoggedIn ? <p>В этом порядке просмотра статусы просмотра есть только у серий</p> : <></>}
+                {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
                 
                 {seriesChronologicalArray.map((season, index) => (
                     <div key={index}>
@@ -1014,6 +1047,13 @@ export default function Anime_Series() {
 
                         </AccordionSummary>
                         <AccordionDetails>
+                        <div className="season-image-container">
+                            {season.image != null && season.image != undefined ? 
+                              <img className="season-image" alt="season_image" src={season.image}/>
+                            :
+                              <></>
+                            }
+                          </div>
                           
 
                         {season.series
@@ -1125,6 +1165,14 @@ export default function Anime_Series() {
 
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
+                              <div className="series-image-container">
+                                {series.image != null && series.image != undefined ? 
+                                  <img className="series-image" alt="series_image" src={series.image}/>
+                                :
+                                  <></>
+                                }
+                              </div>
+
                                 {series.description_ru}{series.number}
                               </AccordionDetails>
                             </Accordion>
@@ -1142,7 +1190,7 @@ export default function Anime_Series() {
                 </TabPane>
 
                 <TabPane tabId="link4" className="color-white">
-                {isLoggedIn ? <p>В этом порядке просмотра статусы просмотра есть только у серий</p> : <></>}
+                {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
 
                 {seriesRanobeArray.map((season, index) => (
                     <div key={index}>
@@ -1250,6 +1298,13 @@ export default function Anime_Series() {
 
                         </AccordionSummary>
                         <AccordionDetails>
+                        <div className="season-image-container">
+                            {season.image != null && season.image != undefined ? 
+                              <img className="season-image" alt="season_image" src={season.image}/>
+                            :
+                              <></>
+                            }
+                          </div>
                           
 
                         {season.series
@@ -1361,6 +1416,14 @@ export default function Anime_Series() {
 
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
+                              <div className="series-image-container">
+                                {series.image != null && series.image != undefined ? 
+                                  <img className="series-image" alt="series_image" src={series.image}/>
+                                :
+                                  <></>
+                                }
+                              </div>
+                              
                                 {series.description_ru}{series.number}
                               </AccordionDetails>
                             </Accordion>

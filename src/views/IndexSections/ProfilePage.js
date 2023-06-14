@@ -22,8 +22,13 @@ import { Icon } from '@iconify/react';
 
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { UserProfile } from "variables/UserProfile";
+
 import { useHistory } from 'react-router-dom';
 import authStore from "variables/AuthStore.js";
+
+// locales
+import { useTranslation } from "react-i18next";
 
 
 // javascript plugin used to create scrollbars on windows
@@ -81,6 +86,8 @@ export default function ProfilePage() {
     // };
   }, []);
 
+  const { t } = useTranslation();
+
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedCardFile, setSelectedCardFile] = useState(null);
@@ -120,9 +127,6 @@ export default function ProfilePage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
-    const [lastLogin, setLastLogin] = useState('')
-    const formattedDate = lastLogin.slice(0, 19).replace('T', ' ');
-
     const [oldPassword, setOldPassword] = useState('')
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
@@ -139,37 +143,10 @@ export default function ProfilePage() {
     //   }, [cookies]);
 
     useEffect(() => {
-      const tokenAccess = {
-        Bearer: cookies.access
-      };
-    
-      const UserProfile = async (tokenAccess) => {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/user/`, {
-            headers: {
-              Authorization: `Bearer ${authStore.accessToken}`
-            }
-          });
-          console.log(response.data); // Результат ответа от сервера
-      
-          setUser(response.data);
-          setLastLogin(response.data.last_login)
-          // setCookie('refresh', response.data.refresh, { expires: new Date(Date.now() + 86400 * 90 * 1000) });
-          // setCookie('user', JSON.stringify(response.data.user), { expires: new Date(Date.now() + 86400 * 90 * 1000) });
-      
-          // setIsLoggedIn(true);
-    
-          // history.push('/');
-        } catch (error) {
-          console.error(error);
-          // Обработка ошибок
-        }
-      };
-
       if (cookies.access) {
-        UserProfile(tokenAccess)
+        UserProfile(setUser);
       }
-    }, [])
+    }, []);
 
 
 
@@ -187,14 +164,7 @@ export default function ProfilePage() {
         console.log(ChangeResponse.data);
         
 
-        const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/user/`, {
-          headers: {
-            Authorization: `Bearer ${authStore.accessToken}`
-          }
-        });
-        console.log(response.data);
-    
-        setUser(response.data);
+        UserProfile(setUser);
 
         setSelectedFile(null)
         fileInputRef.current.value = '';
@@ -284,9 +254,9 @@ export default function ProfilePage() {
 
   return (
     <>
-      <IndexNavbar />
+      <IndexNavbar user={user} setUser={setUser} />
       <div className="wrapper">
-        <div className="page-header-profile">
+        <div className="page-header-profiles">
           <img
             alt="..."
             className="dots"
@@ -299,9 +269,9 @@ export default function ProfilePage() {
           />
           <Container className="align-items-center">
             <Row>
-              <Col lg="6" md="6">
+              {/* <Col lg="6" md="6">
                 <h1 className="text-left">{user.username}</h1>
-              </Col>
+              </Col> */}
               <Col className="ml-auto mr-auto" lg="4" md="6">
                 <Card className="card-coin card-plain">
                   <CardHeader>
@@ -354,7 +324,7 @@ export default function ProfilePage() {
                           }}
                           href="#"
                         >
-                          О профиле
+                          {t('Profilpage-about-profile')}
                         </NavLink>
                       </NavItem>
                     </Nav>
@@ -366,38 +336,65 @@ export default function ProfilePage() {
                       <div className="profile_container_div">
                           <div className="profile_child-container">
                             <div className="profile_child-item">
-                              <p>Ваш юзернейм: {user.username}</p>
+                              <p className="profile-page-info-card">{t('Profilpage-your-username')} </p>
+                              <p className="profile-page-info-card-user">{user.username}</p>
                             </div>
+                          </div>
+                          {/* <div className="profile_child-container">
+                            <div className="profile_child-item">
+                              <p>{t('Profilpage-your-id')} {user.id}</p>
+                            </div>
+                          </div> */}
+                          <div className="profile_child-container">
+                            {user.email != null && user.email != undefined ?
+                              <div className="profile_child-item">
+                                <p className="profile-page-info-card">{t('Profilpage-your-email')} </p>
+                                <p className="profile-page-info-card-user">{user.email}</p>
+                              </div>
+                            : 
+                            <></>
+                            }
+                            
+                          </div>
+
+                          <div className="profile_child-container">
+                            {user.github_account != null && user.github_account != undefined ?
+                              <div className="profile_child-item">
+                                <p className="profile-page-info-card">{t('Profilpage-your-github')} </p>
+                                <p className="profile-page-info-card-user">{user.github_account}</p>
+                              </div>
+                            :
+                            <></>
+                            }
+                            
                           </div>
                           <div className="profile_child-container">
                             <div className="profile_child-item">
-                              <p>Ваш id: {user.id}</p>
+                              <p className="profile-page-info-card">{t('Profilpage-your-language')} </p>
+                              <p className="profile-page-info-card-user">{t('Profilpage-language')}</p>
                             </div>
                           </div>
+
                           <div className="profile_child-container">
-                            <div className="profile_child-item">
-                              <p>Ваша почта: {user.email}</p>
-                            </div>
+                          {user.date_joined != null && user.date_joined != undefined ?
+                              <div className="profile_child-item">
+                                <p className="profile-page-info-card">{t('Profilpage-your-date-joined')} </p>
+                                <p className="profile-page-info-card-user">{user.date_joined.slice(0, 19).replace('T', ' ')}</p>
+                              </div>
+                            :
+                            <></>
+                            }
                           </div>
+
                           <div className="profile_child-container">
-                            <div className="profile_child-item">
-                              <p>Ваша дата присоединения: {user.date_joined}</p>
-                            </div>
-                          </div>
-                          <div className="profile_child-container">
-                            <div className="profile_child-item">
-                              <p>Ваш github account: {user.github_account}</p>
-                            </div>
-                          </div>
-                          <div className="profile_child-container">
-                            <div className="profile_child-item">
-                              <p>Ваш язык: {user.language}</p>
-                            </div>
-                          </div>
-                          <div className="profile_child-container">
-                            <div className="profile_child-item">
-                              <p>Вы последний раз заходили: {formattedDate}</p>
-                            </div>
+                          {user.last_login != null && user.last_login != undefined ?
+                              <div className="profile_child-item">
+                                <p className="profile-page-info-card">{t('Profilpage-your-last-login')} </p>
+                                <p className="profile-page-info-card-user">{user.last_login.slice(0, 19).replace('T', ' ')}</p>
+                              </div>
+                            :
+                            <></>
+                            }
                           </div>
                         </div>
                       </TabPane>
@@ -414,21 +411,21 @@ export default function ProfilePage() {
               <Col lg="6">
                 <Card className="card-plain">
                   <CardHeader>
-                    <h1 className="">Изменить профиль</h1>
+                    <h1 className="">{t('Profilpage-change-profile')}</h1>
                   </CardHeader>
                   <CardBody>
                     <Form onSubmit={handleChangeProfile}>
                       <Row>
                         <Col md="6">
                           <FormGroup>
-                            <label>Username</label>
+                            <label>{t('Profilpage-username')}</label>
                             <Input value={username} onChange={(e) => setUsername(e.target.value)}  placeholder="Abushka" type="text" />
                           </FormGroup>
                         </Col>
                         <Col md="6">
                           <FormGroup>
-                            <label>Email address</label>
-                            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="mike@email.com" type="email" />
+                            <label>{t('Profilpage-email-address')}</label>
+                            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="abushka@email.com" type="email" />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -441,7 +438,7 @@ export default function ProfilePage() {
                           <input type="file" id="fileUpload" onChange={handleFileChange} ref={fileInputRef} />
                           {selectedFile && (
                             <button className="remove-file btn-primary" onClick={handleFileRemove}>
-                              Удалить
+                              {t('Profilpage-remove')}
                             </button>
                           )}
                         </div>
@@ -456,14 +453,14 @@ export default function ProfilePage() {
                         type="button"
                         onClick={handleChangeProfile}
                       >
-                        Изменить
+                        {t('Profilpage-change')}
                       </Button>
                       <UncontrolledTooltip
                         delay={0}
                         placement="right"
                         target="tooltip3411487123"
                       >
-                        Отправить для изменения
+                        {t('Profilpage-send-for-change')}
                       </UncontrolledTooltip>
                     </Form>
 
@@ -480,14 +477,14 @@ export default function ProfilePage() {
               <Col lg="6">
                 <Card className="card-plain">
                   <CardHeader>
-                    <h1 className="">Изменить пароль</h1>
+                    <h1 className="">{t('Profilpage-change-password')}</h1>
                   </CardHeader>
                   <CardBody>
                     <Form onSubmit={handleChangePassword}>
                       <Row>
                         <Col md="12">
                           <FormGroup>
-                            <label>Old Password</label>
+                            <label>{t('Profilpage-old-password')}</label>
                             <Input value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} placeholder="qwerty123" type="text" />
                           </FormGroup>
                         </Col>
@@ -495,7 +492,7 @@ export default function ProfilePage() {
                       <Row>
                         <Col md="12">
                           <FormGroup>
-                            <label>New password</label>
+                            <label>{t('Profilpage-new-password')}</label>
                             <Input value={password1} onChange={(e) => setPassword1(e.target.value)} placeholder="12345678" type="text" />
                           </FormGroup>
                         </Col>
@@ -504,7 +501,7 @@ export default function ProfilePage() {
                       <Row>
                         <Col md="12">
                           <FormGroup>
-                            <label>Confirm password</label>
+                            <label>{t('Profilpage-confirm-password')}</label>
                             <Input value={password2} onChange={(e) => setPassword2(e.target.value)} placeholder="12345678" type="text" />
                           </FormGroup>
                         </Col>
@@ -518,14 +515,14 @@ export default function ProfilePage() {
                         type="button"
                         onClick={handleChangePassword}
                       >
-                        Изменить Пароль
+                        {t('Profilpage-change-password')}
                       </Button>
                       <UncontrolledTooltip
                         delay={0}
                         placement="right"
                         target="tooltip341148793"
                       >
-                        Отправить для изменения
+                        {t('Profilpage-send-for-change')}
                       </UncontrolledTooltip>
                     </Form>
                   </CardBody>

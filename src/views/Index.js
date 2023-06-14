@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { UserProfile } from "variables/UserProfile";
+
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { observer } from 'mobx-react-lite';
@@ -21,6 +23,7 @@ import Suggestion from "views/IndexSections/Suggestion.js"
 
 const Index = observer(() => {
   const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     authStore.setAccessToken(cookies.access);
@@ -85,6 +88,12 @@ const Index = observer(() => {
   }, []);
 
   useEffect(() => {
+    if (cookies.access) {
+      UserProfile(setUser);
+    }
+  }, []);
+
+  useEffect(() => {
     document.body.classList.toggle("index-page");
     return function cleanup() {
       document.body.classList.toggle("index-page");
@@ -93,7 +102,7 @@ const Index = observer(() => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <IndexNavbar />
+      <IndexNavbar user={user} setUser={setUser} />
       <div className="wrapper">
         <PageHeader />
         <div className="main">

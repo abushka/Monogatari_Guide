@@ -30,7 +30,11 @@ import i18n from "../i18n.js";
 import { Icon } from '@iconify/react';
 
 import axios from 'axios';
+import { UserProfile } from "variables/UserProfile";
+
 import { useCookies } from 'react-cookie';
+import authStore from "variables/AuthStore.js";
+
 import { useHistory } from 'react-router-dom';
 
 
@@ -61,12 +65,14 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-export default function IndexNavbar() {
+export default function IndexNavbar({ user, setUser}) {
   const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
   const [fullName, setFullName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [user, setUser] = useState('');
+
   const history = useHistory();
 
   const [collapseOpen, setCollapseOpen] = useState(false);
@@ -208,6 +214,18 @@ export default function IndexNavbar() {
     setIsLoggedIn(false);
     window.location.href = '/';
   };
+
+
+  useEffect(() => {
+    authStore.setAccessToken(cookies.access);
+  }, [cookies.access]);
+
+  useEffect(() => {
+    if (cookies.access) {
+      UserProfile(setUser);
+    }
+  }, []);
+
   
 
   return (
@@ -266,7 +284,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 title={t("IndexNavbar-Subscribe-Telegram")} // Подпишись на мой Telegram канал
               >
-                <Icon icon="ic:baseline-telegram" style={{ fontSize: '20px'}} />
+                <Icon icon="ic:baseline-telegram" style={{ fontSize: '28px'}} />
                 <p className="d-lg-none d-xl-none">Telegram</p>
               </NavLink>
             </NavItem>
@@ -278,7 +296,7 @@ export default function IndexNavbar() {
                 target="_blank"
                 title={t("IndexNavbar-Subscribe-Instagram")} // Подпишись на мой Instagram
               >
-                <Icon icon="mdi:instagram" style={{ fontSize: '20px'}} />
+                <Icon icon="mdi:instagram" style={{ fontSize: '28px'}} />
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
@@ -295,7 +313,12 @@ export default function IndexNavbar() {
             >
 
               {isLoggedIn ? <>
+                {user.image_thumbnail ? 
+                <img alt="user_avatar" src={user.image_thumbnail} className="index-navbar-user-image"/>
+                : 
                 <Icon icon="icon-park-solid:people" style={{ fontSize: '20px', marginRight: '5px'}} />
+                }
+                
                {t("IndexNavbar-Profile")} 
               </>
                : <>
@@ -325,7 +348,10 @@ export default function IndexNavbar() {
               }
 
             {isLoggedIn ?<></> : 
-              <DropdownItem onClick={() => {setFormModal(true); toggleCollapse();}}>
+              <DropdownItem onClick={() => {
+                setFormModal(true); 
+                // toggleCollapse();
+                }}>
                 <Icon icon="fluent-mdl2:signin" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Signin")}
               </DropdownItem>
               }
@@ -350,7 +376,7 @@ export default function IndexNavbar() {
                 onClick={(e) => e.preventDefault()}
               >
                 
-                <Icon icon="material-symbols:language" style={{ fontSize: '20px', marginRight: '13px' }} /> {t("IndexNavbar-Language")}
+                <Icon icon="material-symbols:language" style={{ fontSize: '20px', marginTop: '-4px' }} /> {t("IndexNavbar-Language")}
               </DropdownToggle>
 
               <DropdownMenu className="dropdown-with-icons">

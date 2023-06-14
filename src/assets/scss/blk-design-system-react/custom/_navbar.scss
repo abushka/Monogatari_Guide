@@ -20,8 +20,9 @@
     .nav-item .nav-link{
       position: relative;
       color: inherit;
-      line-height: 20px;
-      display: inline-flex;
+      line-height: 25px;
+      // display: inline-flex;
+      font-size: 14px;
       &:hover{
         color: $opacity-8;
       }
@@ -52,7 +53,7 @@
 
   &.navbar-transparent{
     background: $transparent-bg !important;
-    padding-top: 25px;
+    // padding-top: 25px;
   }
 
   &.bg-white{
@@ -105,6 +106,7 @@
 
   &.bg-info {
     background-color: $info !important;
+    // padding-top: 15px;
   }
 
   &.bg-success {
@@ -179,6 +181,23 @@
   display: none;
 }
 
+.index-navbar-user-image {
+  position: relative;
+  // top: -10%;
+  // left: -10%;
+  // transform: translate(10%, -25%);
+  width: 40px !important;
+  height: 40px;
+  // background: center / cover no-repeat;
+  object-fit: cover;
+  // image-rendering: optimizeSpeed; /* Для старых версий браузеров */
+  // image-rendering: -moz-crisp-edges; /* Для Firefox */
+  // image-rendering: -o-crisp-edges; /* Для Opera */
+  // image-rendering: -webkit-optimize-contrast; /* Для Chrome и Safari */
+  // image-rendering: optimizeSpeed;
+  border-radius: 50%;
+}
+
 @media screen and (max-width: 991px){
   .navbar{
       .container-fluid{
@@ -195,11 +214,11 @@
 
         &.collapsing,
         &.collapse{
-          animation: show_navbar_collapse .2s ease forwards;
+          animation: show_navbar_collapse .2s ease;
         }
 
         &.collapsing-out {
-            animation: hide_navbar_collapse .2s ease forwards;
+            animation: hide_navbar_collapse .2s ease;
         }
 
         .navbar-collapse-header {
@@ -399,6 +418,8 @@
   }
 
   .navbar-nav {
+    align-items: center;
+    vertical-align: center;
     .nav-link {
       &.profile-photo {
         padding: 0;

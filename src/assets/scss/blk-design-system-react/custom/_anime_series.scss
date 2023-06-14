@@ -1,6 +1,6 @@
 .anime-picture {
-    width: 1088px;
-    height: 596px;
+    width: 100%;
+    height: 100%;
 }
 
 .color-white {
@@ -129,6 +129,7 @@
 .accordion-dropdown-menu-item {
     position: relative !important;
     z-index: 1900 !important;
+    color: #9A9A9A !important;
 }
 
 .accordion-array div {
@@ -143,7 +144,7 @@
     position: relative;
     // top: 7px;
     height: 100%;
-    color: #fff !important;
+    color: $success !important;
     z-index: 1 !important;
     vertical-align: middle !important;
     
@@ -174,7 +175,34 @@
     // border: 1px solid $info-states;
 }
 
+.season-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
 
+.season-image {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto 20px auto;
+}
+
+.series-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.series-image {
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    margin: 0 auto 20px auto;
+}
 
 
 
@@ -230,8 +258,12 @@
         font-size: 14px !important;
         // background-color: green !important;
     }
+    
     .accordion-select-header {
         font-size: 14px !important;
+    }
+    .accordion-select-header::after {
+        display: none;
     }
 }
   
@@ -244,9 +276,10 @@
     //     padding: 0 5px 0 5px !important;
     // }
     .accordion-header {
-        font-size: 12px !important;
+        font-size: 14px !important;
         margin-top: 7px !important;
         margin-left: 3px !important;
+        padding-left: 10px !important;
         
         // width: 60%;
         // height: 38px;
@@ -259,7 +292,7 @@
         color: #fff !important;
         font-size: 12px !important;
         width: 60%;
-        height: 38px;
+        // height: 38px;
         overflow: hidden;
         text-overflow: ellipsis;
         // white-space: nowrap;
@@ -274,4 +307,19 @@
     .accordion-select-header::after {
         display: none;
     }
+
+    .accordion-array {
+        padding: 2px !important;
+    }
+
+    .accordion-status {
+        padding-left: 4px !important;
+    }
+    
+    .col-md-12 {
+        padding-left: 4px !important;
+    }
+    // .accordion-array svg {
+    //     color: #fff !important;
+    // }
 }
