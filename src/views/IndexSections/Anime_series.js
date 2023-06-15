@@ -478,8 +478,8 @@ export default function Anime_Series() {
                                                 {/* {console.log(selectedStatus)} */}
                                                 {selectedStatusArray[season.number - 1] !== undefined
                                                   ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
-                                                  : SeasonsStatusData[season.id]?.season != undefined
-                                                  ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
+                                                  : SeasonsStatusData[season.number]?.season != undefined
+                                                  ? t(`Anime_Series_${SeasonsStatusData[season.number]?.season?.status}`)
                                                   : ""}
 
                                               </DropdownToggle>
@@ -558,8 +558,8 @@ export default function Anime_Series() {
 
                         {seriesArray
                         .filter((series) => series.season.id === season.id)
-                        .map((series) => (
-                          <div key={series.number}>
+                        .map((series, index) => (
+                          <div key={series.id}>
                             <Accordion className="accordion-children-main">
                               <AccordionSummary
                                 className="accordion-array"
@@ -567,7 +567,7 @@ export default function Anime_Series() {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                               >
-                                <Typography className="accordion-children-header">ID Серии: {series.number}, Name: {series.name_ru}</Typography>
+                                <Typography className="accordion-children-header">ID Серии: {series.number}, Номер {index + 1}, Name: {series.name_ru}</Typography>
 
                                 <Row className="row-dropdown">
                                   <Col md="12" className="">
@@ -671,7 +671,7 @@ export default function Anime_Series() {
                               </div>
                               
                                 <div>
-                                  {series.description_ru}{series.number}
+                                  {series.description_ru} Скоро всё будет, добавлю и сделаю красиво :) / Everything will be soon, I will add and make it beautiful :)
                                 </div>
                                 
                               </AccordionDetails>

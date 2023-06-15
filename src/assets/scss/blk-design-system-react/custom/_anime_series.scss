@@ -19,7 +19,7 @@
 .accordion-main {
     // color: white !important;
     background-color: #1c326b !important;
-    border: 1px solid #00000038;
+    // border: 1px solid #00000038;
     margin-bottom: 10px;
     // box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     // box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
@@ -161,7 +161,16 @@
 .accordion-children-main {
     margin-bottom: 10px !important;
     background-color: #1f2251 !important;
-    border: 1px dotted #00000038;
+    // border: 1px dotted #00000038;
+}
+
+.accordion-children-main:active,
+.accordion-children-main:checked,
+.accordion-children-main:focus,
+.accordion-children-main:enabled,
+.accordion-children-main:last-of-type,
+.accordion-children-main::selection {
+    margin-bottom: 10px !important;
 }
 
 .accordion-children-header {
@@ -317,7 +326,8 @@
     }
     
     .col-md-12 {
-        padding-left: 4px !important;
+        padding-left: 6px !important;
+        padding-right: 7px !important;
     }
     // .accordion-array svg {
     //     color: #fff !important;
