@@ -53,6 +53,16 @@
     background: transparent !important;
 }
 
+.MuiAccordionSummary-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accordion-nav-dropdown {
+    padding-left: auto !important;
+  }
+
 // .accordion-dropdown {
 //     position: relative;
 // }
@@ -310,7 +320,7 @@
     .accordion-select-header {
         width: 38%;
         font-size: 12px !important;
-        margin-right: -10px;
+        // margin-right: -10px;
     }
 
     .accordion-select-header::after {

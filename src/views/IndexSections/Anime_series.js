@@ -30,6 +30,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Loader from "./Loader";
 
 // reactstrap components
 import {
@@ -45,13 +46,13 @@ import {
   NavItem,
   Navbar,
   NavLink,
-  NavbarBrand,
+  // NavbarBrand,
   Collapse,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
-  UncontrolledTooltip
+  // UncontrolledTooltip
 } from "reactstrap";
 
 import { useCookies } from 'react-cookie';
@@ -64,7 +65,7 @@ export default function Anime_Series() {
 
   const { t } = useTranslation();
 
-  const [cookies, setCookie, removeCookie] = useCookies(['access', 'refresh', 'user']);
+  const [cookies] = useCookies(['access', 'refresh', 'user']);
 
   useEffect(() => {
     authStore.setAccessToken(cookies.access);
@@ -78,9 +79,9 @@ export default function Anime_Series() {
   const SeasonsArray = Object.values(SeasonsData);
 
   const [SeasonsStatusData, setSeasonsStatusData] = useState([])
-  const SeasonsStatusArray = Object.values(SeasonsStatusData);
+  // const SeasonsStatusArray = Object.values(SeasonsStatusData);
 
-  const [selectedStatus, setSelectedStatus] = useState("");
+  // const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedStatusArray, setSelectedStatusArray] = useState([]);
 
   // Series
@@ -88,22 +89,32 @@ export default function Anime_Series() {
   const seriesArray = Object.values(SeriesData);
 
   const [SeriesStatusData, setSeriesStatusData] = useState([])
-  const SeriesStatusArray = Object.values(SeriesStatusData);
+  // const SeriesStatusArray = Object.values(SeriesStatusData);
 
-  const [selectedSerieStatus, setSelectedSerieStatus] = useState("");
+  // const [selectedSerieStatus, setSelectedSerieStatus] = useState("");
   const [selectedSerieStatusArray, setSelectedSerieStatusArray] = useState([]);
 
-    // Series anime_release_view_number
-    const [SeriesAnimeReleaseData, setSeriesAnimeReleaseData] = useState([])
-    const seriesAnimeReleaseArray = Object.values(SeriesAnimeReleaseData);
+  // Series anime_release_view_number
+  const [SeriesAnimeReleaseData, setSeriesAnimeReleaseData] = useState([])
+  const seriesAnimeReleaseArray = Object.values(SeriesAnimeReleaseData);
 
-    // Series anime_release_view_number
-    const [SeriesChronologicalData, setSeriesChronologicalData] = useState([])
-    const seriesChronologicalArray = Object.values(SeriesChronologicalData);
+  const [LoadingAnimeRelease, setLoadingAnimeRelease] = useState(true);
 
-    // Series ranobe_release_number
-    const [SeriesRanobeData, setSeriesRanobeData] = useState([])
-    const seriesRanobeArray = Object.values(SeriesRanobeData);
+  
+  // Series ranobe_release_number
+  const [SeriesRanobeData, setSeriesRanobeData] = useState([])
+  const seriesRanobeArray = Object.values(SeriesRanobeData);
+
+  const [LoadingRanobe, setLoadingRanobe] = useState(true);
+
+  // Series chronological_view_number
+  const [SeriesChronologicalData, setSeriesChronologicalData] = useState([])
+  const seriesChronologicalArray = Object.values(SeriesChronologicalData);
+
+  const [LoadingChronological, setLoadingChronological] = useState(true);
+
+
+
 
 
   // Проверка на куки
@@ -165,7 +176,7 @@ export default function Anime_Series() {
     const updatedStatusArray = [...selectedStatusArray];
     updatedStatusArray[seasonNumber - 1] = status;
     setSelectedStatusArray(updatedStatusArray);
-    setSelectedStatus(status);
+    // setSelectedStatus(status);
   
     try {
       const response = await axios.post(
@@ -242,7 +253,7 @@ export default function Anime_Series() {
       const updatedStatusArray = [...selectedSerieStatusArray];
       updatedStatusArray[serieNumber - 1] = status;
       setSelectedSerieStatusArray(updatedStatusArray);
-      setSelectedSerieStatus(status);
+      // setSelectedSerieStatus(status);
     
       try {
         const response = await axios.post(
@@ -267,68 +278,101 @@ export default function Anime_Series() {
     };
 
 
-  // Series anime_release_view_number
+    // Series anime_release_view_number, ranobe_release_number, chronological_view_number
 
-  useEffect(() => {
-  
-    const SeriesChronological = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/chronological/`, {
-        });
-        console.log(response.data);
-    
-        setSeriesChronologicalData(response.data);
-      } catch (error) {
-        console.error(error);
-        // Обработка ошибок
+    const handleTabChange = async (tabIndex) => {
+      if (tabIndex === 2 && SeriesAnimeReleaseData.length === 0) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/anime-release/`);
+          setSeriesAnimeReleaseData(response.data);
+          setLoadingAnimeRelease(false)
+        } catch (error) {
+          console.error(error);
+          // Обработка ошибок
+        }
+      } 
+      else if (tabIndex === 3 && SeriesRanobeData.length === 0) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/ranobe/`);
+          setSeriesRanobeData(response.data);
+          setLoadingRanobe(false)
+        } catch (error) {
+          console.error(error);
+          // Обработка ошибок
+        }
       }
+      else if (tabIndex === 4 && SeriesChronologicalData.length === 0) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/chronological/`);
+          setSeriesChronologicalData(response.data);
+          setLoadingChronological(false)
+        } catch (error) {
+          console.error(error);
+          // Обработка ошибок
+        }
+      } 
     };
 
-    SeriesChronological()
-  }, [])
-
-
-
-    // Series anime_release_view_number
-
-    useEffect(() => {
+    // useEffect(() => {
   
-      const SeriesAnimeRelease = async () => {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/anime-release/`, {
-          });
-          console.log(response.data);
+    //   const SeriesAnimeRelease = async () => {
+    //     try {
+    //       const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/anime-release/`, {
+    //       });
+    //       console.log(response.data);
       
-          setSeriesAnimeReleaseData(response.data);
-        } catch (error) {
-          console.error(error);
-          // Обработка ошибок
-        }
-      };
+    //       setSeriesAnimeReleaseData(response.data);
+    //     } catch (error) {
+    //       console.error(error);
+    //       // Обработка ошибок
+    //     }
+    //   };
   
-      SeriesAnimeRelease()
-    }, [])
+    //   SeriesAnimeRelease()
+    // }, [])
 
 
-    // Series ranobe_release_number
+    // // Series ranobe_release_number
 
-    useEffect(() => {
+    // useEffect(() => {
   
-      const SeriesRanobe = async () => {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/ranobe/`, {
-          });
-          console.log(response.data);
+    //   const SeriesRanobe = async () => {
+    //     try {
+    //       const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/ranobe/`, {
+    //       });
+    //       console.log(response.data);
       
-          setSeriesRanobeData(response.data);
-        } catch (error) {
-          console.error(error);
-          // Обработка ошибок
-        }
-      };
+    //       setSeriesRanobeData(response.data);
+    //     } catch (error) {
+    //       console.error(error);
+    //       // Обработка ошибок
+    //     }
+    //   };
   
-      SeriesRanobe()
-    }, [])
+    //   SeriesRanobe()
+    // }, [])
+
+
+
+    // // Series chronological_view_number
+
+    // useEffect(() => {
+    
+    //   const SeriesChronological = async () => {
+    //     try {
+    //       const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/chronological/`, {
+    //       });
+    //       console.log(response.data);
+      
+    //       setSeriesChronologicalData(response.data);
+    //     } catch (error) {
+    //       console.error(error);
+    //       // Обработка ошибок
+    //     }
+    //   };
+
+    //   SeriesChronological()
+    // }, [])
 
 
 
@@ -338,7 +382,7 @@ export default function Anime_Series() {
       <div className="section-tabs">
         
       <Container> 
-      <img alt="Anime picture" className="anime-picture" src={require("assets/img/Monogatari_Fandom.webp")}/>
+      <img alt="Anime " className="anime-picture" src={require("assets/img/Monogatari_Fandom.webp")}/>
         <Col md="12">
         <div className="title">
           <h3 className="mb-3">{t('Anime_Sequence-orders-watching-anime')}</h3>
@@ -379,47 +423,10 @@ export default function Anime_Series() {
                       className={classnames({
                         active: iconTabs === 2
                       })}
-                      onClick={(e) => setIconsTabs(2)}
-                      href="#"
-                      id="tooltip4123123123"
-                    >
-                      <Icon icon="bi:calendar-date-fill" style={{ fontSize: '20px', marginTop: '-5px' }} />
-                      <span className="font-weight-light"> {t('Anime_Sequence-serie-release-date')}</span>
-                    </NavLink>
-                  </NavItem>
-                  {/* <UncontrolledTooltip
-                      placement="top"
-                      target="tooltip4123123123"
-                    >
-                      По дате выхода серий
-                  </UncontrolledTooltip> */}
-
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: iconTabs === 3
-                      })}
-                      onClick={(e) => setIconsTabs(3)}
-                      href="#"
-                      id="tooltip4456345232"
-                    >
-                      <Icon icon="icon-park-outline:timeline" style={{ fontSize: '24px', marginTop: '-2px'}} />
-                      <span className="font-weight-light"> {t('Anime_Sequence-chronological-order')}</span>
-                    </NavLink>
-                  </NavItem>
-                  {/* <UncontrolledTooltip
-                      placement="top"
-                      target="tooltip4456345232"
-                    >
-                      Хронологический порядок
-                  </UncontrolledTooltip> */}
-
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: iconTabs === 4
-                      })}
-                      onClick={(e) => setIconsTabs(4)}
+                      onClick={(e) => {
+                        setIconsTabs(2);
+                        handleTabChange(2);
+                      }}
                       href="#"
                       id="tooltip124567854"
                     >
@@ -427,12 +434,45 @@ export default function Anime_Series() {
                       <span className="font-weight-light"> {t('Anime_Sequence-light-novel')}</span>
                     </NavLink>
                   </NavItem>
-                  {/* <UncontrolledTooltip
-                      placement="top"
-                      target="tooltip124567854"
+                  
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: iconTabs === 3
+                      })}
+                      onClick={(e) => {
+                        setIconsTabs(3);
+                        handleTabChange(3);
+                      }}
+                      href="#"
+                      id="tooltip4123123123"
                     >
-                      По ранобэ
-                  </UncontrolledTooltip> */}
+                      <Icon icon="bi:calendar-date-fill" style={{ fontSize: '20px', marginTop: '-5px' }} />
+                      <span className="font-weight-light"> {t('Anime_Sequence-serie-release-date')}</span>
+                    </NavLink>
+                  </NavItem>
+
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: iconTabs === 4
+                      })}
+                      onClick={(e) => {
+                        setIconsTabs(4);
+                        handleTabChange(4);
+                      }}
+                      href="#"
+                      id="tooltip4456345232"
+                    >
+                      <Icon icon="icon-park-outline:timeline" style={{ fontSize: '24px', marginTop: '-2px'}} />
+                      <span className="font-weight-light"> {t('Anime_Sequence-chronological-order')}</span>
+                    </NavLink>
+                  </NavItem>
+
+
+
 
                 </Nav>
               </CardHeader>
@@ -454,12 +494,23 @@ export default function Anime_Series() {
                           <Typography className="accordion-header">{season.name_en}</Typography>
                           {/* <Container id="menu-dropdown"> */}
                           
-                            <Row className="row-dropdown">
+
+                            {/* <Row className="row-dropdown">
                               <Col md="12" className="accordion-status">
                                 <Navbar className="accordion-navbar" expand="xs">
                                   <Container className="">
                                     <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                      <Nav className="accordion-nav-dropdown">
+                                      
+                                    </Collapse>
+                                  </Container>
+                                </Navbar>
+                              </Col>
+                            </Row> */}
+                          {/* </Container> */}
+
+
+
+                          <Nav className="accordion-nav-dropdown">
                                         
                                       {isLoggedIn ?
                                             <UncontrolledDropdown className="accordion-dropdown">
@@ -478,7 +529,7 @@ export default function Anime_Series() {
                                                 {/* {console.log(selectedStatus)} */}
                                                 {selectedStatusArray[season.number - 1] !== undefined
                                                   ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
-                                                  : SeasonsStatusData[season.number]?.season != undefined
+                                                  : SeasonsStatusData[season.number]?.season !== undefined
                                                   ? t(`Anime_Series_${SeasonsStatusData[season.number]?.season?.status}`)
                                                   : ""}
 
@@ -539,16 +590,20 @@ export default function Anime_Series() {
                                           : <></>}
 
                                       </Nav>
-                                    </Collapse>
-                                  </Container>
-                                </Navbar>
-                              </Col>
-                            </Row>
-                          {/* </Container> */}
+
+
+
+
+
+
+
+
+
+                          
                         </AccordionSummary>
                         <AccordionDetails>
                           <div className="season-image-container">
-                            {season.image != null && season.image != undefined ? 
+                            {season.image !== null && season.image !== undefined ? 
                               <img className="season-image" alt="season_image" src={season.image}/>
                             :
                               <></>
@@ -557,7 +612,7 @@ export default function Anime_Series() {
                           
 
                         {seriesArray
-                        .filter((series) => series.season.id === season.id)
+                        .filter((series) => series.season_id === season.id)
                         .map((series, index) => (
                           <div key={series.id}>
                             <Accordion className="accordion-children-main">
@@ -567,103 +622,108 @@ export default function Anime_Series() {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                               >
-                                <Typography className="accordion-children-header">ID Серии: {series.number}, Номер {index + 1}, Name: {series.name_ru}</Typography>
+                                <Typography className="accordion-children-header">{index + 1}: {series.name_ru}</Typography>
 
-                                <Row className="row-dropdown">
+                                {/* <Row className="row-dropdown">
                                   <Col md="12" className="">
                                     <Navbar className="accordion-navbar" expand="xs">
                                       <Container className="">
                                         <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                          <Nav className="">
 
-                                            {isLoggedIn ? 
-                                            <UncontrolledDropdown className="accordion-dropdown">
-                                            <DropdownToggle
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              caret
-                                              color="default"
-                                              data-toggle="dropdown"
-                                              href="#"
-                                              id="navbarDropdownMenuLink"
-                                              onClick={(event) => event.stopPropagation()}
-                                              nav
-                                              className="accordion-select-header"
-                                            >
-                                              
-                                              {selectedSerieStatusArray[series.number - 1] !== undefined
-                                                ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
-                                                : SeriesStatusData[series.number]?.serie != undefined
-                                                ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
-                                                : ""}
-
-                                            </DropdownToggle>
-                                            
-                                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
-                                              
-                                              <DropdownItem
-                                              // style={{
-                                              //   backgroundColor: "rgba(256, 256, 256, 1)",
-                                              // }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('not-watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_not-watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              // style={{
-                                              //   backgroundColor: "rgba(256, 256, 256, 1)",
-                                              // }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watching', series.number)}}
-                                              >
-                                                {t('Anime_Series_watching')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              // style={{
-                                              //   backgroundColor: "rgba(256, 256, 256, 1)",
-                                              // }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              // style={{
-                                              //   backgroundColor: "rgba(256, 256, 256, 1)",
-                                              // }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('to-watch', series.number)}}
-                                              >
-                                                {t('Anime_Series_to-watch')}
-                                              </DropdownItem>
-                                            </DropdownMenu>
-                                          </UncontrolledDropdown>
-                                            : <></>}
-                                            
-                                          </Nav>
                                         </Collapse>
                                       </Container>
                                     </Navbar>
                                   </Col>
-                            </Row>
+                            </Row> */}
+
+
+
+
+                                        <Nav className="">
+
+                                        {isLoggedIn ? 
+                                        <UncontrolledDropdown className="accordion-dropdown">
+                                        <DropdownToggle
+                                          aria-expanded={false}
+                                          aria-haspopup={true}
+                                          caret
+                                          color="default"
+                                          data-toggle="dropdown"
+                                          href="#"
+                                          id="navbarDropdownMenuLink"
+                                          onClick={(event) => event.stopPropagation()}
+                                          nav
+                                          className="accordion-select-header"
+                                        >
+                                          
+                                          {selectedSerieStatusArray[series.number - 1] !== undefined
+                                            ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
+                                            : SeriesStatusData[series.number]?.serie !== undefined
+                                            ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
+                                            : ""}
+
+                                        </DropdownToggle>
+
+                                        <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                          
+                                          <DropdownItem
+                                          // style={{
+                                          //   backgroundColor: "rgba(256, 256, 256, 1)",
+                                          // }}
+                                          className="accordion-dropdown-menu-item"
+                                            href="#"
+                                            onClick={(event) => {
+                                              event.preventDefault();
+                                              handleSeriesStatusSelection('not-watched', series.number)}}
+                                          >
+                                            {t('Anime_Series_not-watched')}
+                                          </DropdownItem>
+                                          <DropdownItem
+                                          // style={{
+                                          //   backgroundColor: "rgba(256, 256, 256, 1)",
+                                          // }}
+                                          className="accordion-dropdown-menu-item"
+                                            href="#"
+                                            onClick={(event) => {
+                                              event.preventDefault();
+                                              handleSeriesStatusSelection('watching', series.number)}}
+                                          >
+                                            {t('Anime_Series_watching')}
+                                          </DropdownItem>
+                                          <DropdownItem
+                                          // style={{
+                                          //   backgroundColor: "rgba(256, 256, 256, 1)",
+                                          // }}
+                                          className="accordion-dropdown-menu-item"
+                                            href="#"
+                                            onClick={(event) => {
+                                              event.preventDefault();
+                                              handleSeriesStatusSelection('watched', series.number)}}
+                                          >
+                                            {t('Anime_Series_watched')}
+                                          </DropdownItem>
+                                          <DropdownItem
+                                          // style={{
+                                          //   backgroundColor: "rgba(256, 256, 256, 1)",
+                                          // }}
+                                          className="accordion-dropdown-menu-item"
+                                            href="#"
+                                            onClick={(event) => {
+                                              event.preventDefault();
+                                              handleSeriesStatusSelection('to-watch', series.number)}}
+                                          >
+                                            {t('Anime_Series_to-watch')}
+                                          </DropdownItem>
+                                        </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                        : <></>}
+
+                                        </Nav>
 
                               </AccordionSummary>
                               <AccordionDetails className="accordion-children-details">
                               <div className="series-image-container">
-                                {series.image != null && series.image != undefined ? 
+                                {series.image !== null && series.image !== undefined ? 
                                   <img className="series-image" alt="series_image" src={series.image}/>
                                 :
                                   <></>
@@ -671,7 +731,15 @@ export default function Anime_Series() {
                               </div>
                               
                                 <div>
-                                  {series.description_ru} Скоро всё будет, добавлю и сделаю красиво :) / Everything will be soon, I will add and make it beautiful :)
+                                  <p>Номер серии в цикле: {series.number}</p>
+
+                                  <p>Номер серии по дате выхода аниме: {series.anime_release_view_number}</p>
+
+                                  <p>Номер серии по выходу ранобэ: {series.ranobe_release_number}</p>
+
+                                  <p>Номер серии в хронологическом порядке: {series.chronological_view_number}</p>
+
+                                  <p>Описание: {series.description_ru}</p>
                                 </div>
                                 
                               </AccordionDetails>
@@ -686,147 +754,426 @@ export default function Anime_Series() {
                   ))}
                 </TabPane>
 
-                <TabPane tabId="link2" className="color-white">
+
+
+
+                <TabPane tabId="link2" className="">
+
+                {LoadingRanobe == true ? 
+                <Loader />
+                : <>
+
                   {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
+
+                  {seriesRanobeArray.map((season, index) => (
+                      <div key={index}>
+                        <Accordion key={index} className="accordion-main">
+                          <AccordionSummary
+                            className="accordion-array"
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                          >
+                            <Typography className="accordion-header">{season.name_en}</Typography>
+
+            
+                            {/* <Row className="row-dropdown">
+                              <Col md="12" className="">
+                                <Navbar className="accordion-navbar" expand="xs">
+                                  <Container className="">
+                                    <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
+                                      <Nav className="">
+                                        {isLoggedIn ? 
+                                        
+                                        <UncontrolledDropdown className="accordion-dropdown">
+                                          <DropdownToggle
+                                            aria-expanded={false}
+                                            aria-haspopup={true}
+                                            caret
+                                            color="default"
+                                            data-toggle="dropdown"
+                                            href="#"
+                                            id="navbarDropdownMenuLink"
+                                            onClick={(event) => event.stopPropagation()}
+                                            nav
+                                            className="accordion-select-header"
+                                          >
+                                            
+                                            {selectedStatusArray[season.number - 1] !== undefined
+                                              ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
+                                              : SeasonsStatusData[season.id]?.season != undefined
+                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
+                                              : ""}
+
+                                          </DropdownToggle>
+                                          
+                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                            
+                                            <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
+                                            className="accordion-dropdown-menu-item"
+                                              href="#"
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('not-watched', season.number)}}
+                                            >
+                                              {t('Anime_Series_not-watched')}
+                                            </DropdownItem>
+                                            <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
+                                            className="accordion-dropdown-menu-item"
+                                              href="#"
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('watching', season.number)}}
+                                            >
+                                              {t('Anime_Series_watching')}
+                                            </DropdownItem>
+                                            <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
+                                            className="accordion-dropdown-menu-item"
+                                              href="#"
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('watched', season.number)}}
+                                            >
+                                              {t('Anime_Series_watched')}
+                                            </DropdownItem>
+                                            <DropdownItem
+                                            style={{
+                                              backgroundColor: "rgba(256, 256, 256, 1)",
+                                            }}
+                                            className="accordion-dropdown-menu-item"
+                                              href="#"
+                                              onClick={(event) => {
+                                                event.preventDefault();
+                                                handleStatusSelection('to-watch', season.number)}}
+                                            >
+                                              {t('Anime_Series_to-watch')}
+                                            </DropdownItem>
+                                          </DropdownMenu>
+                                        </UncontrolledDropdown>
+
+                                        : <></>}
+                                        
+                                      </Nav>
+                                    </Collapse>
+                                  </Container>
+                                </Navbar>
+                              </Col>
+                            </Row> */}
+
+                        </AccordionSummary>
+                        <AccordionDetails>
+                        <div className="season-image-container">
+                            {season.image !== null && season.image !== undefined ? 
+                              <img className="season-image" alt="season_image" src={season.image}/>
+                            :
+                              <></>
+                            }
+                          </div>
+                          
+
+                        {season.series
+                        // .filter((series) => series.season_id === season.id)
+                        .map((series, index) => (
+                          <div key={series.number}>
+                            <Accordion className="accordion-children-main">
+                              <AccordionSummary
+                                className="accordion-array"
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
+                              >
+                                <Typography className="accordion-children-header">{index + 1}: {series.name_ru}</Typography>
+
+                                {/* <Row className="row-dropdown">
+                                  <Col md="12" className="">
+                                    <Navbar className="accordion-navbar" expand="xs">
+                                      <Container className="">
+                                        <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
+                                          
+                                        </Collapse>
+                                      </Container>
+                                    </Navbar>
+                                  </Col>
+                            </Row> */}
+
+                            <Nav className="">
+
+                            {isLoggedIn ? 
+
+                            <UncontrolledDropdown className="accordion-dropdown">
+                            <DropdownToggle
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              caret
+                              color="default"
+                              data-toggle="dropdown"
+                              href="#"
+                              id="navbarDropdownMenuLink"
+                              onClick={(event) => event.stopPropagation()}
+                              nav
+                              className="accordion-select-header"
+                            >
+                              
+                              {selectedSerieStatusArray[series.number - 1] !== undefined
+                                ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
+                                : SeriesStatusData[series.number]?.serie !== undefined
+                                ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
+                                : ""}
+
+                            </DropdownToggle>
+
+                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                              
+                              <DropdownItem
+                              style={{
+                                backgroundColor: "rgba(256, 256, 256, 1)",
+                              }}
+                              className="accordion-dropdown-menu-item"
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  handleSeriesStatusSelection('not-watched', series.number)}}
+                              >
+                                {t('Anime_Series_not-watched')}
+                              </DropdownItem>
+                              <DropdownItem
+                              style={{
+                                backgroundColor: "rgba(256, 256, 256, 1)",
+                              }}
+                              className="accordion-dropdown-menu-item"
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  handleSeriesStatusSelection('watching', series.number)}}
+                              >
+                                {t('Anime_Series_watching')}
+                              </DropdownItem>
+                              <DropdownItem
+                              style={{
+                                backgroundColor: "rgba(256, 256, 256, 1)",
+                              }}
+                              className="accordion-dropdown-menu-item"
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  handleSeriesStatusSelection('watched', series.number)}}
+                              >
+                                {t('Anime_Series_watched')}
+                              </DropdownItem>
+                              <DropdownItem
+                              style={{
+                                backgroundColor: "rgba(256, 256, 256, 1)",
+                              }}
+                              className="accordion-dropdown-menu-item"
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  handleSeriesStatusSelection('to-watch', series.number)}}
+                              >
+                                {t('Anime_Series_to-watch')}
+                              </DropdownItem>
+                            </DropdownMenu>
+                            </UncontrolledDropdown>
+
+                            : <></>}
+
+
+                            </Nav>
+
+                </AccordionSummary>
+                <AccordionDetails className="accordion-children-details">
+                <div className="series-image-container">
+                  {series.image !== null && series.image !== undefined ? 
+                    <img className="series-image" alt="series_image" src={series.image}/>
+                  :
+                    <></>
+                  }
+                </div>
+                  <p>Номер серии по выходу ранобэ: {series.ranobe_release_number}</p>
+                  
+                  <p>Описание: {series.description_ru}</p>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+          ))
+          // : <></>
+          }
+
+
+          </AccordionDetails>
+        </Accordion>
+      </div>
+    ))}
+
+</>}
+                </TabPane>
+
+
+
+
+
+                <TabPane tabId="link3" className="">
+
+                  {LoadingAnimeRelease == true ? 
+                   <Loader />
+                  : <>
+                  
+                    {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
                   
 
-                {seriesAnimeReleaseArray.map((season, index) => (
-                    <div key={index}>
-                      <Accordion key={index} className="accordion-main">
-                        <AccordionSummary
-                          className="accordion-array"
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel1a-content"
-                          id="panel1a-header"
-                        >
-                          <Typography className="accordion-header">{season.name_en}</Typography>
+                  {seriesAnimeReleaseArray.map((season, index) => (
+                      <div key={index}>
+                        <Accordion key={index} className="accordion-main">
+                          <AccordionSummary
+                            className="accordion-array"
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                          >
+                            <Typography className="accordion-header">{season.name_en}</Typography>
 
-                          
-                            <Row className="row-dropdown">
-                              <Col md="12" className="">
-                                <Navbar className="accordion-navbar" expand="xs">
-                                  <Container className="">
-                                    <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                      <Nav className="">
-                                        {/* {isLoggedIn ? 
-                                        
-                                        <UncontrolledDropdown className="accordion-dropdown">
-                                          <DropdownToggle
-                                            aria-expanded={false}
-                                            aria-haspopup={true}
-                                            caret
-                                            color="default"
-                                            data-toggle="dropdown"
-                                            href="#"
-                                            id="navbarDropdownMenuLink"
-                                            onClick={(event) => event.stopPropagation()}
-                                            nav
-                                            className="accordion-select-header"
-                                          >
-                                            
-                                            {selectedStatusArray[season.number - 1] !== undefined
-                                              ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
-                                              : SeasonsStatusData[season.id]?.season != undefined
-                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
-                                              : ""}
-
-                                          </DropdownToggle>
+                            
+                              {/* <Row className="row-dropdown">
+                                <Col md="12" className="">
+                                  <Navbar className="accordion-navbar" expand="xs">
+                                    <Container className="">
+                                      <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
+                                        <Nav className="">
+                                          {isLoggedIn ? 
                                           
-                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                          <UncontrolledDropdown className="accordion-dropdown">
+                                            <DropdownToggle
+                                              aria-expanded={false}
+                                              aria-haspopup={true}
+                                              caret
+                                              color="default"
+                                              data-toggle="dropdown"
+                                              href="#"
+                                              id="navbarDropdownMenuLink"
+                                              onClick={(event) => event.stopPropagation()}
+                                              nav
+                                              className="accordion-select-header"
+                                            >
+                                              
+                                              {selectedStatusArray[season.number - 1] !== undefined
+                                                ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
+                                                : SeasonsStatusData[season.id]?.season != undefined
+                                                ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
+                                                : ""}
+
+                                            </DropdownToggle>
                                             
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('not-watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_not-watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watching', season.number)}}
-                                            >
-                                              {t('Anime_Series_watching')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('to-watch', season.number)}}
-                                            >
-                                              {t('Anime_Series_to-watch')}
-                                            </DropdownItem>
-                                          </DropdownMenu>
-                                        </UncontrolledDropdown>
+                                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                              
+                                              <DropdownItem
+                                              style={{
+                                                backgroundColor: "rgba(256, 256, 256, 1)",
+                                              }}
+                                              className="accordion-dropdown-menu-item"
+                                                href="#"
+                                                onClick={(event) => {
+                                                  event.preventDefault();
+                                                  handleStatusSelection('not-watched', season.number)}}
+                                              >
+                                                {t('Anime_Series_not-watched')}
+                                              </DropdownItem>
+                                              <DropdownItem
+                                              style={{
+                                                backgroundColor: "rgba(256, 256, 256, 1)",
+                                              }}
+                                              className="accordion-dropdown-menu-item"
+                                                href="#"
+                                                onClick={(event) => {
+                                                  event.preventDefault();
+                                                  handleStatusSelection('watching', season.number)}}
+                                              >
+                                                {t('Anime_Series_watching')}
+                                              </DropdownItem>
+                                              <DropdownItem
+                                              style={{
+                                                backgroundColor: "rgba(256, 256, 256, 1)",
+                                              }}
+                                              className="accordion-dropdown-menu-item"
+                                                href="#"
+                                                onClick={(event) => {
+                                                  event.preventDefault();
+                                                  handleStatusSelection('watched', season.number)}}
+                                              >
+                                                {t('Anime_Series_watched')}
+                                              </DropdownItem>
+                                              <DropdownItem
+                                              style={{
+                                                backgroundColor: "rgba(256, 256, 256, 1)",
+                                              }}
+                                              className="accordion-dropdown-menu-item"
+                                                href="#"
+                                                onClick={(event) => {
+                                                  event.preventDefault();
+                                                  handleStatusSelection('to-watch', season.number)}}
+                                              >
+                                                {t('Anime_Series_to-watch')}
+                                              </DropdownItem>
+                                            </DropdownMenu>
+                                          </UncontrolledDropdown>
 
-                                        : <></>}
-                                         */}
-                                      </Nav>
-                                    </Collapse>
-                                  </Container>
-                                </Navbar>
-                              </Col>
-                            </Row>
+                                          : <></>}
+                                          
+                                        </Nav>
+                                      </Collapse>
+                                    </Container>
+                                  </Navbar>
+                                </Col>
+                              </Row> */}
 
-                        </AccordionSummary>
-                        <AccordionDetails>
-                        <div className="season-image-container">
-                            {season.image != null && season.image != undefined ? 
-                              <img className="season-image" alt="season_image" src={season.image}/>
-                            :
-                              <></>
-                            }
-                          </div>
-                          
+                          </AccordionSummary>
+                          <AccordionDetails>
+                          <div className="season-image-container">
+                              {season.image !== null && season.image !== undefined ? 
+                                <img className="season-image" alt="season_image" src={season.image}/>
+                              :
+                                <></>
+                              }
+                            </div>
+                            
 
-                        {season.series
-                        // .filter((series) => series.season.id === season.id)
-                        .map((series) => (
-                          <div key={series.number}>
-                            <Accordion className="accordion-children-main">
-                              <AccordionSummary
-                                className="accordion-array"
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                              >
-                                <Typography className="accordion-children-header">ID Серии: {series.anime_release_view_number}, Name: {series.name_ru}</Typography>
+                          {season.series
+                          // .filter((series) => series.season_id === season.id)
+                          .map((series, index) => (
+                            <div key={series.number}>
+                              <Accordion className="accordion-children-main">
+                                <AccordionSummary
+                                  className="accordion-array"
+                                  expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel2a-content"
+                                  id="panel2a-header"
+                                >
+                                  <Typography className="accordion-children-header">{index + 1}: {series.name_ru}</Typography>
 
-                                <Row className="row-dropdown">
-                                  <Col md="12" className="">
-                                    <Navbar className="accordion-navbar" expand="xs">
-                                      <Container className="">
-                                        <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                          <Nav className="">
+                                  {/* <Row className="row-dropdown">
+                                    <Col md="12" className="">
+                                      <Navbar className="accordion-navbar" expand="xs">
+                                        <Container className="">
+                                          <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
+                                            
+                                          </Collapse>
+                                        </Container>
+                                      </Navbar>
+                                    </Col>
+                              </Row> */}
+
+                                            <Nav className="">
 
                                             {isLoggedIn ? 
-                                            
+
                                             <UncontrolledDropdown className="accordion-dropdown">
                                             <DropdownToggle
                                               aria-expanded={false}
@@ -843,12 +1190,12 @@ export default function Anime_Series() {
                                               
                                               {selectedSerieStatusArray[series.number - 1] !== undefined
                                                 ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
-                                                : SeriesStatusData[series.number]?.serie != undefined
+                                                : SeriesStatusData[series.number]?.serie !== undefined
                                                 ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
                                                 : ""}
 
                                             </DropdownToggle>
-                                            
+
                                             <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
                                               
                                               <DropdownItem
@@ -900,544 +1247,309 @@ export default function Anime_Series() {
                                                 {t('Anime_Series_to-watch')}
                                               </DropdownItem>
                                             </DropdownMenu>
-                                          </UncontrolledDropdown>
+                                            </UncontrolledDropdown>
 
                                             : <></>}
 
-                                            
-                                          </Nav>
-                                        </Collapse>
-                                      </Container>
-                                    </Navbar>
-                                  </Col>
-                            </Row>
 
-                              </AccordionSummary>
-                              <AccordionDetails className="accordion-children-details">
-                              <div className="series-image-container">
-                                {series.image != null && series.image != undefined ? 
-                                  <img className="series-image" alt="series_image" src={series.image}/>
-                                :
-                                  <></>
-                                }
-                              </div>
+                                            </Nav>
 
-                                {series.description_ru}{series.number}
-                              </AccordionDetails>
-                            </Accordion>
-                          </div>
-                        ))
-                        // : <></>
-                        }
+                                </AccordionSummary>
+                                <AccordionDetails className="accordion-children-details">
+                                <div className="series-image-container">
+                                  {series.image !== null && series.image !== undefined ? 
+                                    <img className="series-image" alt="series_image" src={series.image}/>
+                                  :
+                                    <></>
+                                  }
+                                </div>
+                                <p>Номер серии по дате выхода аниме: {series.anime_release_view_number}</p>
+
+                                <p>Описание: {series.description_ru}</p>
+                                </AccordionDetails>
+                              </Accordion>
+                            </div>
+                          ))
+                          // : <></>
+                          }
 
 
-                        </AccordionDetails>
-                      </Accordion>
-                    </div>
-                  ))}
+                          </AccordionDetails>
+                        </Accordion>
+                      </div>
+                    ))}
+
+                  </>}
+
+                  
                 
                 </TabPane>
 
-                <TabPane tabId="link3" className="color-white">
-                {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
-                
-                {seriesChronologicalArray.map((season, index) => (
-                    <div key={index}>
-                      <Accordion key={index} className="accordion-main">
-                        <AccordionSummary
-                          className="accordion-array"
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel1a-content"
-                          id="panel1a-header"
-                        >
-                          <Typography className="accordion-header">{season.name_en}</Typography>
 
-                          
-                            <Row className="row-dropdown">
-                              <Col md="12" className="">
-                                <Navbar className="accordion-navbar" expand="xs">
-                                  <Container className="">
-                                    <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                      <Nav className="">
-                                        {/* {isLoggedIn ? 
-                                        
-                                        <UncontrolledDropdown className="accordion-dropdown">
-                                          <DropdownToggle
-                                            aria-expanded={false}
-                                            aria-haspopup={true}
-                                            caret
-                                            color="default"
-                                            data-toggle="dropdown"
-                                            href="#"
-                                            id="navbarDropdownMenuLink"
-                                            onClick={(event) => event.stopPropagation()}
-                                            nav
-                                            className="accordion-select-header"
-                                          >
-                                            
-                                            {selectedStatusArray[season.number - 1] !== undefined
-                                              ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
-                                              : SeasonsStatusData[season.id]?.season != undefined
-                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
-                                              : ""}
 
-                                          </DropdownToggle>
-                                          
-                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
-                                            
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('not-watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_not-watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watching', season.number)}}
-                                            >
-                                              {t('Anime_Series_watching')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('to-watch', season.number)}}
-                                            >
-                                              {t('Anime_Series_to-watch')}
-                                            </DropdownItem>
-                                          </DropdownMenu>
-                                        </UncontrolledDropdown>
+                <TabPane tabId="link4" className="">
 
-                                        : <></>}
-                                         */}
-                                      </Nav>
-                                    </Collapse>
-                                  </Container>
-                                </Navbar>
-                              </Col>
-                            </Row>
+                  {LoadingChronological == true ? 
+                   <Loader />
+                  : <>
 
-                        </AccordionSummary>
-                        <AccordionDetails>
-                        <div className="season-image-container">
-                            {season.image != null && season.image != undefined ? 
-                              <img className="season-image" alt="season_image" src={season.image}/>
-                            :
-                              <></>
-                            }
-                          </div>
-                          
+                    {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
+                    
+                    {seriesChronologicalArray.map((season, index) => (
+                        <div key={index}>
+                          <Accordion key={index} className="accordion-main">
+                            <AccordionSummary
+                              className="accordion-array"
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1a-content"
+                              id="panel1a-header"
+                            >
+                              <Typography className="accordion-header">{season.name_en}</Typography>
 
-                        {season.series
-                        // .filter((series) => series.season.id === season.id)
-                        .map((series) => (
-                          <div key={series.number}>
-                            <Accordion className="accordion-children-main">
-                              <AccordionSummary
-                                className="accordion-array"
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                              >
-                                <Typography className="accordion-children-header">ID Серии: {series.chronological_view_number}, Name: {series.name_ru}</Typography>
-
-                                <Row className="row-dropdown">
+                              
+                                {/* <Row className="row-dropdown">
                                   <Col md="12" className="">
                                     <Navbar className="accordion-navbar" expand="xs">
                                       <Container className="">
                                         <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
                                           <Nav className="">
-
                                             {isLoggedIn ? 
                                             
                                             <UncontrolledDropdown className="accordion-dropdown">
-                                            <DropdownToggle
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              caret
-                                              color="default"
-                                              data-toggle="dropdown"
-                                              href="#"
-                                              id="navbarDropdownMenuLink"
-                                              onClick={(event) => event.stopPropagation()}
-                                              nav
-                                              className="accordion-select-header"
-                                            >
-                                              
-                                              {selectedSerieStatusArray[series.number - 1] !== undefined
-                                                ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
-                                                : SeriesStatusData[series.number]?.serie != undefined
-                                                ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
-                                                : ""}
+                                              <DropdownToggle
+                                                aria-expanded={false}
+                                                aria-haspopup={true}
+                                                caret
+                                                color="default"
+                                                data-toggle="dropdown"
+                                                href="#"
+                                                id="navbarDropdownMenuLink"
+                                                onClick={(event) => event.stopPropagation()}
+                                                nav
+                                                className="accordion-select-header"
+                                              >
+                                                
+                                                {selectedStatusArray[season.number - 1] !== undefined
+                                                  ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
+                                                  : SeasonsStatusData[season.id]?.season != undefined
+                                                  ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
+                                                  : ""}
 
-                                            </DropdownToggle>
-                                            
-                                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                              </DropdownToggle>
                                               
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('not-watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_not-watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watching', series.number)}}
-                                              >
-                                                {t('Anime_Series_watching')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('to-watch', series.number)}}
-                                              >
-                                                {t('Anime_Series_to-watch')}
-                                              </DropdownItem>
-                                            </DropdownMenu>
-                                          </UncontrolledDropdown>
+                                              <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                                
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleStatusSelection('not-watched', season.number)}}
+                                                >
+                                                  {t('Anime_Series_not-watched')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleStatusSelection('watching', season.number)}}
+                                                >
+                                                  {t('Anime_Series_watching')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleStatusSelection('watched', season.number)}}
+                                                >
+                                                  {t('Anime_Series_watched')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleStatusSelection('to-watch', season.number)}}
+                                                >
+                                                  {t('Anime_Series_to-watch')}
+                                                </DropdownItem>
+                                              </DropdownMenu>
+                                            </UncontrolledDropdown>
 
                                             : <></>}
-
                                             
                                           </Nav>
                                         </Collapse>
                                       </Container>
                                     </Navbar>
                                   </Col>
-                            </Row>
+                                </Row> */}
 
-                              </AccordionSummary>
-                              <AccordionDetails className="accordion-children-details">
-                              <div className="series-image-container">
-                                {series.image != null && series.image != undefined ? 
-                                  <img className="series-image" alt="series_image" src={series.image}/>
-                                :
-                                  <></>
-                                }
-                              </div>
-
-                                {series.description_ru}{series.number}
-                              </AccordionDetails>
-                            </Accordion>
-                          </div>
-                        ))
-                        // : <></>
-                        }
-
-
-                        </AccordionDetails>
-                      </Accordion>
-                    </div>
-                  ))}
-
-                </TabPane>
-
-                <TabPane tabId="link4" className="color-white">
-                {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
-
-                {seriesRanobeArray.map((season, index) => (
-                    <div key={index}>
-                      <Accordion key={index} className="accordion-main">
-                        <AccordionSummary
-                          className="accordion-array"
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel1a-content"
-                          id="panel1a-header"
-                        >
-                          <Typography className="accordion-header">{season.name_en}</Typography>
-
-                          
-                            <Row className="row-dropdown">
-                              <Col md="12" className="">
-                                <Navbar className="accordion-navbar" expand="xs">
-                                  <Container className="">
-                                    <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                      <Nav className="">
-                                        {/* {isLoggedIn ? 
-                                        
-                                        <UncontrolledDropdown className="accordion-dropdown">
-                                          <DropdownToggle
-                                            aria-expanded={false}
-                                            aria-haspopup={true}
-                                            caret
-                                            color="default"
-                                            data-toggle="dropdown"
-                                            href="#"
-                                            id="navbarDropdownMenuLink"
-                                            onClick={(event) => event.stopPropagation()}
-                                            nav
-                                            className="accordion-select-header"
-                                          >
-                                            
-                                            {selectedStatusArray[season.number - 1] !== undefined
-                                              ? t(`Anime_Series_${selectedStatusArray[season.number - 1]}`)
-                                              : SeasonsStatusData[season.id]?.season != undefined
-                                              ? t(`Anime_Series_${SeasonsStatusData[season.id]?.season?.status}`)
-                                              : ""}
-
-                                          </DropdownToggle>
-                                          
-                                          <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
-                                            
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('not-watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_not-watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watching', season.number)}}
-                                            >
-                                              {t('Anime_Series_watching')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('watched', season.number)}}
-                                            >
-                                              {t('Anime_Series_watched')}
-                                            </DropdownItem>
-                                            <DropdownItem
-                                            style={{
-                                              backgroundColor: "rgba(256, 256, 256, 1)",
-                                            }}
-                                            className="accordion-dropdown-menu-item"
-                                              href="#"
-                                              onClick={(event) => {
-                                                event.preventDefault();
-                                                handleStatusSelection('to-watch', season.number)}}
-                                            >
-                                              {t('Anime_Series_to-watch')}
-                                            </DropdownItem>
-                                          </DropdownMenu>
-                                        </UncontrolledDropdown>
-
-                                        : <></>}
-                                         */}
-                                      </Nav>
-                                    </Collapse>
-                                  </Container>
-                                </Navbar>
-                              </Col>
-                            </Row>
-
-                        </AccordionSummary>
-                        <AccordionDetails>
-                        <div className="season-image-container">
-                            {season.image != null && season.image != undefined ? 
-                              <img className="season-image" alt="season_image" src={season.image}/>
-                            :
-                              <></>
-                            }
-                          </div>
-                          
-
-                        {season.series
-                        // .filter((series) => series.season.id === season.id)
-                        .map((series) => (
-                          <div key={series.number}>
-                            <Accordion className="accordion-children-main">
-                              <AccordionSummary
-                                className="accordion-array"
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                              >
-                                <Typography className="accordion-children-header">ID Серии: {series.ranobe_release_number}, Name: {series.name_ru}</Typography>
-
-                                <Row className="row-dropdown">
-                                  <Col md="12" className="">
-                                    <Navbar className="accordion-navbar" expand="xs">
-                                      <Container className="">
-                                        <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
-                                          <Nav className="">
-
-                                            {isLoggedIn ? 
-                                            
-                                            <UncontrolledDropdown className="accordion-dropdown">
-                                            <DropdownToggle
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              caret
-                                              color="default"
-                                              data-toggle="dropdown"
-                                              href="#"
-                                              id="navbarDropdownMenuLink"
-                                              onClick={(event) => event.stopPropagation()}
-                                              nav
-                                              className="accordion-select-header"
-                                            >
-                                              
-                                              {selectedSerieStatusArray[series.number - 1] !== undefined
-                                                ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
-                                                : SeriesStatusData[series.number]?.serie != undefined
-                                                ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
-                                                : ""}
-
-                                            </DropdownToggle>
-                                            
-                                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
-                                              
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('not-watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_not-watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watching', series.number)}}
-                                              >
-                                                {t('Anime_Series_watching')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('watched', series.number)}}
-                                              >
-                                                {t('Anime_Series_watched')}
-                                              </DropdownItem>
-                                              <DropdownItem
-                                              style={{
-                                                backgroundColor: "rgba(256, 256, 256, 1)",
-                                              }}
-                                              className="accordion-dropdown-menu-item"
-                                                href="#"
-                                                onClick={(event) => {
-                                                  event.preventDefault();
-                                                  handleSeriesStatusSelection('to-watch', series.number)}}
-                                              >
-                                                {t('Anime_Series_to-watch')}
-                                              </DropdownItem>
-                                            </DropdownMenu>
-                                          </UncontrolledDropdown>
-
-                                            : <></>}
-
-                                            
-                                          </Nav>
-                                        </Collapse>
-                                      </Container>
-                                    </Navbar>
-                                  </Col>
-                            </Row>
-
-                              </AccordionSummary>
-                              <AccordionDetails className="accordion-children-details">
-                              <div className="series-image-container">
-                                {series.image != null && series.image != undefined ? 
-                                  <img className="series-image" alt="series_image" src={series.image}/>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                            <div className="season-image-container">
+                                {season.image !== null && season.image !== undefined ? 
+                                  <img className="season-image" alt="season_image" src={season.image}/>
                                 :
                                   <></>
                                 }
                               </div>
                               
-                                {series.description_ru}{series.number}
-                              </AccordionDetails>
-                            </Accordion>
-                          </div>
-                        ))
-                        // : <></>
-                        }
+
+                            {season.series
+                            // .filter((series) => series.season_id === season.id)
+                            .map((series, index) => (
+                              <div key={series.number}>
+                                <Accordion className="accordion-children-main">
+                                  <AccordionSummary
+                                    className="accordion-array"
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel2a-content"
+                                    id="panel2a-header"
+                                  >
+                                    <Typography className="accordion-children-header">{index + 1}: {series.name_ru}</Typography>
+
+                                    {/* <Row className="row-dropdown">
+                                      <Col md="12" className="">
+                                        <Navbar className="accordion-navbar" expand="xs">
+                                          <Container className="">
+                                            <Collapse navbar className="accordion-collapse-dropdown" isOpen={false}>
+                                              
+                                            </Collapse>
+                                          </Container>
+                                        </Navbar>
+                                      </Col>
+                                </Row> */}
 
 
-                        </AccordionDetails>
-                      </Accordion>
-                    </div>
-                  ))}
+                                              <Nav className="">
+
+                                              {isLoggedIn ? 
+
+                                              <UncontrolledDropdown className="accordion-dropdown">
+                                              <DropdownToggle
+                                                aria-expanded={false}
+                                                aria-haspopup={true}
+                                                caret
+                                                color="default"
+                                                data-toggle="dropdown"
+                                                href="#"
+                                                id="navbarDropdownMenuLink"
+                                                onClick={(event) => event.stopPropagation()}
+                                                nav
+                                                className="accordion-select-header"
+                                              >
+                                                
+                                                {selectedSerieStatusArray[series.number - 1] !== undefined
+                                                  ? t(`Anime_Series_${selectedSerieStatusArray[series.number - 1]}`)
+                                                  : SeriesStatusData[series.number]?.serie !== undefined
+                                                  ? t(`Anime_Series_${SeriesStatusData[series.number]?.serie?.status}`)
+                                                  : ""}
+
+                                              </DropdownToggle>
+
+                                              <DropdownMenu aria-labelledby="navbarDropdownMenuLink" onClick={(event) => event.stopPropagation()} className="accordion-dropdown-menu">
+                                                
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleSeriesStatusSelection('not-watched', series.number)}}
+                                                >
+                                                  {t('Anime_Series_not-watched')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleSeriesStatusSelection('watching', series.number)}}
+                                                >
+                                                  {t('Anime_Series_watching')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleSeriesStatusSelection('watched', series.number)}}
+                                                >
+                                                  {t('Anime_Series_watched')}
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                style={{
+                                                  backgroundColor: "rgba(256, 256, 256, 1)",
+                                                }}
+                                                className="accordion-dropdown-menu-item"
+                                                  href="#"
+                                                  onClick={(event) => {
+                                                    event.preventDefault();
+                                                    handleSeriesStatusSelection('to-watch', series.number)}}
+                                                >
+                                                  {t('Anime_Series_to-watch')}
+                                                </DropdownItem>
+                                              </DropdownMenu>
+                                              </UncontrolledDropdown>
+
+                                              : <></>}
+
+
+                                              </Nav>
+
+                                  </AccordionSummary>
+                                  <AccordionDetails className="accordion-children-details">
+                                  <div className="series-image-container">
+                                    {series.image !== null && series.image !== undefined ? 
+                                      <img className="series-image" alt="series_image" src={series.image}/>
+                                    :
+                                      <></>
+                                    }
+                                  </div>
+                                    <p>Номер серии в хронологическом порядке: {series.chronological_view_number}</p>
+                                    
+                                    <p>Описание: {series.description_ru}</p>                                    
+                                  </AccordionDetails>
+                                </Accordion>
+                              </div>
+                            ))
+                            // : <></>
+                            }
+
+
+                            </AccordionDetails>
+                          </Accordion>
+                        </div>
+                      ))}
+
+                  </>}
+
                 </TabPane>
+
+                
 
                 
               </TabContent>

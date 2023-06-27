@@ -136,6 +136,7 @@ export default function IndexNavbar({ user, setUser}) {
   useEffect(() => {
     if (cookies.access) {
       UserLanguageChange(selectedLanguage);
+      console.log(11111)
     }
   }, [selectedLanguage]);
 
