@@ -44,10 +44,10 @@ import {
   CardBody,
   Nav,
   NavItem,
-  Navbar,
+  // Navbar,
   NavLink,
   // NavbarBrand,
-  Collapse,
+  // Collapse,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -281,17 +281,7 @@ export default function Anime_Series() {
     // Series anime_release_view_number, ranobe_release_number, chronological_view_number
 
     const handleTabChange = async (tabIndex) => {
-      if (tabIndex === 2 && SeriesAnimeReleaseData.length === 0) {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/anime-release/`);
-          setSeriesAnimeReleaseData(response.data);
-          setLoadingAnimeRelease(false)
-        } catch (error) {
-          console.error(error);
-          // Обработка ошибок
-        }
-      } 
-      else if (tabIndex === 3 && SeriesRanobeData.length === 0) {
+      if (tabIndex === 2 && SeriesRanobeData.length === 0) {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/ranobe/`);
           setSeriesRanobeData(response.data);
@@ -301,6 +291,18 @@ export default function Anime_Series() {
           // Обработка ошибок
         }
       }
+
+      else if (tabIndex === 3 && SeriesAnimeReleaseData.length === 0) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/anime-release/`);
+          setSeriesAnimeReleaseData(response.data);
+          setLoadingAnimeRelease(false)
+        } catch (error) {
+          console.error(error);
+          // Обработка ошибок
+        }
+      } 
+      
       else if (tabIndex === 4 && SeriesChronologicalData.length === 0) {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/series/chronological/`);
@@ -434,7 +436,7 @@ export default function Anime_Series() {
                       <span className="font-weight-light"> {t('Anime_Sequence-light-novel')}</span>
                     </NavLink>
                   </NavItem>
-                  
+
 
                   <NavItem>
                     <NavLink
@@ -759,11 +761,17 @@ export default function Anime_Series() {
 
                 <TabPane tabId="link2" className="">
 
-                {LoadingRanobe == true ? 
-                <Loader />
+                {LoadingRanobe === true ?
+                <div className="loader-center">
+
+                  <Loader />
+                </div> 
+
                 : <>
 
                   {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
+
+                  <p>{t('Anime_Sequence-ranobe-suggestion')}</p>
 
                   {seriesRanobeArray.map((season, index) => (
                       <div key={index}>
@@ -1019,15 +1027,18 @@ export default function Anime_Series() {
 
 
 
-
-
                 <TabPane tabId="link3" className="">
 
-                  {LoadingAnimeRelease == true ? 
-                   <Loader />
+                  {LoadingAnimeRelease === true ? 
+                   <div className="loader-center">
+
+                    <Loader />
+                  </div> 
                   : <>
                   
                     {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
+
+                    <p>{t('Anime_Sequence-anime-release-suggestion')}</p>
                   
 
                   {seriesAnimeReleaseArray.map((season, index) => (
@@ -1289,12 +1300,17 @@ export default function Anime_Series() {
 
                 <TabPane tabId="link4" className="">
 
-                  {LoadingChronological == true ? 
-                   <Loader />
+                  {LoadingChronological === true ? 
+                   <div className="loader-center">
+
+                    <Loader />
+                  </div> 
                   : <>
 
                     {isLoggedIn ? <p>{t('Anime_Sequence-only-series-status')}</p> : <></>}
                     
+                    <p>{t('Anime_Sequence-chronological-suggestion')}</p>
+
                     {seriesChronologicalArray.map((season, index) => (
                         <div key={index}>
                           <Accordion key={index} className="accordion-main">

@@ -16,7 +16,7 @@ import i18n from "../components/i18n.js";
 import { I18nextProvider } from "react-i18next";
 
 // sections for this page/view
-import Anime_sequence from "views/IndexSections/Anime_sequence.js"
+// import Anime_sequence from "views/IndexSections/Anime_sequence.js"
 import Anime_Series from "views/IndexSections/Anime_series.js"
 import Useful_links from "views/IndexSections/Useful_links"
 import Suggestion from "views/IndexSections/Suggestion.js"
@@ -35,8 +35,8 @@ const Index = observer(() => {
       const refreshUrl = `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/token/refresh/`;
       const refreshToken = cookies.refresh;
 
-      if (authStore.accessToken == '' && cookies.refresh == '' || authStore.accessToken == undefined && cookies.refresh == undefined ||
-          authStore.accessToken == '' && cookies.refresh == undefined || authStore.accessToken == undefined && cookies.refresh == ''
+      if (authStore.accessToken === '' && cookies.refresh === '' || authStore.accessToken === undefined && cookies.refresh === undefined ||
+          authStore.accessToken === '' && cookies.refresh === undefined || authStore.accessToken === undefined && cookies.refresh === ''
       ) {
         console.log('Не найден токен в cookie. Завершение проверки валидности токена.');
         return;
@@ -61,6 +61,8 @@ const Index = observer(() => {
 
           console.log('Новый токен получен:', newAccessToken);
 
+          window.location.reload()
+
         } catch (error) {
           if (cookies.access) {
             removeCookie('access');
@@ -74,6 +76,7 @@ const Index = observer(() => {
             removeCookie('user');
           }
           console.log('Не удалось получить новый токен.');
+          window.location.reload()
         }
       }
     };

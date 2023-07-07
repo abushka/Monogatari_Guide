@@ -128,31 +128,36 @@ export default function IndexNavbar({ user, setUser}) {
   const { t } = useTranslation();
 
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-
+  const [isLanguageChanged, setIsLanguageChanged] = useState(false);
+  
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
+    setIsLanguageChanged(true);
   };
-
+  
   useEffect(() => {
-    if (cookies.access) {
+    if (isLanguageChanged) {
       UserLanguageChange(selectedLanguage);
-      console.log(11111)
+      setIsLanguageChanged(false);
     }
-  }, [selectedLanguage]);
-
+  }, [isLanguageChanged, selectedLanguage]);
+  
   const UserLanguageChange = async (selectedLanguage) => {
     try {
-      const response = await axios.put(`${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/user/change-language/`, 
-      {
-        language: selectedLanguage},
-      {
-        headers: {
-          Authorization: `Bearer ${cookies.access}`
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_PROTOCOL}${process.env.REACT_APP_API_HOST}/api/auth/user/change-language/`,
+        {
+          language: selectedLanguage
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.access}`
+          }
         }
-      });
-
-      console.log(selectedLanguage)
-      console.log(response.data); 
+      );
+  
+      console.log(selectedLanguage);
+      console.log(response.data);
   
     } catch (error) {
       console.error(error);
