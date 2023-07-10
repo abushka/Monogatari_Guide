@@ -2,6 +2,7 @@
   "PageHeader-welcome": "Monogatari Series Guide",
   "PageHeader-from-amateur": "От любителя к любителям.",
   "PageHeader-copyright": "Это не коммерческий проект, созданный для фанатов, официальный вебсайт находится тут ",
+  
   "IndexNavbar-Subscribe-Twitter": "Подпишись на мой Twitter",
   "IndexNavbar-Subscribe-Telegram": "Подпишись на мой Telegram канал",
   "IndexNavbar-Subscribe-Instagram": "Подпишись на мой Instagram",
@@ -17,6 +18,7 @@
   "IndexNavbar-Registration": "Зарегистрироваться",
   "IndexNavbar-Signin": "Войти",
   "IndexNavbar-Logout": "Выйти",
+  
   "Anime_Sequence-orders-watching-anime": "Порядки просмотра аниме серий",
   "Anime_Sequence-all-series-and-seasons": "Все серии и сезоны",
   "Anime_Sequence-serie-release-date": "По дате Выхода серий",
@@ -63,10 +65,22 @@
   "Anime_Seguence-Owarimonogatari-II-description-2": "Премьера состоялась 12 августа 2017, финальная серия вышла 13 августа 2017.",
   "Anime_Seguence-Zoku-Owarimonogatari-description-1": "Пятая часть сезона Monogatari Series: Final Season, содержит 6 серий.",
   "Anime_Seguence-Zoku-Owarimonogatari-description-2": "Премьера состоялась 10 ноября 2018.",
+  "Anime_Sequence-serie-number-in-the-cycle":"Номер серии в цикле",
+  "Anime_Sequence-serie-number-by-anime-release-date":"Номер серии по дате выхода аниме",
+  "Anime_Sequence-serie-number-by-light-novel":"Номер серии по выходу ранобэ",
+  "Anime_Sequence-serie-number-in-chronological-order":"Номер серии в хронологическом порядке",
+  "Anime_Sequence-serie-description":"Описание",
+
+  "Ranobe_Section-ranobe": "Ранобэ",
+  "Ranobe_Section-all-chapters-and-volumes": "Все томы и главы",
+  "Ranobe_Section-chapter-number": "Номер главы",
+  "Ranobe_Section-chapter-description": "Описание",
+  
   "Anime_Series_not-watched": "Не просмотрено",
   "Anime_Series_watching": "Смотрю",
   "Anime_Series_watched": "Просмотрено",
   "Anime_Series_to-watch": "Буду смотреть",
+  
   "Useful_links-useful-links": "Полезные ссылки",
   "Useful_links-Google-Docs": "Google документ",
   "Useful_links-Google-Docs-description": " - Гугл документ с огромным количеством информации о Monogatari",
@@ -86,6 +100,7 @@
   "Useful_links-telegram-channel-with-monogatari-description": " - Телеграм канал очень хорошего человека, часто на канале проскальзывает Monogatari и другие работы Nisio Ishin",
   "Useful_links-telegram-monogatari-fandom": "Телеграм фандом",
   "Useful_links-telegram-monogatari-fandom-description": " - Телеграм фандом, где публикуются новости, фанарты, и много всякого полезного по Monogatari",
+  
   "Suggestion-title": "Вам нравится это руководство по Циклу Историй ?",
   "Suggestion-description": "Если у вас есть идеи, предложения, советы или вы можете помочь проекту, подкинув какой-то материал - пишите в телеграм. Если увидели ошибку в материале - так же можете написать в телеграм.",
   "Suggestion-ty-for-help": "Спасибо что помогаете нам!",
@@ -93,12 +108,14 @@
   "Suggestion-Telegram": "Написать в телеграме!",
   "Suggestion-subscribe": "Подпишись!",
   "Suggestion-star-on-github": "Звёздочка на Github",
+  
   "Footer-contact-us": "Связаться с нами",
   "Footer-about-us": "О нас",
   "Footer-blog": "Блог",
   "Footer-Licence": "Лицензия",
   "Footer-follow-us": "Подпишись",
   "Footer-like-us": "Лайкни",
+  
   "Profilpage-language": "Русский",
   "Profilpage-about-profile": "О профиле",
   "Profilpage-your-username": "Юзернейм: ",
@@ -118,6 +135,7 @@
   "Profilpage-old-password": "Старый пароль",
   "Profilpage-new-password": "Новый пароль",
   "Profilpage-confirm-password": "Подтвердить пароль",
+  
   "RegisterPage-register": "Регистрация",
   "RegisterPage-login": "Логин",
   "RegisterPage-email": "Почта",
@@ -148,5 +166,6 @@
   "RegisterPage-section-1-description": "Регистрируясь можно получить несколько очень удобных фишек, которые определённо помогут в просмотре/чтении Monogatari Series. Наш сервис некоммерческий, поэтому платить ничего не нужно, от Вас требуется минимальный объём информации, для того, чтобы сохранять Ваши просмотренные или любимые серии/сезоны.",
   "RegisterPage-section-2-title": "Плюшки профиля",
   "RegisterPage-section-2-description": "Здесь будут наглядно показаны плюшки профиля, которые Вы получите после регистрации, это будут Ваши чекпоинты, любимые серии/сезоны, уведомления о рассылке новостей, возможность загружать медифайлы связанные с Циклом историй (возможно, я ещё не начал над этим работу) и т.д.",
+  
   "Login-signin": "Войти"
 }

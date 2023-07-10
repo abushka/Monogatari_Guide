@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, lazy, Suspense} from "react";
 import classnames from "classnames";
 import { Icon } from '@iconify/react';
 
@@ -31,6 +31,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Loader from "./Loader";
+
 
 // reactstrap components
 import {
@@ -58,6 +59,8 @@ import {
 import { useCookies } from 'react-cookie';
 import authStore from "variables/AuthStore.js";
 
+
+const Ranobe_Section = lazy(() => import('./Ranobe_Section'));
 
 export default function Anime_Series() {
 
@@ -733,15 +736,15 @@ export default function Anime_Series() {
                               </div>
                               
                                 <div>
-                                  <p>Номер серии в цикле: {series.number}</p>
+                                  <p>{t("Anime_Sequence-serie-number-in-the-cycle")}: {series.number}</p>
 
-                                  <p>Номер серии по дате выхода аниме: {series.anime_release_view_number}</p>
+                                  <p>{t("Anime_Sequence-serie-number-by-anime-release-date")}: {series.anime_release_view_number}</p>
 
-                                  <p>Номер серии по выходу ранобэ: {series.ranobe_release_number}</p>
+                                  <p>{t("Anime_Sequence-serie-number-by-light-novel")}: {series.ranobe_release_number}</p>
 
-                                  <p>Номер серии в хронологическом порядке: {series.chronological_view_number}</p>
+                                  <p>{t("Anime_Sequence-serie-number-in-chronological-order")}: {series.chronological_view_number}</p>
 
-                                  <p>Описание: {series.description_ru}</p>
+                                  <p>{t("Anime_Sequence-serie-description")}: {series.description_ru}</p>
                                 </div>
                                 
                               </AccordionDetails>
@@ -1006,9 +1009,8 @@ export default function Anime_Series() {
                     <></>
                   }
                 </div>
-                  <p>Номер серии по выходу ранобэ: {series.ranobe_release_number}</p>
-                  
-                  <p>Описание: {series.description_ru}</p>
+                  <p>{t("Anime_Sequence-serie-number-by-light-novel")}: {series.ranobe_release_number}</p>                  
+                  <p>{t("Anime_Sequence-serie-description")}: {series.description_ru}</p>
                 </AccordionDetails>
               </Accordion>
             </div>
@@ -1274,9 +1276,8 @@ export default function Anime_Series() {
                                     <></>
                                   }
                                 </div>
-                                <p>Номер серии по дате выхода аниме: {series.anime_release_view_number}</p>
-
-                                <p>Описание: {series.description_ru}</p>
+                                  <p>{t("Anime_Sequence-serie-number-by-anime-release-date")}: {series.anime_release_view_number}</p>
+                                  <p>{t("Anime_Sequence-serie-description")}: {series.description_ru}</p>
                                 </AccordionDetails>
                               </Accordion>
                             </div>
@@ -1545,9 +1546,8 @@ export default function Anime_Series() {
                                       <></>
                                     }
                                   </div>
-                                    <p>Номер серии в хронологическом порядке: {series.chronological_view_number}</p>
-                                    
-                                    <p>Описание: {series.description_ru}</p>                                    
+                                  <p>{t("Anime_Sequence-serie-number-in-chronological-order")}: {series.chronological_view_number}</p>
+                                  <p>{t("Anime_Sequence-serie-description")}: {series.description_ru}</p>                                  
                                   </AccordionDetails>
                                 </Accordion>
                               </div>
@@ -1573,6 +1573,13 @@ export default function Anime_Series() {
             </Card>
           </Col>
         </Row>
+        </Col>
+
+        <Col md="12">
+          <Suspense fallback={<div><Loader /></div>}>
+            {/* <SecondContainer /> */}
+            <Ranobe_Section />
+          </Suspense>
         </Col>
 
       </Container>
