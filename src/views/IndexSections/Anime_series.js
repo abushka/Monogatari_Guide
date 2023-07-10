@@ -1576,8 +1576,7 @@ export default function Anime_Series() {
         </Col>
 
         <Col md="12">
-          <Suspense fallback={<div><Loader /></div>}>
-            {/* <SecondContainer /> */}
+          <Suspense fallback={<div><Loader/></div>}>
             <Ranobe_Section />
           </Suspense>
         </Col>
