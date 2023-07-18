@@ -166,6 +166,7 @@ export default function Anime_Series() {
       // console.log(response.data);
     } catch (error) {
       console.error(error);
+      setIsLoggedIn(false)
       // Обработка ошибок
     }
   };

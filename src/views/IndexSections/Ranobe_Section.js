@@ -125,6 +125,7 @@ const Ranobe_Section = () => {
       // console.log(response.data);
     } catch (error) {
       console.error(error);
+      setIsLoggedIn(false)
       // Обработка ошибок
     }
   };
@@ -386,10 +387,11 @@ const Ranobe_Section = () => {
                             }
                           </div>
                           
+                          <p>{volume.description_ru}</p>
 
                         {ChaptersArray
                         .filter((chapters) => chapters.volume_id === volume.id)
-                        .map((chapters, index) => (
+                        .map((chapters) => (
                           <div key={chapters.id}>
                             <Accordion className="accordion-children-main">
                               <AccordionSummary
@@ -398,7 +400,7 @@ const Ranobe_Section = () => {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                               >
-                                <Typography className="accordion-children-header">{index + 1}: {chapters.name_ru}</Typography>
+                                <Typography className="accordion-children-header">{chapters.name_ru}</Typography>
 
                                 {/* <Row className="row-dropdown">
                                   <Col md="12" className="">
